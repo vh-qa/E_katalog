@@ -12,6 +12,7 @@ import ua.ek.utils.PropertyReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +28,8 @@ public class InitDrivers {
     }
 
     private void initDrivers(String browser) {
+
+/*
         String commonProperties = "src/main/resources/common.properties";
         Properties properties = new Properties();
 
@@ -37,6 +40,14 @@ public class InitDrivers {
                 e.printStackTrace();
             }
         }
+*/
+
+        Properties properties = new Properties();
+        try {
+            properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/common.properties"), "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         switch (browser) {
             case "chrome":
@@ -44,7 +55,6 @@ public class InitDrivers {
                 driver = new ChromeDriver();
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", properties.getProperty("gecko.driver"));
                 driver = new FirefoxDriver();
                 break;
             default:

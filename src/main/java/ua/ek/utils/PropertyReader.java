@@ -22,24 +22,38 @@ public class PropertyReader {
         return instance;
     }
 
-    private void loadProperties(String propertyName) {
+/*
+    private String getProperty(String propertyName){
+        Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getResourceAsStream("/common.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties.getProperty(propertyName);
+    }
+*/
+
+    private void loadProperties(String propertyFileName, String propertyName) {
         if (properties.containsKey(propertyName))
             return;
 
         properties.put(propertyName, new PropertyWrapper());
-        String path = System.getProperty(propertyName + ".cfg");
+//      String path = System.getProperty(propertyName + ".cfg");
 
         try {
-            InputStream is = new FileInputStream(path);
-            properties.get(propertyName).load(new InputStreamReader(is, "UTF-8"));
+//          InputStream is = new FileInputStream(path);
+//          properties.get(propertyName).load(new InputStreamReader(is, "UTF-8"));
+            properties.get(propertyName)
+                    .load(new InputStreamReader(this.getClass().getResourceAsStream(propertyFileName), "UTF-8"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static PropertyWrapper from(String propertyName) {
-        getInstance().loadProperties(propertyName);
+    public static PropertyWrapper from(String propertyFileName, String propertyName) {
+        getInstance().loadProperties(propertyFileName, propertyName);
         return getInstance().properties.get(propertyName);
     }
 

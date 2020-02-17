@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
 import ua.ek.base.BaseTest;
 import ua.ek.utils.Helper;
+import ua.ek.utils.ITimeOfWait;
 
 public class AuthPage extends BasePage {
 
@@ -31,10 +32,12 @@ public class AuthPage extends BasePage {
     @FindBy(xpath = "//div[@class='jclose']")
     private WebElement closeLink;
 
-    @FindBy(xpath = "//body[@class='nt wide-view page-list--catalog']/div[@id='mui_user_login']/div[@id='mui_user_login_window-outer']/div[@id='mui_user_login_window']/div[@class='help_content']/div[@class='l-div']/form[@class='l-f']/div[@id='mui_user_login_window_reg']/div[1]")
+//    @FindBy(xpath = "//body[@class='nt wide-view page-list--catalog']/div[@id='mui_user_login']/div[@id='mui_user_login_window-outer']/div[@id='mui_user_login_window']/div[@class='help_content']/div[@class='l-div']/form[@class='l-f']/div[@id='mui_user_login_window_reg']/div[1]")
+//    @FindBy(xpath = "//*[@id='mui_user_login_window_reg']/div[1]")
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div")
 //    @FindBy(xpath="//div[@id='mui_user_login_window_reg']//div[text()='Заполните поле \"Имя\"']")
-    private WebElement loginError;
+    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/form/div[1]/div[1]")
+    private WebElement loginError; // Заполните поле "Имя"
 
     //    @FindBy(xpath = "//input[@class='warn' and @name='p_[NikName]']/following::div[@class='l-err']")
 //    @FindBy(xpath = "//input[@class='warn' and @name='p_[NikName]']/following-sibling::*[1]")
@@ -42,16 +45,20 @@ public class AuthPage extends BasePage {
 //  @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div[1]")
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div[2]")
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']//div[text()='Заполните поле \"email\"']")
-    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div")
-    private WebElement emailError;
+//    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div")
+    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/form/div[1]/div[2]")
+    private WebElement emailFillError; // Заполните поле "email"
 
+    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/form/div[1]/div[1]")
+    private WebElement emailCorrectError; // Поле "e-mail" введено некорректно
 
     @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div/div")
 //            @FindBy(xpath="//div[@id='mui_user_login_window_reg']//div[text()='Заполните поле \"Пароль\"']")
-    private WebElement passwordError;
+    private WebElement passwordError; // Заполните поле "Пароль"
 
-    private String loginErrorLink = "//body[@class='nt wide-view page-list--catalog']/div[@id='mui_user_login']/div[@id='mui_user_login_window-outer']/div[@id='mui_user_login_window']/div[@class='help_content']/div[@class='l-div']/form[@class='l-f']/div[@id='mui_user_login_window_reg']/div[1]";
-    private String emailErrorLink = "//div[@id='mui_user_login_window_reg']/div";
+    private String loginErrorLink = "/html/body/div[1]/div/div/div/div/form/div[1]/div[1]";
+    private String emailFillErrorLink = "/html/body/div[1]/div/div/div/div/form/div[1]/div[2]";
+    private String emailCorrectErrorLink = "/html/body/div[1]/div/div/div/div/form/div[1]/div[1]";
     private String passwordErrorLink = "//div[@id='mui_user_login_window_reg']/div/div";
 
     public AuthPage(WebDriver driver) {
@@ -59,7 +66,7 @@ public class AuthPage extends BasePage {
     }
 
     // Click register link
-    public AuthPage registerLinkClick() {
+    public AuthPage clickRegisterLink() {
         Helper.clickWebElement(registerLink);
         return this;
     }
@@ -96,19 +103,25 @@ public class AuthPage extends BasePage {
 
     // Get loginErrorLink
     public String getLoginErrorLink() {
-//        waitUntilElementIsVisible(10, loginError);
+        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, loginError);
         return loginErrorLink;
     }
 
-    // Get emailErrorLink
-    public String getEmailErrorLink() {
-//        waitUntilElementIsVisible(10, emailError);
-        return emailErrorLink;
+    // Get emailFillErrorLink
+    public String getEmailFillErrorLink() {
+        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, emailFillError);
+        return emailFillErrorLink;
+    }
+
+    // Get emailCorrectErrorLink
+    public String getEmailCorrectErrorLink() {
+        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, emailCorrectError);
+        return emailCorrectErrorLink;
     }
 
     // Get password error link
     public String getPasswordErrorLink() {
-//        waitUntilElementIsVisible(10, passwordError);
+        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, passwordError);
         return passwordErrorLink;
     }
 
@@ -117,9 +130,14 @@ public class AuthPage extends BasePage {
         return Helper.getWebElementText(loginError);
     }
 
-    // Get email error message
-    public String getEmailErrorMessage() {
-        return Helper.getWebElementText(emailError);
+    // Get email fill error message
+    public String getEmailFillErrorMessage() {
+        return Helper.getWebElementText(emailFillError);
+    }
+
+    // Get email correct error message
+    public String getEmailCorrectErrorMessage() {
+        return Helper.getWebElementText(emailCorrectError);
     }
 
     // Get password error message
