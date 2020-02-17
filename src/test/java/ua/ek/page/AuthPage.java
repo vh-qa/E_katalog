@@ -36,7 +36,7 @@ public class AuthPage extends BasePage {
 //    @FindBy(xpath = "//*[@id='mui_user_login_window_reg']/div[1]")
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div")
 //    @FindBy(xpath="//div[@id='mui_user_login_window_reg']//div[text()='Заполните поле \"Имя\"']")
-    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/form/div[1]/div[1]")
+    @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'Имя')]")
     private WebElement loginError; // Заполните поле "Имя"
 
     //    @FindBy(xpath = "//input[@class='warn' and @name='p_[NikName]']/following::div[@class='l-err']")
@@ -46,7 +46,7 @@ public class AuthPage extends BasePage {
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div[2]")
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']//div[text()='Заполните поле \"email\"']")
 //    @FindBy(xpath = "//div[@id='mui_user_login_window_reg']/div")
-    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/form/div[1]/div[2]")
+    @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'email')]")
     private WebElement emailFillError; // Заполните поле "email"
 
     @FindBy(xpath = "/html/body/div[1]/div/div/div/div/form/div[1]/div[1]")
@@ -67,37 +67,37 @@ public class AuthPage extends BasePage {
 
     // Click register link
     public AuthPage clickRegisterLink() {
-        Helper.clickWebElement(registerLink);
+        clickWebElement(registerLink);
         return this;
     }
 
     // Enter login
     public AuthPage enterLogin(String login) {
-        Helper.enterTextInTextField(loginField, login);
+        enterTextInTextField(loginField, login);
         return this;
     }
 
     // Enter email
     public AuthPage enterEmail(String email) {
-        Helper.enterTextInTextField(emailField, email);
+        enterTextInTextField(emailField, email);
         return this;
     }
 
     // Enter password
     public AuthPage enterPassword(String password) {
-        Helper.enterTextInTextField(passwordField, password);
+        enterTextInTextField(passwordField, password);
         return this;
     }
 
     // Click close link
     public BasePage clickCloseLink() {
-        Helper.getWebElementText(closeLink);
+        getWebElementText(closeLink);
         return new HomePage(driver);
     }
 
     // Click Submit Button
     public BasePage submit() {
-        Helper.clickWebElement(submit);
+        clickWebElement(submit);
         return this;
     }
 

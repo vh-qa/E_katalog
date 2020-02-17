@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import ua.ek.base.BasePage;
 import ua.ek.base.BaseTest;
@@ -49,7 +50,9 @@ public class AuthPageTest extends BaseTest {
                         assertEquals(authPage.getLoginErrorMessage(), expected_login_error_message);
                         LOG.info("Login Error message: {} - Login Expected error message: {}", authPage.getLoginErrorMessage(), expected_login_error_message);
                     } catch (Error e) {
-                        verificationErrors.append(e.toString());
+                        verificationErrors.append("<<<<<<<<<<<<<<<<<<<<" + "\n" + "login = " + login + "; " +
+                        "email = " + email + "; " + "password = " + password + "\n\n" +
+                                e.toString() + "\n" + ">>>>>>>>>>>>>>>>>>>>");
                     }
                 }
             }
@@ -62,7 +65,9 @@ public class AuthPageTest extends BaseTest {
                         assertEquals(authPage.getEmailFillErrorMessage(), expected_email_error_message);
                         LOG.info("Email Fill Error message: {} - Email Fill Expected error message: {}", authPage.getEmailFillErrorMessage(), expected_email_error_message);
                     } catch (Error e) {
-                        verificationErrors.append(e.toString());
+                        verificationErrors.append("<<<<<<<<<<<<<<<<<<<<" + "\n" + "login = " + login + "; " +
+                                "email = " + email + "; " + "password = " + password + "\n\n" +
+                                e.toString() + "\n" + ">>>>>>>>>>>>>>>>>>>>");
                     }
                 }
             }
@@ -75,7 +80,9 @@ public class AuthPageTest extends BaseTest {
                     assertEquals(authPage.getEmailCorrectErrorMessage(), expected_email_error_message);
                     LOG.info("Email Correct Error message: {} - Email Correct Expected error message: {}", authPage.getEmailCorrectErrorMessage(), expected_email_error_message);
                 } catch (Error e) {
-                    verificationErrors.append(e.toString());
+                      verificationErrors.append("<<<<<<<<<<<<<<<<<<<<" + "\n" + "login = " + login + "; " +
+                        "email = " + email + "; " + "password = " + password + "\n\n" +
+                                e.toString() + "\n" + ">>>>>>>>>>>>>>>>>>>>");
                 }
             }
         }
@@ -88,7 +95,9 @@ public class AuthPageTest extends BaseTest {
                         assertEquals(authPage.getPasswordErrorMessage(), expected_password_error_message);
                         LOG.info("Password Error message: {} - Password Expected error message: {}", authPage.getPasswordErrorMessage(), expected_password_error_message);
                     } catch (Error e) {
-                        verificationErrors.append(e.toString());
+                        verificationErrors.append("<<<<<<<<<<<<<<<<<<<<" + "\n" + "login = " + login + "; " +
+                                "email = " + email + "; " + "password = " + password + "\n\n" +
+                                e.toString() + "\n" + ">>>>>>>>>>>>>>>>>>>>");
                     }
                 }
             }

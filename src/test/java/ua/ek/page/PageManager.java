@@ -29,4 +29,8 @@ public class PageManager {
     public MapCasesPage goMapCasesPage(WebDriver driver){
         return goHomePage(driver).clickMapCasesLink();
     }
+
+    public MapCasePage goMapCasePage(WebDriver driver){
+        return goHomePage(driver).clickMapCaseLink();
+    }
 }

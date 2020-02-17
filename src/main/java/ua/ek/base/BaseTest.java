@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import static org.testng.FileAssert.fail;
 
-public class BaseTest extends InitDrivers {
+public abstract class BaseTest extends InitDrivers {
     private final static Logger LOG = LogManager.getLogger(BasePage.class);
     protected StringBuffer verificationErrors = new StringBuffer();
 
@@ -48,4 +48,6 @@ public class BaseTest extends InitDrivers {
             return false;
         }
     }
+
+
 }

@@ -7,8 +7,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ua.ek.utils.ITimeOfWait;
 
-public class BasePage {
+public abstract class BasePage {
 
     public static String BASE_URL = "";
     protected WebDriver driver;
@@ -29,24 +30,27 @@ public class BasePage {
         return null;
     }
 
-/*
+
     // Get text from web element
     public static String getWebElementText(WebElement webElement){
         return webElement.getText().trim();
     }
 
+
     // Enter text to text field
-    public static void enterTextInTextField(WebElement textField, String inputText) {
+    public void enterTextInTextField(WebElement textField, String inputText) {
+        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, textField);
         textField.click();
         textField.clear();
         textField.sendKeys(inputText);
     }
 
+
     public void clickWebElement(WebElement webElement){
+        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, webElement);
         webElement.click();
-        waitUntilElementIsVisible(5, webElement);
     }
-*/
+
 
     // Waiting for web element appearance during waitTime
     protected void waitUntilElementIsVisible(Integer waitTime, WebElement webElement) {
