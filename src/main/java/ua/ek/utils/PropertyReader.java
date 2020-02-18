@@ -22,18 +22,6 @@ public class PropertyReader {
         return instance;
     }
 
-/*
-    private String getProperty(String propertyName){
-        Properties properties = new Properties();
-        try {
-            properties.load(this.getClass().getResourceAsStream("/common.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return properties.getProperty(propertyName);
-    }
-*/
-
     private void loadProperties(String propertyFileName, String propertyName) {
         if (properties.containsKey(propertyName))
             return;

@@ -29,19 +29,6 @@ public class InitDrivers {
 
     private void initDrivers(String browser) {
 
-/*
-        String commonProperties = "src/main/resources/common.properties";
-        Properties properties = new Properties();
-
-        if(commonProperties != null) {
-            try {
-                properties.load(new FileReader(commonProperties));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-*/
-
         Properties properties = new Properties();
         try {
             properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/common.properties"), "UTF-8"));

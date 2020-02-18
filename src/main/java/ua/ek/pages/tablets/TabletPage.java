@@ -1,4 +1,4 @@
-package ua.ek.page;
+package ua.ek.pages.tablets;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
 import ua.ek.utils.ITimeOfWait;
 
-public class MapCasePage extends BasePage {
+public class TabletPage extends BasePage {
 
     @FindBy(xpath = ".//div/input[@name='minPrice_']")
     private WebElement minPriceField;
@@ -17,23 +17,23 @@ public class MapCasePage extends BasePage {
     @FindBy(xpath = ".//input[@type='submit' and @class='price-sub']")
     private WebElement submitButton;
 
-    public MapCasePage(WebDriver driver) {
+    public TabletPage(WebDriver driver) {
         super(driver);
     }
 
-    public MapCasePage enterMinPrice(String minPrice) {
+    public TabletPage enterMinPrice(String minPrice) {
         enterTextInTextField(minPriceField, minPrice);
         return this;
     }
 
-    public MapCasePage enterMaxPrice(String maxPrice) {
+    public TabletPage enterMaxPrice(String maxPrice) {
         enterTextInTextField(maxPriceField, maxPrice);
         return this;
     }
 
-    public MapCasesList submitButtonClick(){
+    public TabletsList submitButtonClick(){
         waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, submitButton);
         submitButton.click();
-        return new MapCasesList(driver);
+        return new TabletsList(driver);
     }
 }

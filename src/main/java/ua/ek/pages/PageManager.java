@@ -1,12 +1,10 @@
-package ua.ek.page;
+package ua.ek.pages;
 
 import org.openqa.selenium.WebDriver;
-import ua.ek.base.BasePage;
+import ua.ek.pages.registration.AuthPage;
+import ua.ek.pages.tablets.TabletPage;
+import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.utils.PropertyReader;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 
 public class PageManager {
 
@@ -26,11 +24,11 @@ public class PageManager {
                                     .clickRegisterLink();
     }
 
-    public MapCasesPage goMapCasesPage(WebDriver driver){
-        return goHomePage(driver).clickMapCasesLink();
+    public TabletsPage goTabletsPage(WebDriver driver){
+        return goHomePage(driver).clickTabletsLink();
     }
 
-    public MapCasePage goMapCasePage(WebDriver driver){
-        return goHomePage(driver).clickMapCaseLink();
+    public TabletPage goTabletPage(WebDriver driver){
+        return goHomePage(driver).clickTabletLink();
     }
 }

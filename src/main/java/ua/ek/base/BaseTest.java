@@ -15,7 +15,7 @@ import java.util.Arrays;
 import static org.testng.FileAssert.fail;
 
 public abstract class BaseTest extends InitDrivers {
-    private final static Logger LOG = LogManager.getLogger(BasePage.class);
+    protected final static Logger LOG = LogManager.getLogger(BasePage.class);
     protected StringBuffer verificationErrors = new StringBuffer();
 
     @AfterClass(alwaysRun = true)
@@ -37,17 +37,4 @@ public abstract class BaseTest extends InitDrivers {
     public void logTestStop(Method method) {
         LOG.info("Stop test {}", method.getName());
     }
-
-    // Verify if web element is present
-    public boolean isWebElementPresent(By by){
-        try{
-            driver.findElement(by);
-            return true;
-        }
-        catch(NoSuchElementException e){
-            return false;
-        }
-    }
-
-
 }

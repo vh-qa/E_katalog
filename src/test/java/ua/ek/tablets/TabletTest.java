@@ -1,4 +1,4 @@
-package ua.ek;
+package ua.ek.tablets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,46 +7,43 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ua.ek.base.BasePage;
 import ua.ek.base.BaseTest;
-import ua.ek.page.MapCasePage;
-import ua.ek.page.MapCasesList;
-import ua.ek.page.MapCasesPage;
-import ua.ek.page.PageManager;
+import ua.ek.pages.tablets.TabletPage;
+import ua.ek.pages.tablets.TabletsList;
+import ua.ek.pages.PageManager;
 
 import java.io.IOException;
 
 import static org.testng.Assert.assertEquals;
 
-public class MapCaseTest extends BaseTest {
+public class TabletTest extends BaseTest {
     private final static Logger LOG = LogManager.getLogger(BasePage.class);
     private PageManager pageManager = new PageManager();
 
     @BeforeTest
-    public void goMapCasePage(){
+    public void goTabletPage(){
 
     }
 
-    @Test(testName = "Prices test", dataProvider = "pricesDataProvider")
-    public void pricesTest(String minPrice, String maxPrice, String expectedMessage) {
-        MapCasePage mapCasePage = pageManager.goMapCasePage(driver);
+    @Test(testName = "Tablets Prices Test", dataProvider = "tabletsPricesDataProvider")
+    public void tabletsPricesTest(String minPrice, String maxPrice, String expectedMessage) {
+        TabletPage tabletPage = pageManager.goTabletPage(driver);
 
-        mapCasePage.enterMinPrice(minPrice);
-        mapCasePage.enterMaxPrice(maxPrice);
+        tabletPage.enterMinPrice(minPrice);
+        tabletPage.enterMaxPrice(maxPrice);
 
-        MapCasesList mapCasesList = mapCasePage.submitButtonClick();
+        TabletsList tabletsList = tabletPage.submitButtonClick();
 
         try {
-            assertEquals(mapCasesList.getTextPrices(), expectedMessage);
+            assertEquals(tabletsList.getTextPrices(), expectedMessage);
             LOG.info("Text prices: {} - Expected text prices: {}",
-                    mapCasesList.getTextPrices(), expectedMessage);
+                    tabletsList.getTextPrices(), expectedMessage);
         } catch (Error e) {
             verificationErrors.append(e.toString());
         }
-
-        pageManager.goMapCasePage(driver);
     }
 
-    @DataProvider(name = "pricesDataProvider")
-    private Object[][] pricesDataProvider() throws IOException {
+    @DataProvider(name = "tabletsPricesDataProvider")
+    private Object[][] tabletsPricesDataProvider() throws IOException {
 
         Object[][] priceData = new Object[2][3];
 
