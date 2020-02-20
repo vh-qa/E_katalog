@@ -7,9 +7,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ua.ek.utils.ITimeOfWait;
 
 public abstract class BasePage {
+
+    protected final static int FIVE_SECONDS = 5;
+    protected final static int TEN_SECONDS = 10;
+    protected final static int FIFTEEN_SECONDS = 15;
+    protected final static int TWENTY_SECONDS = 20;
 
     protected final static Logger LOG = LogManager.getLogger(BasePage.class);
     protected WebDriver driver;
@@ -32,36 +36,52 @@ public abstract class BasePage {
 
     // Get text from web element
     protected String getWebElementText(By by){
+        return waitUntilElementIsVisible(FIVE_SECONDS, by).getText().trim();
+/*
         if(isWebElementPresent(by)) {
             return driver.findElement(by).getText().trim();
-        }else {
+        }else{
+//            throw new RuntimeException();
             return "";
         }
+ */
     }
 
     // Get text from web element
     protected String getWebElementText(WebElement webElement){
-       return webElement.getText().trim();
+        return waitUntilElementIsVisible(FIVE_SECONDS, webElement).getText().trim();
     }
 
     // Enter text to text field
     protected void enterTextInTextField(WebElement textField, String inputText) {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, textField);
+        waitUntilElementIsVisible(FIVE_SECONDS, textField);
         textField.click();
         textField.clear();
         textField.sendKeys(inputText);
     }
 
     protected void clickWebElement(WebElement webElement){
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, webElement);
+        waitUntilElementIsVisible(FIVE_SECONDS, webElement);
         webElement.click();
     }
 
     // Waiting for web element appearance during waitTime
-    protected void waitUntilElementIsVisible(Integer waitTime, WebElement webElement) {
+    protected WebElement waitUntilElementIsVisible(Integer waitTime, WebElement webElement) {
         WebDriverWait wait = new WebDriverWait(driver, waitTime);
         wait.until(ExpectedConditions.visibilityOf(webElement));
         wait.withMessage("Element was not found");
+
+        return webElement;
+    }
+
+    // Waiting for web element appearance during waitTime
+    protected WebElement waitUntilElementIsVisible(Integer waitTime, By by) {
+        WebDriverWait wait = new WebDriverWait(driver, waitTime);
+        WebElement webElement = driver.findElement(by);
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+        wait.withMessage("Element was not found");
+
+        return webElement;
     }
 
     protected void presenceOfElementLocated(Integer waitTime, WebElement webElement, By by) {

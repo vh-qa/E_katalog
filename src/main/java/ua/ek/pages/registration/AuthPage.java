@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
 import ua.ek.pages.HomePage;
 
-import static org.testng.Assert.assertEquals;
-
 public class AuthPage extends BasePage {
 
     @FindBy(xpath = ".//div[@class='l-m']//div[2]//em[1]")
@@ -34,23 +32,26 @@ public class AuthPage extends BasePage {
     @FindBy(xpath = ".//div[@class='jclose']")
     private WebElement closeLink;
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'Имя')]")
+//  @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'Имя')]")
+    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Имя')]")
     private WebElement loginError; // Заполните поле "Имя"
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'email')]")
+//  @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'email')]")
+    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'email')]")
     private WebElement emailFillError; // Заполните поле "email"
 
-    @FindBy(xpath = ".//html/body/div[1]/div/div/div/div/form/div[1]/div[1]")
+    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'e-mail')]")
     private WebElement emailCorrectError; // Поле "e-mail" введено некорректно
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div/div")
+//  @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div/div")
+    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Пароль')]")
     private WebElement passwordError; // Заполните поле "Пароль"
 
     //================================================================================//
 
-    private By loginErrorElement = By.xpath(".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'Имя')]");
-    private By emailErrorElement = By.xpath(".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'email')]");
-    private By passwordErrorElement = By.xpath(".//div[@id='mui_user_login_window_reg']/div/div");
+    private By loginErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Имя')]");
+    private By emailErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'email')]");
+    private By passwordErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Пароль')]");
 
     public AuthPage(WebDriver driver) {
         super(driver);
@@ -94,17 +95,28 @@ public class AuthPage extends BasePage {
 
     // Get login error message
     public String getLoginErrorMessage() {
-        return getWebElementText(loginErrorElement);
+        if(isWebElementPresent(loginErrorElement)) {
+            return getWebElementText(loginErrorElement);
+        }else{
+            return "";
+        }
     }
 
     // Get email fill error message
     public String getEmailFillErrorMessage() {
-        return getWebElementText(emailErrorElement);
+        if(isWebElementPresent(emailErrorElement)) {
+            return getWebElementText(emailErrorElement);
+        }else{
+            return "";
+        }
     }
 
     // Get password error message
     public String getPasswordErrorMessage() {
-        return getWebElementText(passwordErrorElement);
+        if(isWebElementPresent(passwordErrorElement)) {
+            return getWebElementText(passwordErrorElement);
+        }else{
+            return "";
+        }
     }
 }
-

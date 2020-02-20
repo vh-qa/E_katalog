@@ -54,7 +54,7 @@ public class TabletsTest extends BaseTest {
     private Object[][] testTabletsDataProvider() throws IOException {
 
         String pathData = PropertyReader
-                .from("/common.properties", "tablets.test.data.file")
+                .from("/properties/common.properties", "tablets.test.data.file")
                 .getProperty("tablets.test.data.file");
 
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));

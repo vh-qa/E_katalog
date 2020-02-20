@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
-import ua.ek.utils.ITimeOfWait;
 
 public class TabletPage extends BasePage {
 
@@ -32,7 +31,7 @@ public class TabletPage extends BasePage {
     }
 
     public TabletsList submitButtonClick(){
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, submitButton);
+        waitUntilElementIsVisible(FIVE_SECONDS, submitButton);
         submitButton.click();
         return new TabletsList(driver);
     }

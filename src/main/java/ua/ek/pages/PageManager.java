@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsPage;
+import ua.ek.pages.xpath.AppleTabletsPage;
 import ua.ek.utils.PropertyReader;
 
 public class PageManager {
@@ -11,7 +12,7 @@ public class PageManager {
     public HomePage goHomePage(WebDriver driver){
 
         String baseUrl = PropertyReader
-                .from("/common.properties", "base.url")
+                .from("/properties/common.properties", "base.url")
                 .getProperty("base.url");
 
         driver.get(baseUrl);
@@ -30,5 +31,9 @@ public class PageManager {
 
     public TabletPage goTabletPage(WebDriver driver){
         return goHomePage(driver).clickTabletLink();
+    }
+
+    public AppleTabletsPage goAppleTabletsPage(WebDriver driver){
+        return goHomePage(driver).clickAppleTabletsCheckBox();
     }
 }

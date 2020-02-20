@@ -1,15 +1,15 @@
 package ua.ek.pages.tablets;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
-import ua.ek.utils.ITimeOfWait;
 
 public class TabletsPage extends BasePage {
 
     // Manufacturers
-//  @FindBy(xpath = ".//label[@class='brand-best']/a[text()='Apple']")
+//  @FindBy(xpath = ".//label[@class='brand-best']/a[text()='AppleTabletsPage']")
     @FindBy(xpath = ".//*[@id=\"li_br116\"]/label") // Apple
     private WebElement manufacturerApple;
 
@@ -68,28 +68,28 @@ public class TabletsPage extends BasePage {
     }
 
     public TabletsPage clickAppleManufacturer() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, manufacturerApple);
+        waitUntilElementIsVisible(FIVE_SECONDS, manufacturerApple);
         executeWebElement(manufacturerApple);
 
         return this;
     }
 
     public TabletsPage clickSamsungManufacturer() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, manufacturerSamsung);
+        waitUntilElementIsVisible(FIVE_SECONDS, manufacturerSamsung);
         executeWebElement(manufacturerSamsung);
 
         return this;
     }
 
     public TabletsPage clickIosOperatingSystem() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, operatingSystemIos);
+        waitUntilElementIsVisible(FIVE_SECONDS, operatingSystemIos);
         executeWebElement(operatingSystemIos);
 
         return this;
     }
 
     public TabletsPage clickAndroid9PieOperatingSystem() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, operatingSystemAndroid9Pie);
+        waitUntilElementIsVisible(FIVE_SECONDS, operatingSystemAndroid9Pie);
         executeWebElement(operatingSystemAndroid9Pie);
 
         return this;
@@ -97,21 +97,21 @@ public class TabletsPage extends BasePage {
 
 
     public TabletsPage clickDisplayDiagonal() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, displayDiagonal);
+        waitUntilElementIsVisible(FIVE_SECONDS, displayDiagonal);
         executeWebElement(displayDiagonal);
 
         return this;
     }
 
     public TabletsPage clickInternalMemory() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, internalMemory);
+        waitUntilElementIsVisible(FIVE_SECONDS, internalMemory);
         executeWebElement(internalMemory);
 
         return this;
     }
 
     public TabletsManufacturerPage clickShowButton() {
-        waitUntilElementIsVisible(ITimeOfWait.FIVE_SECONDS, showButton);
+        waitUntilElementIsVisible(FIVE_SECONDS, showButton);
         executeWebElement(showButton);
 
         return new TabletsManufacturerPage(driver);

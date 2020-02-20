@@ -68,7 +68,7 @@ public class AuthPageTest extends BaseTest {
     private Object[][] testAuthDataProvider() throws IOException {
 
         String pathData = PropertyReader
-                .from("/common.properties", "auth.test.data.file")
+                .from("/properties/common.properties", "auth.test.data.file")
                 .getProperty("auth.test.data.file");
 
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
