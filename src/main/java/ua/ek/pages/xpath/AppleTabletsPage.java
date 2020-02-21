@@ -26,13 +26,7 @@ public class AppleTabletsPage extends BasePage {
 // Выбор всех описаний для камер для всех планшетов на странице
 
 .//div[contains(@title,'Камера')]
-.//div[contains(@class, 'm-s-f2')]/div[3]
-.//div[contains(@class, 'm-s-f2')]/child::div[3]
 .//div[contains(@class, 'm-s-f2')]/div[contains(@title,'Камера')]
-.//table[@class='model-short-block']//div[@class='model-short-description']/div[contains(@class, 'm-s-f2')]/div[3]
-
-// Выбор описания для камеры пятого по номеру планшета на странице
-".//form[@id='list_form1']/div[5]//div[contains(@title, 'Камера')]")
 
 2. starts-with
 // Название планшетов
@@ -59,8 +53,8 @@ public class AppleTabletsPage extends BasePage {
 .//div[contains(@title,'Корпус')]/ancestor::div
 
 8. parent
-// Третий по счету стикер в описании планшета
-.//div[contains(@class, 'm-s-f2')]/parent::div/div/a/following-sibling::a[2]
+// Родительский div по отношению к div с title, которые содержит слово 'Камера'
+.//div[contains(@class, 'm-s-f2')]/div[contains(@title,'Камера')]
 
 9. preceding
 // Множество предков элементов с title, которые содержит слово 'Камера'
@@ -80,8 +74,8 @@ descendant::div[contains(@title,'Камера')]
 .//div[contains(@class,'m-s-f2')]/descendant::div/span
 
 12. following-sibling
-// Третий по счету стикер в описании планшета
-.//div[contains(@class, 'm-s-f2')]/parent::div/div/a/following-sibling::a[2]
+// Стикер, который содержит слово 'процессор'
+.//div[contains(@class, 'm-s-f2')]/parent::div/div/a/following-sibling::a[contains(text(),'процессор')]
 
 13. text
 // Элементы с названием магазина 'Eldorado'
@@ -90,9 +84,6 @@ descendant::div[contains(@title,'Камера')]
 14. count
 // Ссылки с текстом названия магазина 'Eldorado'
 .//a[count(u[contains(text(),'Eldorado')])]
-
-// div, которые содержат table
-.//div[count(table)]
 
 15. |
 
