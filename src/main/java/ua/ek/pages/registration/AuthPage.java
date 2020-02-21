@@ -9,7 +9,7 @@ import ua.ek.pages.HomePage;
 
 public class AuthPage extends BasePage {
 
-    @FindBy(xpath = ".//div[@class='l-m']//div[2]//em[1]")
+    @FindBy(xpath = ".//em[contains(text(), 'Регистрация')]")
     private WebElement registerLink;
 
     @FindBy(xpath = ".//input[@placeholder='Имя']")
@@ -27,27 +27,22 @@ public class AuthPage extends BasePage {
     @FindBy(xpath = ".//input[@name='rules_accepted_']")
     private WebElement userAgreement;
 
-    //================================================================================//
-
     @FindBy(xpath = ".//div[@class='jclose']")
     private WebElement closeLink;
 
-//  @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'Имя')]")
+    // Locators for error text links
+
     @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Имя')]")
     private WebElement loginError; // Заполните поле "Имя"
 
-//  @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(), 'email')]")
     @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'email')]")
     private WebElement emailFillError; // Заполните поле "email"
 
     @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'e-mail')]")
     private WebElement emailCorrectError; // Поле "e-mail" введено некорректно
 
-//  @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div/div")
     @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Пароль')]")
     private WebElement passwordError; // Заполните поле "Пароль"
-
-    //================================================================================//
 
     private By loginErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Имя')]");
     private By emailErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'email')]");
@@ -57,66 +52,57 @@ public class AuthPage extends BasePage {
         super(driver);
     }
 
-    // Click register link
     public AuthPage clickRegisterLink() {
         clickWebElement(registerLink);
         return this;
     }
 
-    // Enter login
     public AuthPage enterLogin(String login) {
         enterTextInTextField(loginField, login);
         return this;
     }
 
-    // Enter email
     public AuthPage enterEmail(String email) {
         enterTextInTextField(emailField, email);
         return this;
     }
 
-    // Enter password
     public AuthPage enterPassword(String password) {
         enterTextInTextField(passwordField, password);
         return this;
     }
 
-    // Click close link
     public BasePage clickCloseLink() {
         getWebElementText(closeLink);
         return new HomePage(driver);
     }
 
-    // Click Submit Button
     public BasePage submit() {
         clickWebElement(submit);
         return this;
     }
 
-    // Get login error message
-    public String getLoginErrorMessage() {
-        if(isWebElementPresent(loginErrorElement)) {
-            return getWebElementText(loginErrorElement);
-        }else{
-            return "";
-        }
+    public By getLoginErrorElement(){
+        return loginErrorElement;
     }
 
-    // Get email fill error message
-    public String getEmailFillErrorMessage() {
-        if(isWebElementPresent(emailErrorElement)) {
-            return getWebElementText(emailErrorElement);
-        }else{
-            return "";
-        }
+    public By getEmailErrorElement(){
+        return emailErrorElement;
     }
 
-    // Get password error message
-    public String getPasswordErrorMessage() {
-        if(isWebElementPresent(passwordErrorElement)) {
-            return getWebElementText(passwordErrorElement);
-        }else{
-            return "";
-        }
+    public By getPasswordErrorElement(){
+        return passwordErrorElement;
+    }
+
+    public String getLoginErrorMessage(){
+        return getWebElementText(loginErrorElement);
+    }
+
+    public String getEmailErrorMessage(){
+        return getWebElementText(emailErrorElement);
+    }
+
+    public String getPasswordErrorMessage(){
+        return getWebElementText(passwordErrorElement);
     }
 }

@@ -8,16 +8,15 @@ import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
 import ua.ek.pages.PageManager;
 import ua.ek.pages.registration.AuthPage;
+import ua.ek.utils.AssertsUtils;
+import ua.ek.utils.Helper;
 import ua.ek.utils.PropertyReader;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import static org.testng.Assert.assertEquals;
+import java.util.HashMap;
 
 public class AuthPageTest extends BaseTest {
 
-    //    private final static Logger LOG = LogManager.getLogger(BasePage.class);
     private PageManager pageManager = new PageManager();
 
     @Test(testName = "Login Tests Chrome", dataProvider = "testAuthDataProvider")
@@ -33,43 +32,43 @@ public class AuthPageTest extends BaseTest {
                 .enterPassword(password)
                 .submit();
 
-        checkErrorMessage(login, email, password, expectedLoginErrorMessage, authPage.getLoginErrorMessage());
-        checkErrorMessage(login, email, password, expectedEmailErrorMessage, authPage.getEmailFillErrorMessage());
-        checkErrorMessage(login, email, password, expectedPasswordErrorMessage, authPage.getPasswordErrorMessage());
+        HashMap<String, String> params = new HashMap<>();
+        params.put("login", login);
+        params.put("email", email);
+        params.put("password", password);
+
+        if(Helper.isWebElementPresent(driver, authPage.getLoginErrorElement())){
+            checkErrorMessage(authPage.getLoginErrorMessage(), expectedLoginErrorMessage, params);
+        }
+
+        if(Helper.isWebElementPresent(driver, authPage.getEmailErrorElement())){
+            checkErrorMessage(authPage.getEmailErrorMessage(), expectedEmailErrorMessage, params);
+        }
+
+        if(Helper.isWebElementPresent(driver, authPage.getPasswordErrorElement())){
+            checkErrorMessage(authPage.getPasswordErrorMessage(), expectedPasswordErrorMessage, params);
+        }
 
         authPage.clickCloseLink();
     }
 
-    //================================================================================//
-
-    private void checkErrorMessage(String login, String email, String password,
-                                   String expectedErrorMessage, String actualErrorMessage) {
+    private void checkErrorMessage(String actualErrorMessage, String expectedErrorMessage,
+                                   HashMap<String, String> params) {
         if (!expectedErrorMessage.equals("")) {
-            asserts(login, email, password, expectedErrorMessage, actualErrorMessage);
+            asserts(expectedErrorMessage, actualErrorMessage, params);
         }
     }
 
-    private void asserts(String login, String email, String password,
-                         String expectedErrorMessage, String actualErrorMessage) {
-        try {
-            assertEquals(actualErrorMessage, expectedErrorMessage);
-            LOG.info("Actual Error message: {} - Expected error message: {}",
-                    actualErrorMessage, expectedErrorMessage);
-        } catch (Error e) {
-            verificationErrors.append("<<<<<<<<<<<<<<<<<<<<" + "\n" +
-                    "login = " + login + "; " +
-                    "email = " + email + "; " +
-                    "password = " + password + "\n\n" +
-                    e.toString() + "\n" + ">>>>>>>>>>>>>>>>>>>>");
-        }
+    private void asserts(String actualErrorMessage, String expectedErrorMessage, HashMap<String, String> params) {
+        AssertsUtils.makeAssert(actualErrorMessage, expectedErrorMessage, params);
     }
 
     @DataProvider(name = "testAuthDataProvider")
     private Object[][] testAuthDataProvider() throws IOException {
 
         String pathData = PropertyReader
-                .from("/properties/common.properties", "auth.test.data.file")
-                .getProperty("auth.test.data.file");
+                          .from("/properties/common.properties", "auth.test.data.file")
+                          .getProperty("auth.test.data.file");
 
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
 

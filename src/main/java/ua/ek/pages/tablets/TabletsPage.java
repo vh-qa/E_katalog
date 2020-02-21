@@ -1,6 +1,5 @@
 package ua.ek.pages.tablets;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,44 +8,31 @@ import ua.ek.base.BasePage;
 public class TabletsPage extends BasePage {
 
     // Manufacturers
-//  @FindBy(xpath = ".//label[@class='brand-best']/a[text()='AppleTabletsPage']")
-    @FindBy(xpath = ".//*[@id=\"li_br116\"]/label") // Apple
+    @FindBy(xpath = ".//*[@id='li_br116']/label")
     private WebElement manufacturerApple;
 
-    //    @FindBy(xpath = ".//label[@class='brand-best']/a[text()='Google']")
-    @FindBy(xpath = ".//*[@id=\"li_br1364\"]/label/a") // Google
+    @FindBy(xpath = ".//*[@id='li_br1364']/label/a")
     private WebElement manufacturerGoogle;
 
-    //   @FindBy(xpath = ".//label[@class='brand-best']/a[text()='Samsung']")
-    @FindBy(xpath = ".//*[@id=\"li_br147\"]/label/a") // Samsung
+    @FindBy(xpath = ".//*[@id='li_br147']/label/a")
     private WebElement manufacturerSamsung;
 
-    @FindBy(xpath = ".//label[@class='brand-best']/a[text()]")
-    private WebElement manufacturer;
-
-    //================================================================================//
-
     // Display diagonals
-    @FindBy(xpath = ".//label[@for='c5699']") // 10 дюймов
-    private WebElement displayDiagonal;
-
-    //================================================================================//
+    @FindBy(xpath = ".//label[@for='c5699']")
+    private WebElement displayDiagonal10inch;
 
     // Operating systems
-    @FindBy(xpath = ".//*[@id=\"preset3868\"]/li[5]/label/a") // Android 9 Pie
+    @FindBy(xpath = ".//label[@for='c36034']/a") // Android 9 Pie
     private WebElement operatingSystemAndroid9Pie;
 
-    @FindBy(xpath = ".//*[@id=\"preset3868\"]/li[7]/label/a") // iOS
+    @FindBy(xpath = ".//label[@for='c3871']/a") // iOS
     private WebElement operatingSystemIos;
 
-    //================================================================================//
-
     // Internal memory
-    @FindBy(xpath = ".//*[@id=\"preset5616\"]/li[5]/label/a") // 256 Гб
-    private WebElement internalMemory;
+    @FindBy(xpath = ".//label[@for='c9535']/a")
+    private WebElement internalMemory256Gb;
 
-    // 'Показать' button
-    @FindBy(xpath = ".//*[@id=\"tt-info\"]/a")
+    @FindBy(xpath = ".//*[@id='tt-info']/a")
     private WebElement showButton;
 
     public TabletsPage(WebDriver driver) {
@@ -56,58 +42,41 @@ public class TabletsPage extends BasePage {
     public TabletsPage clickManufacturer(String manufacturerName) {
         switch (manufacturerName.trim().toLowerCase()) {
             case "apple":
-                clickAppleManufacturer();
+                clickManufacturer(manufacturerApple);
                 break;
             case "samsung":
-                clickSamsungManufacturer();
+                clickManufacturer(manufacturerSamsung);
+                break;
+            case "google":
+                clickManufacturer(manufacturerSamsung);
                 break;
             default:
                 break;
         }
-        return this;
-    }
-
-    public TabletsPage clickAppleManufacturer() {
-        waitUntilElementIsVisible(FIVE_SECONDS, manufacturerApple);
-        executeWebElement(manufacturerApple);
 
         return this;
     }
 
-    public TabletsPage clickSamsungManufacturer() {
-        waitUntilElementIsVisible(FIVE_SECONDS, manufacturerSamsung);
-        executeWebElement(manufacturerSamsung);
+    public void clickManufacturer(WebElement webElement) {
+        waitUntilElementIsVisible(FIVE_SECONDS, webElement);
+        executeWebElement(webElement);
+    }
+
+    public TabletsPage clickDisplayDiagonal(int displayDiagonal) {
+        switch (displayDiagonal) {
+            case 10:
+                clickDisplayDiagonal(displayDiagonal10inch);
+                break;
+            default:
+                break;
+        }
 
         return this;
     }
 
-    public TabletsPage clickIosOperatingSystem() {
-        waitUntilElementIsVisible(FIVE_SECONDS, operatingSystemIos);
-        executeWebElement(operatingSystemIos);
-
-        return this;
-    }
-
-    public TabletsPage clickAndroid9PieOperatingSystem() {
-        waitUntilElementIsVisible(FIVE_SECONDS, operatingSystemAndroid9Pie);
-        executeWebElement(operatingSystemAndroid9Pie);
-
-        return this;
-    }
-
-
-    public TabletsPage clickDisplayDiagonal() {
-        waitUntilElementIsVisible(FIVE_SECONDS, displayDiagonal);
-        executeWebElement(displayDiagonal);
-
-        return this;
-    }
-
-    public TabletsPage clickInternalMemory() {
-        waitUntilElementIsVisible(FIVE_SECONDS, internalMemory);
-        executeWebElement(internalMemory);
-
-        return this;
+    public void clickDisplayDiagonal(WebElement webElement) {
+        waitUntilElementIsVisible(FIVE_SECONDS, webElement);
+        executeWebElement(webElement);
     }
 
     public TabletsManufacturerPage clickShowButton() {

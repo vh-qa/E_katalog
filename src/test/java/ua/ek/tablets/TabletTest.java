@@ -1,28 +1,17 @@
 package ua.ek.tablets;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ua.ek.base.BasePage;
 import ua.ek.base.BaseTest;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsList;
 import ua.ek.pages.PageManager;
-
+import ua.ek.utils.AssertsUtils;
 import java.io.IOException;
 
-import static org.testng.Assert.assertEquals;
-
 public class TabletTest extends BaseTest {
-    private final static Logger LOG = LogManager.getLogger(BasePage.class);
+
     private PageManager pageManager = new PageManager();
-
-    @BeforeTest
-    public void goTabletPage(){
-
-    }
 
     @Test(testName = "Tablets Prices Test", dataProvider = "tabletsPricesDataProvider")
     public void tabletsPricesTest(String minPrice, String maxPrice, String expectedMessage) {
@@ -32,14 +21,7 @@ public class TabletTest extends BaseTest {
         tabletPage.enterMaxPrice(maxPrice);
 
         TabletsList tabletsList = tabletPage.submitButtonClick();
-
-        try {
-            assertEquals(tabletsList.getTextPrices(), expectedMessage);
-            LOG.info("Text prices: {} - Expected text prices: {}",
-                    tabletsList.getTextPrices(), expectedMessage);
-        } catch (Error e) {
-            verificationErrors.append(e.toString());
-        }
+        AssertsUtils.makeAssert(tabletsList.getTextPrices(), expectedMessage);
     }
 
     @DataProvider(name = "tabletsPricesDataProvider")

@@ -31,8 +31,7 @@ public class TabletPage extends BasePage {
     }
 
     public TabletsList submitButtonClick(){
-        waitUntilElementIsVisible(FIVE_SECONDS, submitButton);
-        submitButton.click();
+        waitUntilElementIsVisible(FIVE_SECONDS, submitButton).click();
         return new TabletsList(driver);
     }
 }

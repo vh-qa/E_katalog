@@ -13,13 +13,15 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class InitDrivers {
+
+    private final static int THREE_SECONDS = 3;
     protected WebDriver driver;
 
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser) throws Exception {
         initDrivers(browser);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(THREE_SECONDS, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
 

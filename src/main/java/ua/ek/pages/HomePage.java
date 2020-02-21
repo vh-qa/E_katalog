@@ -1,6 +1,5 @@
 package ua.ek.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,14 +14,13 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-//  @FindBy(xpath = ".//li[@class='mainmenu-item']/a[contains(@class,'mainmenu-link') and text()='Компьютеры']")
     @FindBy(xpath = ".//span[contains(@class,'mainmenu-link-helper')]")
     private WebElement computersLink; // Menu "Компьютеры"
 
     @FindBy(xpath = ".//a[contains(@class,'mainmenu-subitem mainmenu-icon30')]")
     private WebElement tabletsLink; // SubMenu "Планшеты"
 
-    @FindBy(xpath = ".//*[@id=\"li_br116\"]/label") // Apple
+    @FindBy(xpath = ".//*[@id='li_br116']/label") // Apple
     private WebElement manufacturerApple;
 
     public AuthPage clickEnterLink() {

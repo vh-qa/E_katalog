@@ -1,33 +1,22 @@
 package ua.ek.tablets;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ua.ek.base.BasePage;
 import ua.ek.base.BaseTest;
 import ua.ek.pages.tablets.TabletsManufacturerPage;
 import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.pages.PageManager;
+import ua.ek.utils.AssertsUtils;
 import ua.ek.utils.PropertyReader;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static org.testng.Assert.assertEquals;
-
 public class TabletsTest extends BaseTest {
-    private final static Logger LOG = LogManager.getLogger(BasePage.class);
+
     private PageManager pageManager = new PageManager();
-
-    @BeforeTest
-    public void goTabletsPage() {
-
-    }
 
     @Test(testName = "Tablets Page Filters Tests", dataProvider = "testTabletsDataProvider")
     public void tabletsPageFiltersTests(String manufacturerName,
@@ -35,27 +24,20 @@ public class TabletsTest extends BaseTest {
                                  String expectedMessage) {
 
         TabletsPage tabletsPage = pageManager
-                                            .goTabletsPage(driver)
-                                            .clickManufacturer(manufacturerName)
-                                            .clickDisplayDiagonal();
+                    .goTabletsPage(driver)
+                    .clickManufacturer(manufacturerName)
+                    .clickDisplayDiagonal(Integer.parseInt(String.valueOf(displayDiagonal)));
 
         TabletsManufacturerPage tabletsManufacturerPage = tabletsPage.clickShowButton();
-
-        try {
-            assertEquals(tabletsManufacturerPage.getPageTitle(), expectedMessage);
-            LOG.info("Page title: {} - Expected page title: {}",
-                    tabletsManufacturerPage.getPageTitle(), expectedMessage);
-        } catch (Error e) {
-            verificationErrors.append(e.toString());
-        }
+        AssertsUtils.makeAssert(tabletsManufacturerPage.getPageTitle(), expectedMessage);
     }
 
     @DataProvider(name = "testTabletsDataProvider")
     private Object[][] testTabletsDataProvider() throws IOException {
 
         String pathData = PropertyReader
-                .from("/properties/common.properties", "tablets.test.data.file")
-                .getProperty("tablets.test.data.file");
+                         .from("/properties/common.properties", "tablets.test.data.file")
+                         .getProperty("tablets.test.data.file");
 
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
 
