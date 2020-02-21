@@ -3,23 +3,23 @@
 
 <!-- TestNG configuration -->
 <suite name="Cross Browser  Suite">
-    <test name="Auth Tests Chrome">
+    <test name="Registration Tests Chrome">
         <parameter name="browser" value="chrome" />
         <packages>
             <package name="ua.ek" />
         </packages>
         <classes>
-            <class name="ua.ek.AuthPageTest" />
+            <class name="ua.ek.registration.AuthPageTest" />
         </classes>
     </test>
 
-    <test name="Auth Tests Firefox">
+    <test name="Registration Tests Firefox">
         <parameter name="browser" value="firefox" />
         <packages>
             <package name="ua.ek" />
         </packages>
         <classes>
-            <class name="ua.ek.AuthPageTest" />
+            <class name="ua.ek.registration.AuthPageTest" />
         </classes>
     </test>
 </suite>
