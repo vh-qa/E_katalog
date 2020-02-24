@@ -13,12 +13,13 @@ public class AppleTabletsPage extends BasePage {
     @FindBy(xpath = ".//*[@id=\"tt-info\"]/a")
     private WebElement showButton;
 
-    @FindBy(xpath=".//div[@class='page-title']/h1[@class='t2' and contains(text(), 'Apple')]")
+    @FindBy(xpath=".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]")
     private WebElement pageTitle;
 
 
-//  Страница "Планшеты Apple"
-//   https://ek.ua/list/30/apple/
+// Страница "Планшеты Apple"
+// https://ek.ua/list/30/apple/
+// Локаторы работают также для страниц с планшетами любого производителя
 
 /*
 
@@ -30,7 +31,7 @@ public class AppleTabletsPage extends BasePage {
 
 2. starts-with
 // Название планшетов
-.//span[starts-with(text(),'Apple')]
+.//span[starts-with(text(),'%s')]
 
 3. last
 // Выбор последнего элемента в описании
@@ -46,7 +47,7 @@ public class AppleTabletsPage extends BasePage {
 
 6. and
 // Выбор элементов с названием планшета
-.//div[@class='page-title']/h1[@class='t2' and contains(text(), 'Apple')]
+.//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]
 
 7. ancestor
 // Все предки div элемента с title, который содержит слово 'Корпус' в описании
@@ -78,12 +79,12 @@ descendant::div[contains(@title,'Камера')]
 .//div[contains(@class, 'm-s-f2')]/parent::div//following-sibling::a[contains(text(),'процессор')]
 
 13. text
-// Элементы с названием магазина 'Eldorado'
-.//u[contains(text(),'Eldorado')]
+// Элементы с названием магазина
+.//u[contains(text(),'%s')]
 
 14. count
-// Ссылки с текстом названия магазина 'Eldorado'
-.//a[count(u[contains(text(),'Eldorado')])]
+// Ссылки с текстом названия магазина
+.//a[count(u[contains(text(),'%s')])]
 
 15. |
 
