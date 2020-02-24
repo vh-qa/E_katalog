@@ -75,7 +75,7 @@ descendant::div[contains(@title,'Камера')]
 
 12. following-sibling
 // Стикер, который содержит слово 'процессор'
-.//div[contains(@class, 'm-s-f2')]/parent::div/div/a/following-sibling::a[contains(text(),'процессор')]
+.//div[contains(@class, 'm-s-f2')]/parent::div//following-sibling::a[contains(text(),'процессор')]
 
 13. text
 // Элементы с названием магазина 'Eldorado'
