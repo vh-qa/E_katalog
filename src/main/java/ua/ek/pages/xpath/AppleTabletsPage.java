@@ -1,9 +1,10 @@
 package ua.ek.pages.xpath;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ua.ek.base.BasePage;
+import ua.ek.utils.WaitUtils;
 
 public class AppleTabletsPage extends BasePage {
 
@@ -13,8 +14,11 @@ public class AppleTabletsPage extends BasePage {
     @FindBy(xpath = ".//*[@id=\"tt-info\"]/a")
     private WebElement showButton;
 
-    @FindBy(xpath=".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]")
+    @FindBy(xpath = ".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]")
     private WebElement pageTitle;
+
+    private String pageTitleXpath = ".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]";
+
 
 
 // Страница "Планшеты Apple"
@@ -113,18 +117,60 @@ descendant::div[contains(@title,'Камера')]
         super(driver);
     }
 
-    public WebElement getAppleManufacturerCheckBox(){
+    public WebElement getAppleManufacturerCheckBox() {
         return manufacturerApple;
     }
 
     public AppleTabletsPage clickShowButton() {
+
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.elementToBeClickable(showButton, 1);
+
+ /*
         waitUntilElementIsVisible(FIVE_SECONDS, showButton);
         executeWebElement(showButton);
+*/
 
         return new AppleTabletsPage(driver);
     }
 
-    public String getPageTitleText(){
-        return getWebElementText(pageTitle);
+    public String getPageTitleText() {
+
+        WaitUtils waitUtils = new WaitUtils(driver);
+
+        // Explicit expected conditions
+
+        try {
+            waitUtils.visibilityOf(pageTitle, 1);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        // Fluent Expected Condition
+
+
+        try {
+            WebElement webElement = waitUtils.fluentWait(By.xpath(pageTitleXpath), 10, 500);
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementNotVisibleException e) {
+            System.out.println(e.getMessage());
+        } catch (TimeoutException e) {
+            System.out.println(e.getMessage());
+        }
+
+                 
+
+        // Custom wait
+        WaitUtils.CustomWait customWait = new WaitUtils.CustomWait("Планшеты Apple");
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        if(!wait.until(customWait)){
+            throw new RuntimeException("Target page is not displayed!");
+        }
+
+        //       return getWebElementText(pageTitle);
+
+        return "Some text";
     }
 }
