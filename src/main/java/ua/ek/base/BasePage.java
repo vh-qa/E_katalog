@@ -8,10 +8,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class BasePage {
 
+    protected final static int THREE_SECONDS = 3;
     protected final static int FIVE_SECONDS = 5;
     protected final static int TEN_SECONDS = 10;
     protected final static int FIFTEEN_SECONDS = 15;
     protected final static int TWENTY_SECONDS = 20;
+
+    protected final static int MILLISECOND_100 = 100;
+    protected final static int MILLISECOND_500 = 500;
 
     protected WebDriver driver;
 

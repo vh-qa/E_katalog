@@ -1,12 +1,9 @@
 package ua.ek.utils;
 
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.function.Function;
@@ -22,10 +19,8 @@ public class WaitUtils {
         try {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.alertIsPresent());
-        } catch (NoAlertPresentException e) {
-            return null;
-        } catch (TimeoutException e) {
-            return null;
+        } catch (NoAlertPresentException | TimeoutException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -52,16 +47,16 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException e) {
-            throw new RuntimeException("WebElement was not found");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public WebElement elementToBeClickable(WebElement element, int timeout) throws RuntimeException {
+    public WebElement elementToBeClickable(WebElement element, int timeout) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException e) {
-            throw new RuntimeException("WebElement was not found");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -88,7 +83,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -97,7 +92,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -124,7 +119,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(element));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -133,7 +128,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.presenceOfElementLocated(element));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -182,12 +177,12 @@ public class WaitUtils {
         }
     }
 
-    public WebElement visibilityOf(WebElement element, int timeout) throws RuntimeException {
+    public WebElement visibilityOf(WebElement element, int timeout) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException e) {
-            throw new RuntimeException("WebElement was not found");
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -196,7 +191,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.visibilityOfAllElements(elements));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -205,7 +200,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(element));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -214,7 +209,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -268,27 +263,16 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.jsReturnsValue(javaScript));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
-
-/*
-    public Boolean not(ExpectedCondition<?> condition, int timeout) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, timeout);
-            return wait.until(ExpectedConditions.not(condition);
-        } catch (TimeoutException e) {
-            return false;
-        }
-    }
- */
 
     public List<WebElement> numberOfElementsToBe(By locator, int number, int timeout) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.numberOfElementsToBe(locator, number));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -297,7 +281,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.numberOfElementsToBeLessThan(locator, number));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -306,7 +290,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, number));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -324,7 +308,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(locator, childLocator));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -333,7 +317,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, childLocator));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -342,18 +326,9 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.presenceOfNestedElementsLocatedBy(parent, childLocator));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
-
-// refreshed method
-
-    /*
-
-
-
-     */
-
 
     public Boolean stalenessOf(WebElement element, int timeout) {
         try {
@@ -423,7 +398,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(parent, childLocator));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -432,7 +407,7 @@ public class WaitUtils {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             return wait.until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(element, childLocator));
         } catch (TimeoutException e) {
-            return null;
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -445,37 +420,10 @@ public class WaitUtils {
                     .pollingEvery(Duration.ofMillis(polling))
                     .ignoring(StaleElementReferenceException.class);
             webElement = (WebElement) wait.until((Function<WebDriver, WebElement>) driver -> driver.findElement(element));
-        } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("NoSuchElementException");
-        } catch (ElementNotVisibleException e) {
-            throw new ElementNotVisibleException("ElementNotVisibleException");
-        } catch (TimeoutException e) {
-            throw new TimeoutException("TimeoutException");
+        } catch (NoSuchElementException | ElementNotVisibleException | TimeoutException e) {
+            throw new RuntimeException(e.getMessage());
         }
+
         return webElement;
-    }
-
-    public static class CustomWait implements ExpectedCondition<Boolean> {
-
-        String pageTitle;
-
-        public CustomWait(String pageTitle) {
-            this.pageTitle = pageTitle;
-        }
-
-        @NullableDecl
-        @Override
-        public Boolean apply(@NullableDecl WebDriver driver) {
-            try {
-                return driver.getTitle().contains(pageTitle);
-
-            } catch (StaleElementReferenceException e) {
-                return false;
-            } catch (java.util.NoSuchElementException e) {
-                return false;
-            }catch(TimeoutException e){
-                return false;
-            }
-        }
     }
 }

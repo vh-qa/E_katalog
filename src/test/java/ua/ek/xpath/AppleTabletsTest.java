@@ -4,8 +4,7 @@ import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
 import ua.ek.pages.PageManager;
 import ua.ek.pages.xpath.AppleTabletsPage;
-import ua.ek.utils.AssertsUtils;
-import ua.ek.utils.WaitUtils;
+import ua.ek.utils.AssertUtils;
 
 public class AppleTabletsTest extends BaseTest {
 
@@ -16,8 +15,6 @@ public class AppleTabletsTest extends BaseTest {
         AppleTabletsPage appleTabletsPage = pageManager.goAppleTabletsPage(driver);
         appleTabletsPage.clickShowButton();
 
-
-
-        AssertsUtils.makeAssert(appleTabletsPage.getPageTitleText(), "Планшеты Apple ");
+        AssertUtils.makeAssert(appleTabletsPage.getPageTitleText(), "Планшеты Apple ");
     }
 }

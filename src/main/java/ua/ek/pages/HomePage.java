@@ -8,16 +8,17 @@ import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.pages.xpath.AppleTabletsPage;
+import ua.ek.utils.WaitUtils;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = ".//span[contains(@class,'mainmenu-link-helper')]")
+    @FindBy(xpath = ".//ul[contains(@class,'mainmenu-list')]/li/a[contains(text(),'Компьютеры')]")
     private WebElement computersLink; // Menu "Компьютеры"
 
-    @FindBy(xpath = ".//a[contains(@class,'mainmenu-subitem mainmenu-icon30')]")
+    @FindBy(xpath = "(.//div[@class='mainmenu-sublist']/a[@class='mainmenu-subitem mainmenu-icon30'])[1]")
     private WebElement tabletsLink; // SubMenu "Планшеты"
 
     @FindBy(xpath = ".//*[@id='li_br116']/label") // Apple
@@ -33,21 +34,29 @@ public class HomePage extends BasePage {
 
     public TabletsPage clickTabletsLink() {
         clickWebElement(computersLink);
-        clickWebElement(tabletsLink);
+        executeWebElement(tabletsLink);
 
         return new TabletsPage(driver);
     }
 
     public TabletPage clickTabletLink() {
         clickWebElement(computersLink);
-        clickWebElement(tabletsLink);
+        executeWebElement(tabletsLink);
 
         return new TabletPage(driver);
     }
 
     public AppleTabletsPage clickAppleTabletsCheckBox(){
-        clickWebElement(computersLink);
-        clickWebElement(tabletsLink);
+        waitUntilElementIsVisible(FIVE_SECONDS, computersLink);
+        executeWebElement(computersLink);
+
+//        waitUntilElementIsVisible(FIVE_SECONDS, tabletsLink);
+//        executeWebElement(tabletsLink);
+
+//        WaitUtils waitUtils = new WaitUtils(driver);
+//        waitUtils.visibilityOf(tabletsLink, TEN_SECONDS).click();
+
+        executeWebElement(tabletsLink);
 
         waitUntilElementIsVisible(FIVE_SECONDS, manufacturerApple);
         executeWebElement(manufacturerApple);

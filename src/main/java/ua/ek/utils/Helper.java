@@ -29,4 +29,12 @@ public class Helper {
             return false;
         }
     }
+
+    public static int convertDoubleToInt(double value) {
+        return (int) value;
+    }
+
+    public static String convertDoubleToString(double value) {
+        return String.valueOf(convertDoubleToInt(value));
+    }
 }

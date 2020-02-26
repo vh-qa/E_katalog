@@ -4,22 +4,24 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ua.ek.base.BasePage;
+import ua.ek.utils.CustomWaits;
 import ua.ek.utils.WaitUtils;
 
 public class AppleTabletsPage extends BasePage {
 
-    @FindBy(xpath = ".//*[@id=\"li_br116\"]/label")
+    @FindBy(xpath = ".//*[@id='li_br116']/label")
     private WebElement manufacturerApple;
 
-    @FindBy(xpath = ".//*[@id=\"tt-info\"]/a")
+    @FindBy(xpath = ".//*[@id='tt-info']/a")
     private WebElement showButton;
 
-    @FindBy(xpath = ".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]")
+    //  @FindBy(xpath = ".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]")
+    @FindBy(xpath = ".//div[@class='page-title']/h1")
     private WebElement pageTitle;
 
-    private String pageTitleXpath = ".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]";
+    private String pageTitleXpath = ".//div[@class='page-title']/h1";
 
-
+    WaitUtils waitUtils;
 
 // Страница "Планшеты Apple"
 // https://ek.ua/list/30/apple/
@@ -115,6 +117,7 @@ descendant::div[contains(@title,'Камера')]
 
     public AppleTabletsPage(WebDriver driver) {
         super(driver);
+        waitUtils = new WaitUtils(driver);
     }
 
     public WebElement getAppleManufacturerCheckBox() {
@@ -123,54 +126,23 @@ descendant::div[contains(@title,'Камера')]
 
     public AppleTabletsPage clickShowButton() {
 
+        // Explicit wait
         WaitUtils waitUtils = new WaitUtils(driver);
-        waitUtils.elementToBeClickable(showButton, 1);
-
- /*
-        waitUntilElementIsVisible(FIVE_SECONDS, showButton);
+        waitUtils.elementToBeClickable(showButton, TEN_SECONDS);
         executeWebElement(showButton);
-*/
 
         return new AppleTabletsPage(driver);
     }
 
     public String getPageTitleText() {
 
-        WaitUtils waitUtils = new WaitUtils(driver);
-
-        // Explicit expected conditions
-
-        try {
-            waitUtils.visibilityOf(pageTitle, 1);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-        // Fluent Expected Condition
-
-
-        try {
-            WebElement webElement = waitUtils.fluentWait(By.xpath(pageTitleXpath), 10, 500);
-        } catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
-        } catch (ElementNotVisibleException e) {
-            System.out.println(e.getMessage());
-        } catch (TimeoutException e) {
-            System.out.println(e.getMessage());
-        }
-
-                 
+        // Fluent wait
+        WebElement webElement = waitUtils.fluentWait(By.xpath(pageTitleXpath), FIVE_SECONDS, MILLISECOND_500);
 
         // Custom wait
-        WaitUtils.CustomWait customWait = new WaitUtils.CustomWait("Планшеты Apple");
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        if(!wait.until(customWait)){
-            throw new RuntimeException("Target page is not displayed!");
-        }
+        WebDriverWait wait = new WebDriverWait(driver, FIVE_SECONDS);
+        wait.until(CustomWaits.isElementContainsText(pageTitleXpath, "Apple"));
 
-        //       return getWebElementText(pageTitle);
-
-        return "Some text";
+        return webElement.getText();
     }
 }
