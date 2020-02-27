@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 
-public class AssertsUtils {
+public class AssertUtils {
 
     private final static Logger LOG = LogManager.getLogger(BasePage.class);
     private static StringBuffer verificationErrors = new StringBuffer();
@@ -25,7 +25,7 @@ public class AssertsUtils {
     }
 
     public static void makeAssert(String actualErrorMessage, String expectedErrorMessage,
-                                    HashMap<String, String> params){
+                                    Map<String, String> params){
 
         try {
             assertEquals(actualErrorMessage, expectedErrorMessage);

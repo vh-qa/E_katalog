@@ -7,6 +7,13 @@ import ua.ek.base.BasePage;
 
 public class TabletsPage extends BasePage {
 
+    private final static String APPLE = "apple";
+    private final static String GOOGLE = "google";
+    private final static String SAMSUNG = "samsung";
+    private final static String LENOVO = "lenovo";
+
+    private final static int TEN_INCH = 10;
+
     // Manufacturers
     @FindBy(xpath = ".//*[@id='li_br116']/label")
     private WebElement manufacturerApple;
@@ -40,14 +47,15 @@ public class TabletsPage extends BasePage {
     }
 
     public TabletsPage clickManufacturer(String manufacturerName) {
+
         switch (manufacturerName.trim().toLowerCase()) {
-            case "apple":
+            case APPLE:
                 clickManufacturer(manufacturerApple);
                 break;
-            case "samsung":
-                clickManufacturer(manufacturerSamsung);
+            case GOOGLE:
+                clickManufacturer(manufacturerGoogle);
                 break;
-            case "google":
+            case SAMSUNG:
                 clickManufacturer(manufacturerSamsung);
                 break;
             default:
@@ -59,12 +67,12 @@ public class TabletsPage extends BasePage {
 
     public void clickManufacturer(WebElement webElement) {
         waitUntilElementIsVisible(FIVE_SECONDS, webElement);
-        executeWebElement(webElement);
+        clickElementWithJS(webElement);
     }
 
     public TabletsPage clickDisplayDiagonal(int displayDiagonal) {
         switch (displayDiagonal) {
-            case 10:
+            case TEN_INCH:
                 clickDisplayDiagonal(displayDiagonal10inch);
                 break;
             default:
@@ -76,13 +84,11 @@ public class TabletsPage extends BasePage {
 
     public void clickDisplayDiagonal(WebElement webElement) {
         waitUntilElementIsVisible(FIVE_SECONDS, webElement);
-        executeWebElement(webElement);
+        clickElementWithJS(webElement);
     }
 
     public TabletsManufacturerPage clickShowButton() {
-        waitUntilElementIsVisible(FIVE_SECONDS, showButton);
-        executeWebElement(showButton);
-
+        clickElementWithJS(showButton);
         return new TabletsManufacturerPage(driver);
     }
 }

@@ -9,7 +9,8 @@ import ua.ek.base.BaseTest;
 import ua.ek.pages.tablets.TabletsManufacturerPage;
 import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.pages.PageManager;
-import ua.ek.utils.AssertsUtils;
+import ua.ek.utils.AssertUtils;
+import ua.ek.utils.Helper;
 import ua.ek.utils.PropertyReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,10 +27,10 @@ public class TabletsTest extends BaseTest {
         TabletsPage tabletsPage = pageManager
                     .goTabletsPage(driver)
                     .clickManufacturer(manufacturerName)
-                    .clickDisplayDiagonal(Integer.parseInt(String.valueOf(displayDiagonal)));
+                    .clickDisplayDiagonal(Helper.convertDoubleToInt(displayDiagonal));
 
         TabletsManufacturerPage tabletsManufacturerPage = tabletsPage.clickShowButton();
-        AssertsUtils.makeAssert(tabletsManufacturerPage.getPageTitle(), expectedMessage);
+        AssertUtils.makeAssert(tabletsManufacturerPage.getPageTitle(), expectedMessage);
     }
 
     @DataProvider(name = "testTabletsDataProvider")

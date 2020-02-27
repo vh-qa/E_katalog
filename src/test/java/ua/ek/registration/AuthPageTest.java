@@ -8,12 +8,13 @@ import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
 import ua.ek.pages.PageManager;
 import ua.ek.pages.registration.AuthPage;
-import ua.ek.utils.AssertsUtils;
+import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
 import ua.ek.utils.PropertyReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AuthPageTest extends BaseTest {
 
@@ -32,7 +33,7 @@ public class AuthPageTest extends BaseTest {
                 .enterPassword(password)
                 .submit();
 
-        HashMap<String, String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("login", login);
         params.put("email", email);
         params.put("password", password);
@@ -53,14 +54,14 @@ public class AuthPageTest extends BaseTest {
     }
 
     private void checkErrorMessage(String actualErrorMessage, String expectedErrorMessage,
-                                   HashMap<String, String> params) {
+                                   Map<String, String> params) {
         if (!expectedErrorMessage.equals("")) {
             asserts(expectedErrorMessage, actualErrorMessage, params);
         }
     }
 
-    private void asserts(String actualErrorMessage, String expectedErrorMessage, HashMap<String, String> params) {
-        AssertsUtils.makeAssert(actualErrorMessage, expectedErrorMessage, params);
+    private void asserts(String actualErrorMessage, String expectedErrorMessage, Map<String, String> params) {
+        AssertUtils.makeAssert(actualErrorMessage, expectedErrorMessage, params);
     }
 
     @DataProvider(name = "testAuthDataProvider")

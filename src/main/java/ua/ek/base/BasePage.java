@@ -3,23 +3,29 @@ package ua.ek.base;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import ua.ek.utils.WaitUtils;
 
 public abstract class BasePage {
 
+    protected final static int THREE_SECONDS = 3;
     protected final static int FIVE_SECONDS = 5;
     protected final static int TEN_SECONDS = 10;
     protected final static int FIFTEEN_SECONDS = 15;
     protected final static int TWENTY_SECONDS = 20;
 
+    protected final static int MILLISECOND_100 = 100;
+    protected final static int MILLISECOND_500 = 500;
+
     protected WebDriver driver;
+
+    WaitUtils waitUtils;
 
     @FindBy(xpath = "//span[@class='wu_entr']//em")
     private WebElement enterLink; // "Войти" link
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        waitUtils = new WaitUtils(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -51,21 +57,24 @@ public abstract class BasePage {
     }
 
     protected WebElement waitUntilElementIsVisible(Integer waitTime, WebElement webElement) {
-        WebDriverWait wait = new WebDriverWait(driver, waitTime);
-        wait.withMessage("Element was not found");
-        return wait.until(ExpectedConditions.visibilityOf(webElement));
+        return waitUtils.visibilityOf(webElement, waitTime);
     }
 
     protected WebElement waitUntilElementIsVisible(Integer waitTime, By by) {
-        WebDriverWait wait = new WebDriverWait(driver, waitTime);
         WebElement webElement = driver.findElement(by);
-        wait.withMessage("Element was not found");
-        return wait.until(ExpectedConditions.visibilityOf(webElement));
+        return waitUtils.visibilityOf(webElement, waitTime);
     }
 
     protected WebElement presenceOfElementLocated(Integer waitTime, WebElement webElement, By by) {
-        WebDriverWait wait = new WebDriverWait(driver, waitTime);
-        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+        return waitUtils.presenceOfElementLocated(by, waitTime);
+    }
+
+    protected WebElement elementToBeClickable(Integer waitTime, WebElement webElement){
+        return waitUtils.elementToBeClickable(webElement, waitTime);
+    }
+
+    protected WebElement fluentWait(By by, Integer waitTime, Integer polling){
+        return waitUtils.fluentWait(by, waitTime, polling);
     }
 
     protected boolean isWebElementDisplayed(WebElement webElement) {
@@ -86,18 +95,9 @@ public abstract class BasePage {
                 .click();
     }
 
-    protected void executeWebElement(WebElement webElement){
+    protected void clickElementWithJS(WebElement webElement){
+        waitUtils.elementToBeSelected(webElement, THREE_SECONDS);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", webElement);
-    }
-
-    protected boolean isWebElementPresent(By by){
-        try{
-            driver.findElement(by);
-            return true;
-        }
-        catch(NoSuchElementException e){
-            return false;
-        }
     }
 }

@@ -21,6 +21,12 @@ public class InitDrivers {
     @BeforeClass(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser) throws Exception {
         initDrivers(browser);
+
+        // An implicit wait of three seconds is written to increase the stability of the tests.
+        // This timeout applies to all web elements.
+        // Explicit waits are prescribed for specific web elements
+        // (the necessary conditions and the necessary waiting time),
+        // implicit waits does not affect such elements.
         driver.manage().timeouts().implicitlyWait(THREE_SECONDS, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
