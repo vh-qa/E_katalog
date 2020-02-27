@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsPage;
-import ua.ek.pages.xpath.AppleTabletsPage;
+import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
 import ua.ek.utils.PropertyReader;
 
 public class PageManager {

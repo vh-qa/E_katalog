@@ -7,8 +7,7 @@ import ua.ek.base.BasePage;
 import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsPage;
-import ua.ek.pages.xpath.AppleTabletsPage;
-import ua.ek.utils.WaitUtils;
+import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
@@ -34,32 +33,25 @@ public class HomePage extends BasePage {
 
     public TabletsPage clickTabletsLink() {
         clickWebElement(computersLink);
-        executeWebElement(tabletsLink);
+        clickElementWithJS(tabletsLink);
 
         return new TabletsPage(driver);
     }
 
     public TabletPage clickTabletLink() {
         clickWebElement(computersLink);
-        executeWebElement(tabletsLink);
+        clickElementWithJS(tabletsLink);
 
         return new TabletPage(driver);
     }
 
     public AppleTabletsPage clickAppleTabletsCheckBox(){
         waitUntilElementIsVisible(FIVE_SECONDS, computersLink);
-        executeWebElement(computersLink);
-
-//        waitUntilElementIsVisible(FIVE_SECONDS, tabletsLink);
-//        executeWebElement(tabletsLink);
-
-//        WaitUtils waitUtils = new WaitUtils(driver);
-//        waitUtils.visibilityOf(tabletsLink, TEN_SECONDS).click();
-
-        executeWebElement(tabletsLink);
+        clickElementWithJS(computersLink);
+        clickElementWithJS(tabletsLink);
 
         waitUntilElementIsVisible(FIVE_SECONDS, manufacturerApple);
-        executeWebElement(manufacturerApple);
+        clickElementWithJS(manufacturerApple);
 
         return new AppleTabletsPage(driver);
     }

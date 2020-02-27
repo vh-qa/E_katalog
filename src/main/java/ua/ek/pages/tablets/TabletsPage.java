@@ -67,7 +67,7 @@ public class TabletsPage extends BasePage {
 
     public void clickManufacturer(WebElement webElement) {
         waitUntilElementIsVisible(FIVE_SECONDS, webElement);
-        executeWebElement(webElement);
+        clickElementWithJS(webElement);
     }
 
     public TabletsPage clickDisplayDiagonal(int displayDiagonal) {
@@ -84,13 +84,11 @@ public class TabletsPage extends BasePage {
 
     public void clickDisplayDiagonal(WebElement webElement) {
         waitUntilElementIsVisible(FIVE_SECONDS, webElement);
-        executeWebElement(webElement);
+        clickElementWithJS(webElement);
     }
 
     public TabletsManufacturerPage clickShowButton() {
-//        waitUntilElementIsVisible(FIVE_SECONDS, showButton);
-        executeWebElement(showButton);
-
+        clickElementWithJS(showButton);
         return new TabletsManufacturerPage(driver);
     }
 }
