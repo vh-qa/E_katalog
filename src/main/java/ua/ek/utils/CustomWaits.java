@@ -1,37 +1,28 @@
 package ua.ek.utils;
 
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 public class CustomWaits {
 
-    public static ExpectedCondition<Boolean> isElementContainsText(String xpath, String text) {
-        return new WebElementContainsTextCondition(xpath, text);
+    public static ExpectedCondition<Boolean> isElementContainsText(WebElement webElement, String text) {
+        return new WebElementContainsTextCondition(webElement, text);
     }
 
     static class WebElementContainsTextCondition implements ExpectedCondition<Boolean> {
 
-        String xpath;
+        WebElement webElement;
         String text;
 
-        public WebElementContainsTextCondition(String xpath, String text) {
-            this.xpath = xpath;
+        public WebElementContainsTextCondition(WebElement webElement, String text) {
+            this.webElement = webElement;
             this.text = text;
         }
 
-        @NullableDecl
         @Override
-        public Boolean apply(@NullableDecl WebDriver driver) {
-
+        public Boolean apply(WebDriver driver) {
             try {
-                WebElement webElement = driver.findElement(By.xpath(xpath));
-
-                if (webElement.getText().contains(text)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return webElement.getText().contains(text);
             } catch (StaleElementReferenceException | NoSuchElementException | TimeoutException e) {
                 return false;
             }

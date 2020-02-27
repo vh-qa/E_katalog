@@ -5,7 +5,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ua.ek.base.BasePage;
 import ua.ek.utils.CustomWaits;
-import ua.ek.utils.WaitUtils;
 
 public class AppleTabletsPage extends BasePage {
 
@@ -20,8 +19,6 @@ public class AppleTabletsPage extends BasePage {
     private WebElement pageTitle;
 
     private String pageTitleXpath = ".//div[@class='page-title']/h1";
-
-    WaitUtils waitUtils;
 
 // Страница "Планшеты Apple"
 // https://ek.ua/list/30/apple/
@@ -114,10 +111,8 @@ descendant::div[contains(@title,'Камера')]
 .//div[count(a) >= 31 mod 21]
 
 */
-
     public AppleTabletsPage(WebDriver driver) {
         super(driver);
-        waitUtils = new WaitUtils(driver);
     }
 
     public WebElement getAppleManufacturerCheckBox() {
@@ -127,8 +122,7 @@ descendant::div[contains(@title,'Камера')]
     public AppleTabletsPage clickShowButton() {
 
         // Explicit wait
-        WaitUtils waitUtils = new WaitUtils(driver);
-        waitUtils.elementToBeClickable(showButton, TEN_SECONDS);
+        elementToBeClickable(TEN_SECONDS, showButton);
         executeWebElement(showButton);
 
         return new AppleTabletsPage(driver);
@@ -137,12 +131,13 @@ descendant::div[contains(@title,'Камера')]
     public String getPageTitleText() {
 
         // Fluent wait
-        WebElement webElement = waitUtils.fluentWait(By.xpath(pageTitleXpath), FIVE_SECONDS, MILLISECOND_500);
+        WebElement webElementFluentWay = fluentWait(By.xpath(pageTitleXpath), FIVE_SECONDS, MILLISECOND_500);
 
         // Custom wait
+        WebElement webElementCustomWait = waitUntilElementIsVisible(FIVE_SECONDS, By.xpath(pageTitleXpath));
         WebDriverWait wait = new WebDriverWait(driver, FIVE_SECONDS);
-        wait.until(CustomWaits.isElementContainsText(pageTitleXpath, "Apple"));
+        wait.until(CustomWaits.isElementContainsText(webElementCustomWait, "Apple"));
 
-        return webElement.getText();
+        return webElementCustomWait.getText();
     }
 }
