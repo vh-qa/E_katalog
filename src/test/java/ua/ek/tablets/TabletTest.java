@@ -3,32 +3,49 @@ package ua.ek.tablets;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
-import ua.ek.pages.tablets.TabletPage;
-import ua.ek.pages.tablets.TabletsList;
-import ua.ek.pages.PageManager;
+import ua.ek.model.Price;
+import ua.ek.model.User;
+import ua.ek.steps.tablets.TabletStep;
+import ua.ek.steps.tablets.TabletsListStep;
+import ua.ek.steps.tablets.TabletsStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
 import ua.ek.utils.PropertyReader;
 
+import javax.imageio.IIOException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabletTest extends BaseTest {
 
-    private PageManager pageManager = new PageManager();
+//    @Test(testName = "Tablets Prices Test", dataProvider = "tabletsPricesDataProvider")
+//    public void tabletsPricesTest(double minPrice, double maxPrice, String expectedMessage) {
 
-    @Test(testName = "Tablets Prices Test", dataProvider = "tabletsPricesDataProvider")
-    public void tabletsPricesTest(double minPrice, double maxPrice, String expectedMessage) {
-        TabletPage tabletPage = pageManager.goTabletPage(driver);
+    @Test(testName = "Tablets Prices Test")
+    public void tabletsPricesTest() {
 
-        tabletPage.enterMinPrice(Helper.convertDoubleToString(minPrice));
-        tabletPage.enterMaxPrice(Helper.convertDoubleToString(maxPrice));
+        List<Price> prices = null;
 
-        TabletsList tabletsList = tabletPage.submitButtonClick();
-        AssertUtils.makeAssert(tabletsList.getTextPrices(), expectedMessage);
+        try{
+            prices = getPrices();
+        }catch (IOException e){
+            e.getMessage();
+        }
+
+        for (Price price : prices) {
+            tabletStep.goTabletPage(driver);
+            tabletStep.enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()));
+            tabletStep.enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()));
+            tabletStep.submitButtonClick();
+
+            AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(), price.getExpectedMessage());
+        }
     }
 
     @DataProvider(name = "tabletsPricesDataProvider")
@@ -51,5 +68,29 @@ public class TabletTest extends BaseTest {
         }
 
         return priceData;
+    }
+
+    private List<Price> getPrices() throws IOException {
+        List<Price> prices = new ArrayList<>();
+
+        String pathData = PropertyReader
+                .from("/properties/common.properties", "tablets.test.prices.data.file")
+                .getProperty("tablets.test.prices.data.file");
+
+        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
+
+        XSSFSheet sheet = workbook.getSheet("prices");
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            Price price = new Price();
+            XSSFRow parRow = sheet.getRow(i);
+
+            price.setMinPrice((parRow.getCell(0) == null) ? 0.0 : parRow.getCell(0).getNumericCellValue());
+            price.setMaxPrice((parRow.getCell(1) == null) ? 0.0 : parRow.getCell(1).getNumericCellValue());
+            price.setExpectedMessage((parRow.getCell(2) == null) ? "" : parRow.getCell(2).getStringCellValue());
+            prices.add(price);
+        }
+
+        return prices;
     }
 }

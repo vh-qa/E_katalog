@@ -7,13 +7,6 @@ import ua.ek.base.BasePage;
 
 public class TabletsPage extends BasePage {
 
-    private final static String APPLE = "apple";
-    private final static String GOOGLE = "google";
-    private final static String SAMSUNG = "samsung";
-    private final static String LENOVO = "lenovo";
-
-    private final static int TEN_INCH = 10;
-
     // Manufacturers
     @FindBy(xpath = ".//*[@id='li_br116']/label")
     private WebElement manufacturerApple;
@@ -46,49 +39,35 @@ public class TabletsPage extends BasePage {
         super(driver);
     }
 
-    public TabletsPage clickManufacturer(String manufacturerName) {
-
-        switch (manufacturerName.trim().toLowerCase()) {
-            case APPLE:
-                clickManufacturer(manufacturerApple);
-                break;
-            case GOOGLE:
-                clickManufacturer(manufacturerGoogle);
-                break;
-            case SAMSUNG:
-                clickManufacturer(manufacturerSamsung);
-                break;
-            default:
-                break;
-        }
-
-        return this;
+    public WebElement getManufacturerApple() {
+        return manufacturerApple;
     }
 
-    public void clickManufacturer(WebElement webElement) {
-        waitUntilElementIsVisible(FIVE_SECONDS, webElement);
-        clickElementWithJS(webElement);
+    public WebElement getManufacturerGoogle() {
+        return manufacturerGoogle;
     }
 
-    public TabletsPage clickDisplayDiagonal(int displayDiagonal) {
-        switch (displayDiagonal) {
-            case TEN_INCH:
-                clickDisplayDiagonal(displayDiagonal10inch);
-                break;
-            default:
-                break;
-        }
-
-        return this;
+    public WebElement getManufacturerSamsung() {
+        return manufacturerSamsung;
     }
 
-    public void clickDisplayDiagonal(WebElement webElement) {
-        waitUntilElementIsVisible(FIVE_SECONDS, webElement);
-        clickElementWithJS(webElement);
+    public WebElement getDisplayDiagonal10inch() {
+        return displayDiagonal10inch;
     }
 
-    public TabletsManufacturerPage clickShowButton() {
-        clickElementWithJS(showButton);
-        return new TabletsManufacturerPage(driver);
+    public WebElement getOperatingSystemAndroid9Pie() {
+        return operatingSystemAndroid9Pie;
+    }
+
+    public WebElement getOperatingSystemIos() {
+        return operatingSystemIos;
+    }
+
+    public WebElement getInternalMemory256Gb() {
+        return internalMemory256Gb;
+    }
+
+    public WebElement getShowButton() {
+        return showButton;
     }
 }

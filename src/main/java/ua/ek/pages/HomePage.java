@@ -8,6 +8,7 @@ import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
+import ua.ek.utils.IWaitTimes;
 
 public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
@@ -25,38 +26,34 @@ public class HomePage extends BasePage {
 
     public AuthPage clickEnterLink() {
         if (getEnterLink() != null) {
-            clickWebElement(getEnterLink());
+            helper.clickWebElement(getEnterLink());
             return new AuthPage(driver);
         }
         return null;
     }
 
     public TabletsPage clickTabletsLink() {
-        clickWebElement(computersLink);
-        clickElementWithJS(tabletsLink);
+        helper.clickWebElement(computersLink);
+        helper.clickElementWithJS(tabletsLink);
 
         return new TabletsPage(driver);
     }
 
     public TabletPage clickTabletLink() {
-        clickWebElement(computersLink);
-        clickElementWithJS(tabletsLink);
+        helper.clickWebElement(computersLink);
+        helper.clickElementWithJS(tabletsLink);
 
         return new TabletPage(driver);
     }
 
     public AppleTabletsPage clickAppleTabletsCheckBox(){
-        waitUntilElementIsVisible(FIVE_SECONDS, computersLink);
-        clickElementWithJS(computersLink);
-        clickElementWithJS(tabletsLink);
+        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, computersLink);
+        helper.clickElementWithJS(computersLink);
+        helper.clickElementWithJS(tabletsLink);
 
-        waitUntilElementIsVisible(FIVE_SECONDS, manufacturerApple);
-        clickElementWithJS(manufacturerApple);
+        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, manufacturerApple);
+        helper.clickElementWithJS(manufacturerApple);
 
         return new AppleTabletsPage(driver);
-    }
-
-    public WebElement getWebElement(WebElement webElement){
-        return webElement;
     }
 }

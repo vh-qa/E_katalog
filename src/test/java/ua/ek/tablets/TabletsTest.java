@@ -6,9 +6,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
-import ua.ek.pages.tablets.TabletsManufacturerPage;
-import ua.ek.pages.tablets.TabletsPage;
-import ua.ek.pages.PageManager;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
 import ua.ek.utils.PropertyReader;
@@ -17,28 +14,25 @@ import java.io.IOException;
 
 public class TabletsTest extends BaseTest {
 
-    private PageManager pageManager = new PageManager();
-
     @Test(testName = "Tablets Page Filters Tests", dataProvider = "testTabletsDataProvider")
     public void tabletsPageFiltersTests(String manufacturerName,
-                                 double displayDiagonal,
-                                 String expectedMessage) {
+                                        double displayDiagonal,
+                                        String expectedMessage) {
 
-        TabletsPage tabletsPage = pageManager
-                    .goTabletsPage(driver)
-                    .clickManufacturer(manufacturerName)
-                    .clickDisplayDiagonal(Helper.convertDoubleToInt(displayDiagonal));
+        tabletsStep.goTabletsPage(driver);
+        tabletsStep.clickManufacturer(manufacturerName);
+        tabletsStep.clickDisplayDiagonal(Helper.convertDoubleToInt(displayDiagonal));
+        tabletsStep.clickShowButton();
 
-        TabletsManufacturerPage tabletsManufacturerPage = tabletsPage.clickShowButton();
-        AssertUtils.makeAssert(tabletsManufacturerPage.getPageTitle(), expectedMessage);
+        AssertUtils.makeAssert(tabletsManufacturerStep.getTabletsManufacturerPage().getPageTitle(), expectedMessage);
     }
 
     @DataProvider(name = "testTabletsDataProvider")
     private Object[][] testTabletsDataProvider() throws IOException {
 
         String pathData = PropertyReader
-                         .from("/properties/common.properties", "tablets.test.data.file")
-                         .getProperty("tablets.test.data.file");
+                .from("/properties/common.properties", "tablets.test.data.file")
+                .getProperty("tablets.test.data.file");
 
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
 

@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
 
 public class TabletPage extends BasePage {
-
     @FindBy(xpath = ".//div/input[@name='minPrice_']")
     private WebElement minPriceField;
 
@@ -20,18 +19,15 @@ public class TabletPage extends BasePage {
         super(driver);
     }
 
-    public TabletPage enterMinPrice(String minPrice) {
-        enterTextInTextField(minPriceField, minPrice);
-        return this;
+    public WebElement getMinPriceField() {
+        return minPriceField;
     }
 
-    public TabletPage enterMaxPrice(String maxPrice) {
-        enterTextInTextField(maxPriceField, maxPrice);
-        return this;
+    public WebElement getMaxPriceField() {
+        return maxPriceField;
     }
 
-    public TabletsList submitButtonClick(){
-        waitUntilElementIsVisible(FIVE_SECONDS, submitButton).click();
-        return new TabletsList(driver);
+    public WebElement getSubmitButton() {
+        return submitButton;
     }
 }

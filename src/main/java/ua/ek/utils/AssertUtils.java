@@ -3,8 +3,6 @@ package ua.ek.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.ek.base.BasePage;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.testng.Assert.assertEquals;

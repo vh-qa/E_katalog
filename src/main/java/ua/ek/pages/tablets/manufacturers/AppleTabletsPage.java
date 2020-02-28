@@ -2,9 +2,7 @@ package ua.ek.pages.tablets.manufacturers;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ua.ek.base.BasePage;
-import ua.ek.utils.CustomWaits;
 
 public class AppleTabletsPage extends BasePage {
 
@@ -28,25 +26,19 @@ public class AppleTabletsPage extends BasePage {
         return manufacturerApple;
     }
 
-    public AppleTabletsPage clickShowButton() {
-
-        // Explicit wait
-        elementToBeClickable(TEN_SECONDS, showButton);
-        clickElementWithJS(showButton);
-
-        return new AppleTabletsPage(driver);
+    public WebElement getManufacturerApple() {
+        return manufacturerApple;
     }
 
-    public String getPageTitleText() {
+    public WebElement getShowButton() {
+        return showButton;
+    }
 
-        // Fluent wait
-        WebElement webElementFluentWay = fluentWait(By.xpath(pageTitleXpath), FIVE_SECONDS, MILLISECOND_500);
+    public WebElement getPageTitle() {
+        return pageTitle;
+    }
 
-        // Custom wait
-        WebElement webElementCustomWait = waitUntilElementIsVisible(FIVE_SECONDS, By.xpath(pageTitleXpath));
-        WebDriverWait wait = new WebDriverWait(driver, FIVE_SECONDS);
-        wait.until(CustomWaits.isElementContainsText(webElementCustomWait, "Apple"));
-
-        return webElementCustomWait.getText();
+    public String getPageTitleXpath() {
+        return pageTitleXpath;
     }
 }

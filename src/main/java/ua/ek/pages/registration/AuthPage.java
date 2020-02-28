@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
-import ua.ek.pages.HomePage;
 
 public class AuthPage extends BasePage {
 
@@ -52,34 +51,32 @@ public class AuthPage extends BasePage {
         super(driver);
     }
 
-    public AuthPage clickRegisterLink() {
-        clickWebElement(registerLink);
-        return this;
+    public WebElement getRegisterLink() {
+        return registerLink;
     }
 
-    public AuthPage enterLogin(String login) {
-        enterTextInTextField(loginField, login);
-        return this;
+    public WebElement getLoginField() {
+        return loginField;
     }
 
-    public AuthPage enterEmail(String email) {
-        enterTextInTextField(emailField, email);
-        return this;
+    public WebElement getEmailField() {
+        return emailField;
     }
 
-    public AuthPage enterPassword(String password) {
-        enterTextInTextField(passwordField, password);
-        return this;
+    public WebElement getPasswordField() {
+        return passwordField;
     }
 
-    public BasePage clickCloseLink() {
-        getWebElementText(closeLink);
-        return new HomePage(driver);
+    public WebElement getSubmit() {
+        return submit;
     }
 
-    public BasePage submit() {
-        clickWebElement(submit);
-        return this;
+    public WebElement getUserAgreement() {
+        return userAgreement;
+    }
+
+    public WebElement getCloseLink() {
+        return closeLink;
     }
 
     public By getLoginErrorElement(){
@@ -95,14 +92,14 @@ public class AuthPage extends BasePage {
     }
 
     public String getLoginErrorMessage(){
-        return getWebElementText(loginErrorElement);
+        return helper.getWebElementText(loginErrorElement);
     }
 
     public String getEmailErrorMessage(){
-        return getWebElementText(emailErrorElement);
+        return helper.getWebElementText(emailErrorElement);
     }
 
     public String getPasswordErrorMessage(){
-        return getWebElementText(passwordErrorElement);
+        return helper.getWebElementText(passwordErrorElement);
     }
 }
