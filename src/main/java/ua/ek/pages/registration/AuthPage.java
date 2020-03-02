@@ -1,6 +1,5 @@
 package ua.ek.pages.registration;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,98 +7,106 @@ import ua.ek.base.BasePage;
 
 public class AuthPage extends BasePage {
 
-    @FindBy(xpath = ".//em[contains(text(), 'Регистрация')]")
-    private WebElement registerLink;
+    // Auth page
 
-    @FindBy(xpath = ".//input[@placeholder='Имя']")
-    private WebElement loginField;
+    @FindBy(xpath = ".//div[@class='l-m']/div/em[contains(text(),'Войти')]")
+    private WebElement authLink; // 'Войти' link on the registration form
 
-    @FindBy(xpath = ".//input[@placeholder='e-mail']")
-    private WebElement emailField;
+    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/input[@type='text']")
+    private WebElement loginOrEmailAuthField;
 
-    @FindBy(xpath = ".//input[@placeholder='пароль']")
-    private WebElement passwordField;
+    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/div/input[@type='password']")
+    private WebElement passwordAuthField;
 
-    @FindBy(xpath = ".//input[@name='new_reg_' and @class='l-but2']")
-    private WebElement submit;
+    @FindBy(xpath = ".//input[@id='wu_l_frm']")
+    private WebElement rememberMeCheckBoxAuth;
 
-    @FindBy(xpath = ".//input[@name='rules_accepted_']")
-    private WebElement userAgreement;
+    @FindBy(xpath = ".//input[@type='submit' and @value='Войти']")
+    private WebElement submitButtonAuth;
+
+    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите логин')]")
+    private WebElement errorLoginAuth; // Введите логин/email!
+
+    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите пароль')]")
+    private WebElement errorPasswordAuth; // Введите пароль!
 
     @FindBy(xpath = ".//div[@class='jclose']")
-    private WebElement closeLink;
+    private WebElement closeLinkRegistrationForm;
 
-    // Locators for error text links
+    // User Profile page
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Имя')]")
-    private WebElement loginError; // Заполните поле "Имя"
+    @FindBy(xpath = ".//a[@class='info-nick']")
+    private WebElement nickLink;
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'email')]")
-    private WebElement emailFillError; // Заполните поле "email"
+    @FindBy(xpath = ".//a[@class='user-menu__edit']")
+    private WebElement editUserMenuLink;
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'e-mail')]")
-    private WebElement emailCorrectError; // Поле "e-mail" введено некорректно
+    @FindBy(xpath = ".//input[@class='ek-form-control' and @name='p_[NikName]']")
+    private WebElement nickInUserProfileField; // Ваш ник (check value attribute)
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Пароль')]")
-    private WebElement passwordError; // Заполните поле "Пароль"
+    @FindBy(xpath = ".//input[@class='ek-form-control' and @name='p_[EMail]']")
+    private WebElement emailInUserProfileField; // E-mail (check value attribute)
 
-    private By loginErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Имя')]");
-    private By emailErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'email')]");
-    private By passwordErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Пароль')]");
+    @FindBy(xpath = ".//a[@class='help2']")
+    private WebElement logOutFromUserProfileLink;
 
     public AuthPage(WebDriver driver) {
         super(driver);
     }
 
-    public WebElement getRegisterLink() {
-        return registerLink;
+    public WebElement getAuthLink() {
+        return authLink;
     }
 
-    public WebElement getLoginField() {
-        return loginField;
+    public WebElement getLoginOrEmailAuthField() {
+        return loginOrEmailAuthField;
     }
 
-    public WebElement getEmailField() {
-        return emailField;
+    public WebElement getPasswordAuthField() {
+        return passwordAuthField;
     }
 
-    public WebElement getPasswordField() {
-        return passwordField;
+    public WebElement getRememberMeCheckBoxAuth() {
+        return rememberMeCheckBoxAuth;
     }
 
-    public WebElement getSubmit() {
-        return submit;
+    public WebElement getSubmitButtonAuth() {
+        return submitButtonAuth;
     }
 
-    public WebElement getUserAgreement() {
-        return userAgreement;
+    public WebElement getErrorLoginAuth() {
+        return errorLoginAuth;
     }
 
-    public WebElement getCloseLink() {
-        return closeLink;
+    public WebElement getErrorPasswordAuth() {
+        return errorPasswordAuth;
     }
 
-    public By getLoginErrorElement(){
-        return loginErrorElement;
+    public WebElement getCloseLinkRegistrationForm() {
+        return closeLinkRegistrationForm;
     }
 
-    public By getEmailErrorElement(){
-        return emailErrorElement;
+    public WebElement getNickLink() {
+        return nickLink;
     }
 
-    public By getPasswordErrorElement(){
-        return passwordErrorElement;
+    public String getNickLinkText(){
+        return helper.getWebElementText(nickLink);
     }
 
-    public String getLoginErrorMessage(){
-        return helper.getWebElementText(loginErrorElement);
+    public WebElement getEditUserMenuLink() {
+        return editUserMenuLink;
     }
 
-    public String getEmailErrorMessage(){
-        return helper.getWebElementText(emailErrorElement);
+    public WebElement getNickInUserProfileField() {
+        return nickInUserProfileField;
     }
 
-    public String getPasswordErrorMessage(){
-        return helper.getWebElementText(passwordErrorElement);
+    public WebElement getEmailInUserProfileField() {
+        return emailInUserProfileField;
+    }
+
+    public WebElement getLogOutFromUserProfileLink() {
+        return logOutFromUserProfileLink;
     }
 }

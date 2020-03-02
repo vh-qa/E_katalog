@@ -10,7 +10,7 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected Helper helper;
 
-    @FindBy(xpath = "//span[@class='wu_entr']//em")
+    @FindBy(xpath = ".//span[@class='wu_entr']//em")
     private WebElement enterLink; // "Войти" link
 
     public BasePage(WebDriver driver) {

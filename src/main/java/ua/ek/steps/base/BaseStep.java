@@ -3,6 +3,7 @@ package ua.ek.steps.base;
 import org.openqa.selenium.WebDriver;
 import ua.ek.pages.HomePage;
 import ua.ek.pages.registration.AuthPage;
+import ua.ek.pages.registration.RegistrationPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsListPage;
 import ua.ek.pages.tablets.TabletsManufacturerPage;
@@ -13,6 +14,7 @@ import ua.ek.utils.PropertyReader;
 public class BaseStep {
     private WebDriver driver;
 
+    private RegistrationPage registrationPage;
     private AuthPage authPage;
     private TabletPage tabletPage;
     private TabletsPage tabletsPage;
@@ -21,17 +23,22 @@ public class BaseStep {
     private AppleTabletsPage appleTabletsPage;
 
     protected void init(){
+        registrationPage = new RegistrationPage(driver);
+        authPage = new AuthPage(driver);
         tabletPage = new TabletPage(driver);
         tabletsPage = new TabletsPage(driver);
         tabletsListPage = new TabletsListPage(driver);
         tabletsManufacturerPage = new TabletsManufacturerPage(driver);
-        authPage = new AuthPage(driver);
         appleTabletsPage = new AppleTabletsPage(driver);
     }
 
     public BaseStep(WebDriver driver){
         this.driver = driver;
         init();
+    }
+
+    public RegistrationPage getRegistrationPage() {
+        return registrationPage;
     }
 
     public AuthPage getAuthPage() {

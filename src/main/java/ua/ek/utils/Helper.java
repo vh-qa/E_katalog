@@ -44,15 +44,15 @@ public class Helper {
         return waitUtils.visibilityOf(webElement, waitTime);
     }
 
-    public Boolean visibilityOf(Integer waitTime, WebElement webElement){
-        if(waitUtils.visibilityOf(webElement, waitTime) != null){
+    public Boolean visibilityOf(Integer waitTime, WebElement webElement) {
+        if (waitUtils.visibilityOf(webElement, waitTime) != null) {
             return true;
         }
         return false;
     }
 
-    public Boolean visibilityOfElementLocated(By by, int timeout){
-        if(waitUtils.visibilityOfElementLocated(by, timeout) != null){
+    public Boolean visibilityOfElementLocated(By by, int timeout) {
+        if (waitUtils.visibilityOfElementLocated(by, timeout) != null) {
             return true;
         }
         return false;
@@ -62,14 +62,14 @@ public class Helper {
         return waitUtils.elementToBeSelected(webElement, waitTime);
     }
 
-    public Boolean presenceOfElementLocated(By by, int timeout){
-        if(waitUtils.presenceOfElementLocated(by, timeout) != null){
+    public Boolean presenceOfElementLocated(By by, int timeout) {
+        if (waitUtils.presenceOfElementLocated(by, timeout) != null) {
             return true;
         }
         return false;
     }
 
-    public WebElement elementToBeClickable(WebElement webElement, Integer timeout){
+    public WebElement elementToBeClickable(WebElement webElement, Integer timeout) {
         return waitUtils.elementToBeClickable(webElement, timeout);
     }
 
@@ -84,6 +84,16 @@ public class Helper {
         js.executeScript("arguments[0].click();", webElement);
     }
 
+    public boolean getCheckBoxStatus(WebElement webElement) {
+        if (webElement.getAttribute("type").equals("checkbox")) {
+            if (webElement.getAttribute("value").trim().toLowerCase().equals("y")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static int convertDoubleToInt(double value) {
         return (int) value;
     }
@@ -91,4 +101,11 @@ public class Helper {
     public static String convertDoubleToString(double value) {
         return String.valueOf(convertDoubleToInt(value));
     }
+
+    public static String getProperty(String propertyFileName, String propertyName){
+        return PropertyReader
+                .from(propertyFileName, propertyName)
+                .getProperty(propertyName);
+    }
 }
+

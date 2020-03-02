@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
-import ua.ek.pages.registration.AuthPage;
+import ua.ek.pages.registration.RegistrationPage;
 import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
@@ -24,10 +24,10 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//*[@id='li_br116']/label") // Apple
     private WebElement manufacturerApple;
 
-    public AuthPage clickEnterLink() {
+    public RegistrationPage clickEnterLink() {
         if (getEnterLink() != null) {
             helper.clickWebElement(getEnterLink());
-            return new AuthPage(driver);
+            return new RegistrationPage(driver);
         }
         return null;
     }

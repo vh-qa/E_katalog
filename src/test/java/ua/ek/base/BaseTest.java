@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
+import ua.ek.steps.auth.AuthStep;
+import ua.ek.steps.auth.RegistrationStep;
 import ua.ek.steps.tablets.*;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.Helper;
@@ -19,6 +21,7 @@ public abstract class BaseTest extends InitDrivers {
     protected StringBuffer verificationErrors = new StringBuffer();
     protected Helper helper;
 
+    protected RegistrationStep registrationStep;
     protected AuthStep authStep;
     protected TabletStep tabletStep;
     protected TabletsStep tabletsStep;
@@ -27,6 +30,7 @@ public abstract class BaseTest extends InitDrivers {
     protected AppleTabletsStep appleTabletsStep;
 
     private void init (WebDriver driver){
+        registrationStep = new RegistrationStep(driver);
         authStep = new AuthStep(driver);
         tabletStep = new TabletStep(driver);
         tabletsStep = new TabletsStep(driver);
