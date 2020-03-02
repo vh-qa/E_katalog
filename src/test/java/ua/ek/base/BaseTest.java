@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import ua.ek.steps.auth.AuthStep;
 import ua.ek.steps.auth.RegistrationStep;
+import ua.ek.steps.search.SearchStep;
 import ua.ek.steps.tablets.*;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.Helper;
@@ -28,6 +29,7 @@ public abstract class BaseTest extends InitDrivers {
     protected TabletsListStep tabletsListStep;
     protected TabletsManufacturerStep tabletsManufacturerStep;
     protected AppleTabletsStep appleTabletsStep;
+    protected SearchStep searchStep;
 
     private void init (WebDriver driver){
         registrationStep = new RegistrationStep(driver);
@@ -37,6 +39,7 @@ public abstract class BaseTest extends InitDrivers {
         tabletsListStep = new TabletsListStep(driver);
         tabletsManufacturerStep = new TabletsManufacturerStep(driver);
         appleTabletsStep = new AppleTabletsStep(driver);
+        searchStep = new SearchStep(driver);
 
         helper = new Helper(driver);
     }
