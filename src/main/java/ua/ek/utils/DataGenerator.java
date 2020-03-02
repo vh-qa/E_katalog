@@ -13,16 +13,16 @@ public class DataGenerator {
         int randomIntNumber = random.nextInt();
 
         StringBuffer login = new StringBuffer();
-        login.append("some-login-").append(randomIntNumber);
+        login.append("some_login_").append(randomIntNumber);
 
         StringBuffer email = new StringBuffer();
-        email.append("some-email-").append(randomIntNumber).append("@company.com");
+        email.append("some_email_").append(randomIntNumber).append("@company.com");
 
         user.setLogin(login.toString());
         user.setEmail(email.toString());
 
         StringBuffer password = new StringBuffer();
-        password.append("some-password-").append(randomIntNumber);
+        password.append("some_password_").append(randomIntNumber);
 
         user.setPassword(password.toString());
 
