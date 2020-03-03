@@ -1,5 +1,9 @@
-package ua.ek.registration;
+package ua.ek.bdd;
 
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
@@ -7,28 +11,48 @@ import ua.ek.model.User;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.DataGenerator;
 
-public class AuthPageTest extends BaseTest {
-
-    @BeforeMethod
-    public void openAuthFormBeforeTest() {
-        authStep.goAuthPage(driver);
-        authStep.clickAuthLink();
-    }
+public class AuthPageTestBDD extends BaseTest {
 
     // Positive scenario
 
-    @Test
-    public void authSuccessfulTestWithLogin() {
-        User user = DataGenerator.getPositiveUserData();
+    @Given("I am on home page")
+    public void goHomePage() {
 
-        authStep.enterLoginOrEmail(user.getLogin());
-        authStep.enterPassword(user.getPassword());
-        authStep.clickRememberMeCheckBoxAuth(); // uncheck checkbox
-        authStep.clickSubmitButton();
-        AssertUtils.makeAssert(authStep.getAuthPage().getNickLinkText(),
-                "some_login_15");
+    }
 
-        authStep.clickLogOutFromUserProfileLink();
+    @When("I click on sign in link")
+    public void clickSignInLink() {
+        authStep.goAuthPage(driver);
+    }
+
+    @Then("I am on Auth form")
+    public void validateAuthForm() {
+
+    }
+
+    @When("I click on sign in link on auth form")
+    public void clickSignInLinkOnAuthForm(){
+        authStep.clickAuthLink();
+    }
+
+    @And("I enter login")
+    public void enterLogin() {
+
+    }
+
+    @And("I enter password")
+    public void enterPassword() {
+
+    }
+
+    @And("I click submit button")
+    public void clickSubmitButton() {
+
+    }
+
+    @Then("I should see some_login_15 link")
+    public void validateUserProfile(){
+
     }
 
     @Test
