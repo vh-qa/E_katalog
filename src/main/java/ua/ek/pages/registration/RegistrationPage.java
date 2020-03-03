@@ -123,18 +123,18 @@ public class RegistrationPage extends BasePage {
     }
 
     public String getLoginErrorMessage(){
-        return helper.getWebElementText(loginErrorElement);
+        return getHelper().getWebElementText(loginErrorElement);
     }
 
     public String getEmailErrorMessage(){
-        return helper.getWebElementText(emailErrorElement);
+        return getHelper().getWebElementText(emailErrorElement);
     }
 
     public String getEmailIncorrectErrorMessage(){
-        return helper.getWebElementText(emailIncorrectErrorElement);
+        return getHelper().getWebElementText(emailIncorrectErrorElement);
     }
 
     public String getPasswordErrorMessage(){
-        return helper.getWebElementText(passwordErrorElement);
+        return getHelper().getWebElementText(passwordErrorElement);
     }
 }

@@ -3,6 +3,8 @@ package ua.ek.tablets;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
@@ -43,17 +45,26 @@ public class TabletTest extends BaseTest {
 
     @Test
     public void tabletsFixedPricesLinkTest(){
-
+        tabletStep.goTabletPage(driver);
+        tabletStep.clickFixedPriceLink();
+        AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(),
+                " от 7000  до 10000 грн.");
     }
 
     @Test
     public void tabletsDisplayDiagonalLinkTest(){
-
+        tabletStep.goTabletPage(driver);
+        tabletStep.clickDisplayDiagonalLink();
+        AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(),
+                "Планшеты 10 дюймов ");
     }
 
     @Test
     public void tabletsManufacturersLinkTest(){
-
+        tabletStep.goTabletPage(driver);
+        tabletStep.clickManufacturerLink();
+        AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(),
+                "Планшеты Apple ");
     }
 
     @DataProvider(name = "tabletsPricesDataProvider")

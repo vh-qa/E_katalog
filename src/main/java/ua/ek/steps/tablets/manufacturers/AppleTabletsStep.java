@@ -12,7 +12,7 @@ import ua.ek.utils.WaitUtils;
 
 import static ua.ek.utils.IWaitTimes.*;
 
-public class AppleTabletsStep  extends BaseStep {
+public class AppleTabletsStep extends BaseStep {
 
     private WebDriver driver;
     private Helper helper;
@@ -28,7 +28,10 @@ public class AppleTabletsStep  extends BaseStep {
     }
 
     public AppleTabletsPage goAppleTabletsPage(WebDriver driver){
-        return goHomePage(driver).clickAppleTabletsCheckBox();
+        helper.clickWebElement(getHomePage().getComputersLink());
+        helper.clickElementWithJS(getHomePage().getTabletsLink());
+        helper.clickElementWithJS(getAppleTabletsPage().getAppleManufacturerCheckBox());
+        return new AppleTabletsPage(driver);
     }
 
     public AppleTabletsPage clickShowButton() {

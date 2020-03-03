@@ -26,10 +26,6 @@ public class AppleTabletsPage extends BasePage {
         return manufacturerApple;
     }
 
-    public WebElement getManufacturerApple() {
-        return manufacturerApple;
-    }
-
     public WebElement getShowButton() {
         return showButton;
     }

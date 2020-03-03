@@ -91,7 +91,7 @@ public class AuthPage extends BasePage {
     }
 
     public String getNickLinkText(){
-        return helper.getWebElementText(nickLink);
+        return getHelper().getWebElementText(nickLink);
     }
 
     public WebElement getEditUserMenuLink() {

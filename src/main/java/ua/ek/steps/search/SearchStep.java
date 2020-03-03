@@ -20,7 +20,7 @@ public class SearchStep extends BaseStep {
     }
 
     public HomePage goSearchPage (WebDriver driver) {
-        return goHomePage(driver);
+        return new HomePage(driver);
     }
 
     public SearchPage enterSearchTextInSearchField (String searchText){

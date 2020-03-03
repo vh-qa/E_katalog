@@ -19,7 +19,9 @@ public class TabletStep extends BaseStep {
     }
 
     public TabletPage goTabletPage(WebDriver driver) {
-        return goHomePage(driver).clickTabletLink();
+        helper.clickWebElement(getHomePage().getComputersLink());
+        helper.clickElementWithJS(getHomePage().getTabletsLink());
+        return new TabletPage(driver);
     }
 
     public TabletPage enterMinPrice(String minPrice) {

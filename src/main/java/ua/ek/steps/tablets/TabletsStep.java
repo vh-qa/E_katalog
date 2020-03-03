@@ -22,7 +22,9 @@ public class TabletsStep extends BaseStep {
     }
 
     public TabletsPage goTabletsPage(WebDriver driver){
-        return goHomePage(driver).clickTabletsLink();
+        helper.clickWebElement(getHomePage().getComputersLink());
+        helper.clickElementWithJS(getHomePage().getTabletsLink());
+        return new TabletsPage(driver);
     }
 
     public TabletsPage clickManufacturer(String manufacturerName) {

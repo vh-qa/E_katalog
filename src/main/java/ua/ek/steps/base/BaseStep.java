@@ -10,12 +10,14 @@ import ua.ek.pages.tablets.TabletPage;
 import ua.ek.pages.tablets.TabletsListPage;
 import ua.ek.pages.tablets.TabletsManufacturerPage;
 import ua.ek.pages.tablets.TabletsPage;
+import ua.ek.pages.tablets.filters.PriceFilter;
 import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
-import ua.ek.utils.PropertyReader;
 
 public abstract class BaseStep {
+
     private WebDriver driver;
 
+    private HomePage homePage;
     private RegistrationPage registrationPage;
     private AuthPage authPage;
     private TabletPage tabletPage;
@@ -25,8 +27,10 @@ public abstract class BaseStep {
     private AppleTabletsPage appleTabletsPage;
     private SearchPage searchPage;
     private SearchResultPage searchResultPage;
+    private PriceFilter priceFilter;
 
     protected void init(){
+        homePage = new HomePage(driver);
         registrationPage = new RegistrationPage(driver);
         authPage = new AuthPage(driver);
         tabletPage = new TabletPage(driver);
@@ -36,11 +40,16 @@ public abstract class BaseStep {
         appleTabletsPage = new AppleTabletsPage(driver);
         searchPage = new SearchPage(driver);
         searchResultPage = new SearchResultPage(driver);
+        priceFilter = new PriceFilter(driver);
     }
 
     public BaseStep(WebDriver driver){
         this.driver = driver;
         init();
+    }
+
+    public HomePage getHomePage() {
+        return homePage;
     }
 
     public RegistrationPage getRegistrationPage() {
@@ -79,13 +88,7 @@ public abstract class BaseStep {
         return searchResultPage;
     }
 
-    public HomePage goHomePage(WebDriver driver){
-
-        String baseUrl = PropertyReader
-                .from("/properties/common.properties", "base.url")
-                .getProperty("base.url");
-
-        driver.get(baseUrl);
-        return new HomePage(driver);
+    public PriceFilter getPriceFilter() {
+        return priceFilter;
     }
 }

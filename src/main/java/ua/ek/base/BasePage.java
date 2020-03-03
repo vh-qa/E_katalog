@@ -1,17 +1,13 @@
 package ua.ek.base;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import ua.ek.utils.Helper;
 
 public abstract class BasePage {
 
-    protected WebDriver driver;
-    protected Helper helper;
-
-    @FindBy(xpath = ".//span[@class='wu_entr']//em")
-    private WebElement enterLink; // "Войти" link
+    private WebDriver driver;
+    private Helper helper;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -19,10 +15,11 @@ public abstract class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    protected WebElement getEnterLink() {
-        if (helper.isWebElementDisplayed(enterLink)) {
-            return enterLink;
-        }
-        return null;
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public Helper getHelper() {
+        return helper;
     }
 }

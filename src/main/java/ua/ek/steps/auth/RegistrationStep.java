@@ -19,10 +19,8 @@ public class RegistrationStep extends BaseStep {
     }
 
     public RegistrationPage goAuthPage(WebDriver driver){
-        RegistrationPage registrationPage = goHomePage(driver)
-                .clickEnterLink();
-
-        return registrationPage;
+        helper.clickWebElement(getHomePage().getEnterLink());
+        return new RegistrationPage(driver);
     }
 
     public RegistrationPage clickRegisterLink() {

@@ -15,6 +15,6 @@ private WebElement textPricesField;
     }
 
     public String getTextPrices(){
-        return helper.getWebElementText(textPricesField);
+        return getHelper().getWebElementText(textPricesField);
     }
 }
