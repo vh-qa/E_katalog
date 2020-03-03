@@ -58,7 +58,6 @@ public class RegistrationPageTest extends BaseTest {
         registrationStep.enterLogin(user.getLogin());
         registrationStep.enterEmail(user.getEmail());
         registrationStep.enterPassword(user.getPassword());
-
         registrationStep.clickSubmitButton();
 
         AssertUtils.makeAssert(registrationStep.getSuccessfulUserRegistrationTextFromWebElement(),

@@ -15,6 +15,16 @@ public class TabletPage extends BasePage {
     @FindBy(xpath = ".//input[@type='submit' and @class='price-sub']")
     private WebElement submitButton;
 
+//  @FindBy(xpath=".//a[@class='ib']/u[contains(text(),'7000 — 10000')]")
+    @FindBy(xpath = ".//u[contains(text(),'7000 — 10000')]")
+    private WebElement fixedPriceLink;
+
+    @FindBy(xpath = ".//a[@class='ib']/u[contains(text(),'Диагональ 10\"')]")
+    private WebElement displayDiagonalLink;
+
+    @FindBy(xpath = ".//div[@class='brands-tags']/a[contains(text(),'Apple')]")
+    private WebElement manufacturerLink;
+
     public TabletPage(WebDriver driver) {
         super(driver);
     }
@@ -29,5 +39,17 @@ public class TabletPage extends BasePage {
 
     public WebElement getSubmitButton() {
         return submitButton;
+    }
+
+    public WebElement getFixedPriceLink() {
+        return fixedPriceLink;
+    }
+
+    public WebElement getDisplayDiagonalLink() {
+        return displayDiagonalLink;
+    }
+
+    public WebElement getManufacturerLink() {
+        return manufacturerLink;
     }
 }

@@ -10,7 +10,7 @@ public class DataGenerator {
         User user = new User();
 
         Random random = new Random();
-        int randomIntNumber = random.nextInt();
+        int randomIntNumber = Math.abs(random.nextInt());
 
         StringBuffer login = new StringBuffer();
         login.append("some_login_").append(randomIntNumber);

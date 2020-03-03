@@ -18,7 +18,7 @@ public class TabletStep extends BaseStep {
         helper = new Helper(driver);
     }
 
-    public TabletPage goTabletPage(WebDriver driver){
+    public TabletPage goTabletPage(WebDriver driver) {
         return goHomePage(driver).clickTabletLink();
     }
 
@@ -32,8 +32,27 @@ public class TabletStep extends BaseStep {
         return new TabletPage(driver);
     }
 
-    public TabletsListPage submitButtonClick(){
-        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, getTabletPage().getSubmitButton()).click();
+    public TabletsListPage submitButtonClick() {
+        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                getTabletPage().getSubmitButton()).click();
+        return new TabletsListPage(driver);
+    }
+
+    public TabletsListPage clickFixedPriceLink() {
+        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                getTabletPage().getFixedPriceLink()).click();
+        return new TabletsListPage(driver);
+    }
+
+    public TabletsListPage clickDisplayDiagonalLink() {
+        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                getTabletPage().getDisplayDiagonalLink()).click();
+        return new TabletsListPage(driver);
+    }
+
+    public TabletsListPage clickManufacturerLink() {
+        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                getTabletPage().getManufacturerLink()).click();
         return new TabletsListPage(driver);
     }
 }

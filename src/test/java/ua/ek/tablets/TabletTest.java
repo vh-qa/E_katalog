@@ -41,6 +41,21 @@ public class TabletTest extends BaseTest {
         }
     }
 
+    @Test
+    public void tabletsFixedPricesLinkTest(){
+
+    }
+
+    @Test
+    public void tabletsDisplayDiagonalLinkTest(){
+
+    }
+
+    @Test
+    public void tabletsManufacturersLinkTest(){
+
+    }
+
     @DataProvider(name = "tabletsPricesDataProvider")
     private Object[][] tabletsPricesDataProvider() throws IOException {
 
