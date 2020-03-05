@@ -1,7 +1,8 @@
 package ua.ek.bdd;
 
-import cucumber.api.testng.*;
 import cucumber.api.CucumberOptions;
+import cucumber.api.testng.CucumberFeatureWrapper;
+import cucumber.api.testng.TestNGCucumberRunner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -9,9 +10,9 @@ import org.testng.annotations.Test;
 
 @CucumberOptions(
 
-        features = "src/main/resources/features/loginuserprofile",
-        glue = "ua.ek.bdd.steps.loginuserprofile",
-        tags = "@LoginUserProfile",
+        features = "src/main/resources/features/userregistration",
+        glue = "ua.ek.bdd.steps.userregistration",
+        tags = "@UserRegistration",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",
@@ -19,7 +20,7 @@ import org.testng.annotations.Test;
                 "rerun:target/cucumber-reports/rerun.txt"
         })
 
-public class AuthTestBDD {
+public class UserRegistrationTestBDD {
 
     private TestNGCucumberRunner testNGCucumberRunner;
 

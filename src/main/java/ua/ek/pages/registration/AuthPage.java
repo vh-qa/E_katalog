@@ -24,11 +24,17 @@ public class AuthPage extends BasePage {
     @FindBy(xpath = ".//input[@type='submit' and @value='Войти']")
     private WebElement submitButtonAuth;
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите логин')]")
-    private WebElement errorLoginAuth; // Введите логин/email!
+//    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите логин')]")
+//    private WebElement errorLoginAuth; // Введите логин/email!
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите пароль')]")
-    private WebElement errorPasswordAuth; // Введите пароль!
+    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/div[@class='l-err']")
+    private WebElement errorLoginAuth;
+
+//    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите пароль')]")
+//    private WebElement errorPasswordAuth; // Введите пароль!
+
+    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/div[@class='l-err']")
+    private WebElement errorPasswordAuth;
 
     @FindBy(xpath = ".//div[@class='jclose']")
     private WebElement closeLinkRegistrationForm;

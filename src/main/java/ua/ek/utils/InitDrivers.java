@@ -31,6 +31,10 @@ public class InitDrivers {
         driver.manage().window().maximize();
     }
 
+    public WebDriver getDriver() {
+        return driver;
+    }
+
     private void initDrivers(String browser) {
 
         Properties properties = new Properties();

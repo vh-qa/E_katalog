@@ -8,8 +8,6 @@ import ua.ek.utils.PropertyReader;
 
 public class HomePage extends BasePage {
 
-    private String baseUrl;
-
     @FindBy(xpath = ".//div[@class='cr-contr']/div/em")
     private WebElement deliveryRegionLink;
 
@@ -28,16 +26,6 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
     }
-
-    //    public HomePage goHomePage(WebDriver driver){
-//
-//        String baseUrl = PropertyReader
-//                .from("/properties/common.properties", "base.url")
-//                .getProperty("base.url");
-//
-//        driver.get(baseUrl);
-//        return new HomePage(driver);
-//    }
 
     public String getBaseUrl(){
         return PropertyReader
