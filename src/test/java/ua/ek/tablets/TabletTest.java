@@ -1,18 +1,11 @@
 package ua.ek.tablets;
 
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
 import ua.ek.model.Price;
-import ua.ek.utils.AssertUtils;
-import ua.ek.utils.Helper;
-import ua.ek.utils.PropertyReader;
-import java.io.FileInputStream;
+import ua.ek.utils.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,89 +20,60 @@ public class TabletTest extends BaseTest {
 
         List<Price> prices = null;
 
-        try{
+        try {
             prices = getPrices();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.getMessage();
         }
 
         for (Price price : prices) {
-            tabletStep.goTabletPage(driver);
-            tabletStep.enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()));
-            tabletStep.enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()));
-            tabletStep.submitButtonClick();
+            getTabletStep().goTabletPage();
+            getTabletStep().enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()));
+            getTabletStep().enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()));
+            getTabletStep().submitButtonClick();
 
-            AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(), price.getExpectedMessage());
+            AssertUtils.makeAssert(getTabletsListStep().getTextPrices(), price.getExpectedMessage());
         }
     }
 
     @Test
-    public void tabletsFixedPricesLinkTest(){
-        tabletStep.goTabletPage(driver);
-        tabletStep.clickFixedPriceLink();
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(),
+    public void tabletsFixedPricesLinkTest() {
+        getTabletStep().goTabletPage();
+        getTabletStep().clickFixedPriceLink();
+        AssertUtils.makeAssert(getTabletsListStep().getTextPrices(),
                 " от 7000  до 10000 грн.");
     }
 
     @Test
-    public void tabletsDisplayDiagonalLinkTest(){
-        tabletStep.goTabletPage(driver);
-        tabletStep.clickDisplayDiagonalLink();
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(),
+    public void tabletsDisplayDiagonalLinkTest() {
+        getTabletStep().goTabletPage();
+        getTabletStep().clickDisplayDiagonalLink();
+        AssertUtils.makeAssert(getTabletsListStep().getTextPrices(),
                 "Планшеты 10 дюймов ");
     }
 
     @Test
-    public void tabletsManufacturersLinkTest(){
-        tabletStep.goTabletPage(driver);
-        tabletStep.clickManufacturerLink();
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListPage().getTextPrices(),
+    public void tabletsManufacturersLinkTest() {
+        getTabletStep().goTabletPage();
+        getTabletStep().clickManufacturerLink();
+        AssertUtils.makeAssert(getTabletsListStep().getTextPrices(),
                 "Планшеты Apple ");
     }
 
     @DataProvider(name = "tabletsPricesDataProvider")
     private Object[][] tabletsPricesDataProvider() throws IOException {
-
-        String pathData = PropertyReader
-                .from("/properties/common.properties", "tablets.test.prices.data.file")
-                .getProperty("tablets.test.prices.data.file");
-
-        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
-
-        XSSFSheet sheet = workbook.getSheet("prices");
-        Object[][] priceData = new Object[sheet.getLastRowNum()][3];
-
-        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-            XSSFRow parRow = sheet.getRow(i);
-            priceData[i - 1][0] = (parRow.getCell(0) == null) ? "" : parRow.getCell(0).getNumericCellValue();
-            priceData[i - 1][1] = (parRow.getCell(1) == null) ? "" : parRow.getCell(1).getNumericCellValue();
-            priceData[i - 1][2] = (parRow.getCell(2) == null) ? "" : parRow.getCell(2).getStringCellValue();
-        }
-
-        return priceData;
+        return GetDataFromExcel.getDataToObjectArray("/properties/common.properties",
+                "tablets.test.prices.data.file", "prices");
     }
 
     private List<Price> getPrices() throws IOException {
+        List<Object> objectList = new ArrayList<>();
         List<Price> prices = new ArrayList<>();
 
-        String pathData = PropertyReader
-                .from("/properties/common.properties", "tablets.test.prices.data.file")
-                .getProperty("tablets.test.prices.data.file");
+        objectList = GetDataFromExcel.getDataToList("/properties/common.properties",
+                "tablets.test.prices.data.file", "prices", "ua.ek.model.Price");
 
-        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
-
-        XSSFSheet sheet = workbook.getSheet("prices");
-
-        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-            Price price = new Price();
-            XSSFRow parRow = sheet.getRow(i);
-
-            price.setMinPrice((parRow.getCell(0) == null) ? 0.0 : parRow.getCell(0).getNumericCellValue());
-            price.setMaxPrice((parRow.getCell(1) == null) ? 0.0 : parRow.getCell(1).getNumericCellValue());
-            price.setExpectedMessage((parRow.getCell(2) == null) ? "" : parRow.getCell(2).getStringCellValue());
-            prices.add(price);
-        }
-
+        prices = ClassConverter.cast(Price.class, objectList);
         return prices;
     }
 }

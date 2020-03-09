@@ -10,9 +10,9 @@ import org.testng.annotations.Test;
 
 @CucumberOptions(
 
-        features = "src/main/resources/features/userregistration",
-        glue = "ua.ek.bdd.steps.userregistration",
-        tags = "@UserRegistration",
+        features = "src/main/resources/features/tabletsfilter",
+        glue = "ua.ek.bdd.tabletsfilter",
+        tags = "@TabletsFilters",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",
@@ -20,8 +20,7 @@ import org.testng.annotations.Test;
                 "rerun:target/cucumber-reports/rerun.txt"
         })
 
-public class UserRegistrationTestBDD {
-
+public class TabletsFiltersTestBddRunner {
     private TestNGCucumberRunner testNGCucumberRunner;
 
     @BeforeClass

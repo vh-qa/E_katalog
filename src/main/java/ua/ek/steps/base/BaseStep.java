@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import ua.ek.pages.HomePage;
 import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.registration.RegistrationPage;
+import ua.ek.pages.registration.UserProfilePage;
 import ua.ek.pages.search.SearchPage;
 import ua.ek.pages.search.SearchResultPage;
 import ua.ek.pages.tablets.TabletPage;
@@ -12,14 +13,16 @@ import ua.ek.pages.tablets.TabletsManufacturerPage;
 import ua.ek.pages.tablets.TabletsPage;
 import ua.ek.pages.tablets.filters.PriceFilter;
 import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
+import ua.ek.utils.Helper;
 
 public abstract class BaseStep {
 
-    private WebDriver driver;
+    private Helper helper;
 
     private HomePage homePage;
     private RegistrationPage registrationPage;
     private AuthPage authPage;
+    private UserProfilePage userProfilePage;
     private TabletPage tabletPage;
     private TabletsPage tabletsPage;
     private TabletsListPage tabletsListPage;
@@ -29,10 +32,14 @@ public abstract class BaseStep {
     private SearchResultPage searchResultPage;
     private PriceFilter priceFilter;
 
-    protected void init(){
+    public BaseStep(WebDriver driver){
+
+        helper = new Helper(driver);
+
         homePage = new HomePage(driver);
         registrationPage = new RegistrationPage(driver);
         authPage = new AuthPage(driver);
+        userProfilePage = new UserProfilePage(driver);
         tabletPage = new TabletPage(driver);
         tabletsPage = new TabletsPage(driver);
         tabletsListPage = new TabletsListPage(driver);
@@ -43,21 +50,24 @@ public abstract class BaseStep {
         priceFilter = new PriceFilter(driver);
     }
 
-    public BaseStep(WebDriver driver){
-        this.driver = driver;
-        init();
+    public Helper getHelper() {
+        return helper;
     }
 
     public HomePage getHomePage() {
         return homePage;
     }
 
-    public RegistrationPage getRegistrationPage() {
-        return registrationPage;
-    }
-
     public AuthPage getAuthPage() {
         return authPage;
+    }
+
+    public UserProfilePage getUserProfilePage() {
+        return userProfilePage;
+    }
+
+    public RegistrationPage getRegistrationPage() {
+        return registrationPage;
     }
 
     public TabletPage getTabletPage() {

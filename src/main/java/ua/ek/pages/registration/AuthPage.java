@@ -7,8 +7,6 @@ import ua.ek.base.BasePage;
 
 public class AuthPage extends BasePage {
 
-    // Auth page
-
     @FindBy(xpath = ".//div[@class='l-m']/div/em[contains(text(),'Войти')]")
     private WebElement authLink; // 'Войти' link on the registration form
 
@@ -38,23 +36,6 @@ public class AuthPage extends BasePage {
 
     @FindBy(xpath = ".//div[@class='jclose']")
     private WebElement closeLinkRegistrationForm;
-
-    // User Profile page
-
-    @FindBy(xpath = ".//a[@class='info-nick']")
-    private WebElement nickLink;
-
-    @FindBy(xpath = ".//a[@class='user-menu__edit']")
-    private WebElement editUserMenuLink;
-
-    @FindBy(xpath = ".//input[@class='ek-form-control' and @name='p_[NikName]']")
-    private WebElement nickInUserProfileField; // Ваш ник (check value attribute)
-
-    @FindBy(xpath = ".//input[@class='ek-form-control' and @name='p_[EMail]']")
-    private WebElement emailInUserProfileField; // E-mail (check value attribute)
-
-    @FindBy(xpath = ".//a[@class='help2']")
-    private WebElement logOutFromUserProfileLink;
 
     public AuthPage(WebDriver driver) {
         super(driver);
@@ -90,29 +71,5 @@ public class AuthPage extends BasePage {
 
     public WebElement getCloseLinkRegistrationForm() {
         return closeLinkRegistrationForm;
-    }
-
-    public WebElement getNickLink() {
-        return nickLink;
-    }
-
-    public String getNickLinkText(){
-        return getHelper().getWebElementText(nickLink);
-    }
-
-    public WebElement getEditUserMenuLink() {
-        return editUserMenuLink;
-    }
-
-    public WebElement getNickInUserProfileField() {
-        return nickInUserProfileField;
-    }
-
-    public WebElement getEmailInUserProfileField() {
-        return emailInUserProfileField;
-    }
-
-    public WebElement getLogOutFromUserProfileLink() {
-        return logOutFromUserProfileLink;
     }
 }

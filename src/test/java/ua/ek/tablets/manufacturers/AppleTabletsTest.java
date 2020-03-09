@@ -8,9 +8,9 @@ public class AppleTabletsTest extends BaseTest {
 
     @Test
     public void xpathTest(){
-        appleTabletsStep.goAppleTabletsPage(driver);
-        appleTabletsStep.clickShowButton();
+        getAppleTabletsStep().goAppleTabletsPage()
+                        .clickShowButton();
 
-        AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), "Планшеты Apple ");
+        AssertUtils.makeAssert(getAppleTabletsStep().getPageTitleText(), "Планшеты Apple ");
     }
 }

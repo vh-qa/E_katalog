@@ -1,35 +1,28 @@
 package ua.ek.steps.tablets.filters;
 
 import org.openqa.selenium.WebDriver;
-import ua.ek.pages.tablets.filters.PriceFilter;
 import ua.ek.steps.base.BaseStep;
-import ua.ek.utils.Helper;
 import ua.ek.utils.IWaitTimes;
 
 public class PriceFilterStep extends BaseStep {
 
-    private WebDriver driver;
-    private Helper helper;
-
     public PriceFilterStep(WebDriver driver) {
         super(driver);
-        this.driver = driver;
-        helper = new Helper(driver);
     }
 
-    public PriceFilter enterMinPriceInMinPriceField(String minPrice) {
-        helper.enterTextInTextField(getPriceFilter().getMinPriceInput(), minPrice);
-        return new PriceFilter(driver);
+    public PriceFilterStep enterMinPriceInMinPriceField(String minPrice) {
+        getHelper().enterTextInTextField(getPriceFilter().getMinPriceInput(), minPrice);
+        return this;
     }
 
-    public PriceFilter enterMaxPriceInMinPriceField(String maxPrice) {
-        helper.enterTextInTextField(getPriceFilter().getMaxPriceInput(), maxPrice);
-        return new PriceFilter(driver);
+    public PriceFilterStep enterMaxPriceInMinPriceField(String maxPrice) {
+        getHelper().enterTextInTextField(getPriceFilter().getMaxPriceInput(), maxPrice);
+        return this;
     }
 
-    public PriceFilter clickShowButton() {
-        helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+    public PriceFilterStep clickShowButton() {
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
                 getPriceFilter().getShowButton()).click();
-        return new PriceFilter(driver);
+        return this;
     }
 }

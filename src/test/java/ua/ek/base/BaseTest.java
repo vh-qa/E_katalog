@@ -5,14 +5,15 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.auth.AuthStep;
-import ua.ek.steps.auth.RegistrationStep;
+import ua.ek.steps.registration.AuthStep;
+import ua.ek.steps.registration.RegistrationStep;
+import ua.ek.steps.registration.UserProfileStep;
 import ua.ek.steps.search.SearchStep;
 import ua.ek.steps.tablets.*;
 import ua.ek.steps.tablets.filters.PriceFilterStep;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
-import ua.ek.utils.Helper;
 import ua.ek.utils.InitDrivers;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -20,25 +21,26 @@ import static org.testng.FileAssert.fail;
 
 public abstract class BaseTest extends InitDrivers {
 
-    protected final static Logger LOG = LogManager.getLogger(BasePage.class);
-    protected StringBuffer verificationErrors = new StringBuffer();
-    protected Helper helper;
+    private final static Logger LOG = LogManager.getLogger(BasePage.class);
+    private StringBuffer verificationErrors = new StringBuffer();
 
-    protected HomeStep homeStep;
-    protected RegistrationStep registrationStep;
-    protected AuthStep authStep;
-    protected TabletStep tabletStep;
-    protected TabletsStep tabletsStep;
-    protected TabletsListStep tabletsListStep;
-    protected TabletsManufacturerStep tabletsManufacturerStep;
-    protected AppleTabletsStep appleTabletsStep;
-    protected SearchStep searchStep;
-    protected PriceFilterStep priceFilterStep;
+    private HomeStep homeStep;
+    private RegistrationStep registrationStep;
+    private AuthStep authStep;
+    private UserProfileStep userProfileStep;
+    private TabletStep tabletStep;
+    private TabletsStep tabletsStep;
+    private TabletsListStep tabletsListStep;
+    private TabletsManufacturerStep tabletsManufacturerStep;
+    private AppleTabletsStep appleTabletsStep;
+    private SearchStep searchStep;
+    private PriceFilterStep priceFilterStep;
 
     private void init (WebDriver driver){
         homeStep = new HomeStep(driver);
         registrationStep = new RegistrationStep(driver);
         authStep = new AuthStep(driver);
+        userProfileStep = new UserProfileStep(driver);
         tabletStep = new TabletStep(driver);
         tabletsStep = new TabletsStep(driver);
         tabletsListStep = new TabletsListStep(driver);
@@ -46,13 +48,16 @@ public abstract class BaseTest extends InitDrivers {
         appleTabletsStep = new AppleTabletsStep(driver);
         searchStep = new SearchStep(driver);
         priceFilterStep = new PriceFilterStep(driver);
+    }
 
-        helper = new Helper(driver);
+    @BeforeClass
+    public void initSteps(){
+        init(getWebDriver());
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
-        driver.quit();
+        getWebDriver().quit();
         String verificationErrorString = verificationErrors.toString();
         if (!"".equals(verificationErrorString)) {
             fail(verificationErrorString);
@@ -61,11 +66,7 @@ public abstract class BaseTest extends InitDrivers {
 
     @BeforeMethod
     public void initStepsAndLogTestStart(Method method, Object[] params) {
-
-        init(driver);
-
         homeStep.goHomePage();
-
         LOG.info("Start test {} with parameters {}",
                 method.getName(), Arrays.toString(params));
     }
@@ -73,5 +74,49 @@ public abstract class BaseTest extends InitDrivers {
     @AfterMethod(alwaysRun = true)
     public void logTestStop(Method method) {
         LOG.info("Stop test {}", method.getName());
+    }
+
+    public HomeStep getHomeStep() {
+        return homeStep;
+    }
+
+    public RegistrationStep getRegistrationStep() {
+        return registrationStep;
+    }
+
+    public AuthStep getAuthStep() {
+        return authStep;
+    }
+
+    public UserProfileStep getUserProfileStep() {
+        return userProfileStep;
+    }
+
+    public TabletStep getTabletStep() {
+        return tabletStep;
+    }
+
+    public TabletsStep getTabletsStep() {
+        return tabletsStep;
+    }
+
+    public TabletsListStep getTabletsListStep() {
+        return tabletsListStep;
+    }
+
+    public TabletsManufacturerStep getTabletsManufacturerStep() {
+        return tabletsManufacturerStep;
+    }
+
+    public AppleTabletsStep getAppleTabletsStep() {
+        return appleTabletsStep;
+    }
+
+    public SearchStep getSearchStep() {
+        return searchStep;
+    }
+
+    public PriceFilterStep getPriceFilterStep() {
+        return priceFilterStep;
     }
 }

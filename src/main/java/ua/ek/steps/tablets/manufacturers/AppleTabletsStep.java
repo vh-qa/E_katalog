@@ -4,10 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
 import ua.ek.steps.base.BaseStep;
 import ua.ek.utils.CustomWaits;
-import ua.ek.utils.Helper;
 import ua.ek.utils.WaitUtils;
 
 import static ua.ek.utils.IWaitTimes.*;
@@ -15,32 +13,28 @@ import static ua.ek.utils.IWaitTimes.*;
 public class AppleTabletsStep extends BaseStep {
 
     private WebDriver driver;
-    private Helper helper;
     private WaitUtils waitUtils;
-    private CustomWaits customWaits;
 
     public AppleTabletsStep(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        helper = new Helper(driver);
         waitUtils = new WaitUtils(driver);
-        customWaits = new CustomWaits();
     }
 
-    public AppleTabletsPage goAppleTabletsPage(WebDriver driver){
-        helper.clickWebElement(getHomePage().getComputersLink());
-        helper.clickElementWithJS(getHomePage().getTabletsLink());
-        helper.clickElementWithJS(getAppleTabletsPage().getAppleManufacturerCheckBox());
-        return new AppleTabletsPage(driver);
+    public AppleTabletsStep goAppleTabletsPage(){
+        getHelper().clickWebElement(getHomePage().getComputersLink());
+        getHelper().clickElementWithJS(getHomePage().getTabletsLink());
+        getHelper().clickElementWithJS(getAppleTabletsPage().getAppleManufacturerCheckBox());
+        return this;
     }
 
-    public AppleTabletsPage clickShowButton() {
+    public AppleTabletsStep clickShowButton() {
 
         // Explicit wait
-        helper.elementToBeClickable(getAppleTabletsPage().getShowButton(), FIVE_SECONDS);
-        helper.clickElementWithJS(getAppleTabletsPage().getShowButton());
+        getHelper().elementToBeClickable(getAppleTabletsPage().getShowButton(), FIVE_SECONDS);
+        getHelper().clickElementWithJS(getAppleTabletsPage().getShowButton());
 
-        return new AppleTabletsPage(driver);
+        return this;
     }
 
     public String getPageTitleText() {
@@ -50,7 +44,7 @@ public class AppleTabletsStep extends BaseStep {
                 FIVE_SECONDS, MILLISECOND_500);
 
 //        // Custom wait
-        WebElement webElementCustomWait = helper.waitUntilElementIsVisible(FIVE_SECONDS,
+        WebElement webElementCustomWait = getHelper().waitUntilElementIsVisible(FIVE_SECONDS,
                                             By.xpath(getAppleTabletsPage().getPageTitleXpath()));
         WebDriverWait wait = new WebDriverWait(driver, FIVE_SECONDS);
         wait.until(CustomWaits.isElementContainsText(webElementCustomWait, "Apple"));

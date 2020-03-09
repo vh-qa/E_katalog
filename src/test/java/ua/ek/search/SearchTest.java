@@ -8,9 +8,10 @@ public class SearchTest extends BaseTest {
 
     @Test
     public void searchTest(){
-        searchStep.goSearchPage(driver);
-        searchStep.enterSearchTextInSearchField("планшеты apple");
-        searchStep.makeSearch();
-        AssertUtils.makeAssert(searchStep.getSearchListTitleText(), "Планшеты Apple");
+        getSearchStep().goSearchPage()
+                       .enterSearchTextInSearchField("планшеты apple")
+                       .makeSearch();
+
+        AssertUtils.makeAssert(getSearchStep().getSearchListTitleText(), "Планшеты Apple");
     }
 }

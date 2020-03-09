@@ -1,8 +1,7 @@
 package ua.ek.bdd;
 
+import cucumber.api.testng.*;
 import cucumber.api.CucumberOptions;
-import cucumber.api.testng.CucumberFeatureWrapper;
-import cucumber.api.testng.TestNGCucumberRunner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -10,9 +9,9 @@ import org.testng.annotations.Test;
 
 @CucumberOptions(
 
-        features = "src/main/resources/features/tabletsfilter",
-        glue = "ua.ek.bdd.steps.tabletsfilter",
-        tags = "@TabletsFilters",
+        features = "src/main/resources/features/loginuserprofile",
+        glue = "ua.ek.bdd.loginuserprofile",
+        tags = "@LoginUserProfile",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",
@@ -20,7 +19,8 @@ import org.testng.annotations.Test;
                 "rerun:target/cucumber-reports/rerun.txt"
         })
 
-public class TabletsFiltersTestBDD {
+public class AuthTestBddRunner {
+
     private TestNGCucumberRunner testNGCucumberRunner;
 
     @BeforeClass
@@ -28,7 +28,7 @@ public class TabletsFiltersTestBDD {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @Test(dataProvider = "getFeatures")
+    @Test(groups="cucumber", dataProvider = "getFeatures")
     public void authLoginTest(CucumberFeatureWrapper cucumberFeatureWrapper) {
         testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
     }

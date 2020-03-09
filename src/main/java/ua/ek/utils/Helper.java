@@ -22,11 +22,11 @@ public class Helper {
         textField.sendKeys(inputText);
     }
 
-    public String getWebElementText(By by) {
+    public String getTextFromWebElement(By by) {
         return waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, by).getText().trim();
     }
 
-    public String getWebElementText(WebElement webElement) {
+    public String getTextFromWebElement(WebElement webElement) {
         return waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement).getText().trim();
     }
 
@@ -102,10 +102,17 @@ public class Helper {
         return String.valueOf(convertDoubleToInt(value));
     }
 
+    public static int convertStringToInt(String value){
+        return Integer.parseInt(value);
+    }
+
+    public static String convertStringFromUpperCaseToLowercase(String upperCaseString){
+        return upperCaseString.trim().toLowerCase();
+    }
+
     public static String getProperty(String propertyFileName, String propertyName){
         return PropertyReader
                 .from(propertyFileName, propertyName)
                 .getProperty(propertyName);
     }
 }
-

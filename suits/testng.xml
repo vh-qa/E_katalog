@@ -13,13 +13,13 @@
         </classes>
     </test>
 
-    <test name="Registration Tests Firefox">
-        <parameter name="browser" value="firefox" />
-        <packages>
-            <package name="ua.ek" />
-        </packages>
-        <classes>
-            <class name="ua.ek.registration.RegistrationPageTest" />
-        </classes>
-    </test>
+<!--    <test name="Registration Tests Firefox">-->
+<!--        <parameter name="browser" value="firefox" />-->
+<!--        <packages>-->
+<!--            <package name="ua.ek" />-->
+<!--        </packages>-->
+<!--        <classes>-->
+<!--            <class name="ua.ek.registration.RegistrationPageTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

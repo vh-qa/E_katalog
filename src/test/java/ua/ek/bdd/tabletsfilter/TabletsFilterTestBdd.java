@@ -1,6 +1,5 @@
-package ua.ek.bdd.steps.tabletsfilter;
+package ua.ek.bdd.tabletsfilter;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -8,30 +7,29 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ua.ek.pages.tablets.TabletsListPage;
 import ua.ek.steps.HomeStep;
 import ua.ek.steps.tablets.TabletsStep;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
+import ua.ek.utils.IWaitTimes;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class TabletsFilterSteps {
-
+public class TabletsFilterTestBdd {
     WebDriver driver;
     Helper helper;
     HomeStep homeStep;
     TabletsStep tabletsStep;
     AppleTabletsStep appleTabletsStep;
 
-    public TabletsFilterSteps() {
+    public TabletsFilterTestBdd() {
         initDrivers("chrome");
 
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
         helper = new Helper(driver);
@@ -47,17 +45,17 @@ public class TabletsFilterSteps {
 
     @When("^I go tablets page$")
     public void i_click_on_Компьютеры_link()  {
-        tabletsStep.goTabletsPage(driver);
+        tabletsStep.goTabletsPage();
     }
 
     @And("^I click on \"([^\"]*)\" checkbox$")
     public void i_click_on_checkbox(String manufacturer)  {
-     tabletsStep.clickManufacturer(manufacturer);
+        tabletsStep.clickManufacturer(manufacturer);
     }
 
     @And("^I click on 'Показать' button$")
     public void i_click_on_Показать_button()  {
-      tabletsStep.clickShowButton();
+        tabletsStep.clickShowButton();
     }
 
     @Then("^I am on page with list of Apples tablets$")

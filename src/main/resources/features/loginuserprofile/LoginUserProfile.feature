@@ -29,8 +29,10 @@
       Examples:
 
       | login            | password                   | error_message          |
+      | some_new_login   |                            | Введите пароль!        |
       | some_new_login   | some_new_password_password | Пароль указан неверно! |
       | some_new_login   | 123456789                  | Пароль указан неверно! |
+      | some_new_login   | !@#$%^&*(                  | Пароль указан неверно! |
 
     Scenario Outline: Negative password scenario
       Given I am on home page
@@ -44,5 +46,7 @@
       Examples:
 
         | login                  | password          | error_message                              |
+        |                        | some_new_password | Введите логин/email!                       |
         | some_new_login_login   | some_new_password | Логина some_new_login_login не существует! |
         | 123456789              | some_new_password | Логина 123456789 не существует!            |
+        | !@#$%^&*(              | some_new_password | email !@#$%^&*( указан неверно!            |

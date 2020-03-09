@@ -11,41 +11,45 @@ public class RegistrationPageTest extends BaseTest {
 
     @BeforeMethod
     public void openRegistryFormBeforeTest() {
-        registrationStep.goAuthPage(driver);
-        registrationStep.clickRegisterLink();
+        getRegistrationStep().goAuthPage()
+                        .clickRegisterLink();
     }
 
     // Negative scenario
 
     @Test
     public void loginFieldRegistrationFormTestEmptyLogin() {
-        registrationStep.enterLogin("");
-        registrationStep.clickSubmitButton();
-        AssertUtils.makeAssert(registrationStep.getRegistrationPage().getLoginErrorMessage(),
+        getRegistrationStep().enterLogin("")
+                        .clickSubmitButton();
+
+        AssertUtils.makeAssert(getRegistrationStep().getLoginErrorMessage(),
                 "Заполните поле \"Имя\"");
     }
 
     @Test
     public void emailFieldRegistrationFormTestEmptyEmail() {
-        registrationStep.enterEmail("");
-        registrationStep.clickSubmitButton();
-        AssertUtils.makeAssert(registrationStep.getRegistrationPage().getEmailErrorMessage(),
+        getRegistrationStep().enterEmail("")
+                        .clickSubmitButton();
+
+        AssertUtils.makeAssert(getRegistrationStep().getEmailErrorMessage(),
                 "Заполните поле \"email\"");
     }
 
     @Test
     public void emailFieldRegistrationFormTestIncorrectEmail() {
-        registrationStep.enterEmail("some-email");
-        registrationStep.clickSubmitButton();
-        AssertUtils.makeAssert(registrationStep.getRegistrationPage().getEmailIncorrectErrorMessage(),
+        getRegistrationStep().enterEmail("some-email")
+                        .clickSubmitButton();
+
+        AssertUtils.makeAssert(getRegistrationStep().getEmailIncorrectErrorMessage(),
                 "Поле \"e-mail\" введено некорректно");
     }
 
     @Test
     public void passwordFieldRegistrationFormEmptyPassword() {
-        registrationStep.enterPassword("");
-        registrationStep.clickSubmitButton();
-        AssertUtils.makeAssert(registrationStep.getRegistrationPage().getPasswordErrorMessage(),
+        getRegistrationStep().enterPassword("")
+                        .clickSubmitButton();
+
+        AssertUtils.makeAssert(getRegistrationStep().getPasswordErrorMessage(),
                 "Заполните поле \"Пароль\"");
     }
 
@@ -55,12 +59,12 @@ public class RegistrationPageTest extends BaseTest {
     public void successfulUserRegistration() {
         User user = DataGenerator.getUser();
 
-        registrationStep.enterLogin(user.getLogin());
-        registrationStep.enterEmail(user.getEmail());
-        registrationStep.enterPassword(user.getPassword());
-        registrationStep.clickSubmitButton();
+        getRegistrationStep().enterLogin(user.getLogin())
+                        .enterEmail(user.getEmail())
+                        .enterPassword(user.getPassword())
+                        .clickSubmitButton();
 
-        AssertUtils.makeAssert(registrationStep.getSuccessfulUserRegistrationTextFromWebElement(),
+        AssertUtils.makeAssert(getRegistrationStep().getSuccessfulUserRegistrationTextFromWebElement(),
                 "Регистрация прошла успешно!");
     }
 }

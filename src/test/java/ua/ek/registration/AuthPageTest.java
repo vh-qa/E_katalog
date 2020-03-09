@@ -11,8 +11,8 @@ public class AuthPageTest extends BaseTest {
 
     @BeforeMethod
     public void openAuthFormBeforeTest() {
-        authStep.goAuthPage(driver);
-        authStep.clickAuthLink();
+        getAuthStep().goAuthPage()
+                .clickAuthLink();
     }
 
     // Positive scenario
@@ -21,28 +21,30 @@ public class AuthPageTest extends BaseTest {
     public void authSuccessfulTestWithLogin() {
         User user = DataGenerator.getPositiveUserData();
 
-        authStep.enterLoginOrEmail(user.getLogin());
-        authStep.enterPassword(user.getPassword());
-        authStep.clickRememberMeCheckBoxAuth(); // uncheck checkbox
-        authStep.clickSubmitButton();
-        AssertUtils.makeAssert(authStep.getAuthPage().getNickLinkText(),
+        getAuthStep().enterLoginOrEmail(user.getLogin())
+                .enterPassword(user.getPassword())
+                .clickRememberMeCheckBoxAuth() // uncheck checkbox
+                .clickSubmitButton();
+
+        AssertUtils.makeAssert(getUserProfileStep().getNickLinkText(),
                 "some_login_15");
 
-        authStep.clickLogOutFromUserProfileLink();
+        getUserProfileStep().clickLogOutFromUserProfileLink();
     }
 
     @Test
     public void authSuccessfulTestWithEmail() {
         User user = DataGenerator.getPositiveUserData();
 
-        authStep.enterLoginOrEmail(user.getEmail());
-        authStep.enterPassword(user.getPassword());
-        authStep.clickRememberMeCheckBoxAuth(); // uncheck checkbox
-        authStep.clickSubmitButton();
-        AssertUtils.makeAssert(authStep.getAuthPage().getNickLinkText(),
+        getAuthStep().enterLoginOrEmail(user.getEmail())
+                .enterPassword(user.getPassword())
+                .clickRememberMeCheckBoxAuth() // uncheck checkbox
+                .clickSubmitButton();
+
+        AssertUtils.makeAssert(getUserProfileStep().getNickLinkText(),
                 "some_login_15");
 
-        authStep.clickLogOutFromUserProfileLink();
+        getUserProfileStep().clickLogOutFromUserProfileLink();
     }
 
     // Negative scenario
@@ -51,40 +53,41 @@ public class AuthPageTest extends BaseTest {
     public void authUnSuccessfulTestWithLogin() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
 
-        authStep.enterLoginOrEmail(user.getLogin());
-        authStep.enterPassword(user.getPassword());
-        authStep.clickSubmitButton();
+        getAuthStep().enterLoginOrEmail(user.getLogin())
+                .enterPassword(user.getPassword())
+                .clickSubmitButton();
 
-        AssertUtils.makeAssert(authStep.getErrorAuthLoginText(),
+        AssertUtils.makeAssert(getAuthStep().getErrorAuthLoginText(),
                 "Введите логин/email!");
 
-        authStep.clickCloseLinkRegistrationForm();
+        getAuthStep().clickCloseLinkRegistrationForm();
     }
 
     @Test
     public void authUnSuccessfulTestWithEmail() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
 
-        authStep.enterLoginOrEmail(user.getEmail());
-        authStep.enterPassword(user.getPassword());
-        authStep.clickSubmitButton();
+        getAuthStep().enterLoginOrEmail(user.getEmail())
+                .enterPassword(user.getPassword())
+                .clickSubmitButton();
 
-        AssertUtils.makeAssert(authStep.getErrorAuthLoginText(),
+        AssertUtils.makeAssert(getAuthStep().getErrorAuthLoginText(),
                 "Введите логин/email!");
 
-        authStep.clickCloseLinkRegistrationForm();
+        getAuthStep().clickCloseLinkRegistrationForm();
     }
 
     @Test
     public void authUnSuccessfulTestWithPassword() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
 
-        authStep.enterLoginOrEmail(user.getLogin());
-        authStep.enterPassword(user.getPassword());
-        authStep.clickSubmitButton();
-        AssertUtils.makeAssert(authStep.getErrorAuthPasswordText(),
+        getAuthStep().enterLoginOrEmail(user.getLogin())
+                .enterPassword(user.getPassword())
+                .clickSubmitButton();
+
+        AssertUtils.makeAssert(getAuthStep().getErrorAuthPasswordText(),
                 "Введите пароль!");
 
-        authStep.clickCloseLinkRegistrationForm();
+        getAuthStep().clickCloseLinkRegistrationForm();
     }
 }

@@ -14,7 +14,7 @@ private WebElement textPricesField;
         super(driver);
     }
 
-    public String getTextPrices(){
-        return getHelper().getWebElementText(textPricesField);
+    public WebElement getTextPricesField(){
+        return textPricesField;
     }
 }

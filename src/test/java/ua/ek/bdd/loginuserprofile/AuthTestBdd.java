@@ -1,23 +1,24 @@
-package ua.ek.bdd.steps.loginuserprofile;
+package ua.ek.bdd.loginuserprofile;
 
-import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.java.en.And;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ua.ek.base.BaseTest;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.auth.AuthStep;
+import ua.ek.steps.registration.AuthStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class AuthTestSteps {
+public class AuthTestBdd extends BaseTest {
 
     WebDriver driver;
     Helper helper;
@@ -25,7 +26,7 @@ public class AuthTestSteps {
     AuthStep authStep;
     AssertUtils assertUtils;
 
-    public AuthTestSteps() {
+    public AuthTestBdd() {
         initDrivers("chrome");
 
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -49,10 +50,10 @@ public class AuthTestSteps {
         homeStep.clickEnterLink();
     }
 
-//  @Then("^I am on auth form$")
+    //  @Then("^I am on auth form$")
     @Then("^I should see 'Войти' link on auth form$")
     public void validateAuthForm() {
-        assertUtils.makeAssert(helper.getWebElementText(authStep.getAuthPage().getAuthLink()),
+        assertUtils.makeAssert(helper.getTextFromWebElement(authStep.getAuthPage().getAuthLink()),
                 "Войти");
     }
 
@@ -78,7 +79,7 @@ public class AuthTestSteps {
 
     @Then("^I should see \"([^\"]*)\" link$")
     public void shouldSeeLink(String nickText) {
-        AssertUtils.makeAssert(authStep.getAuthPage().getNickLinkText(), nickText);
+        AssertUtils.makeAssert(authStep.getUserProfilePage().getNickLink().getText(), nickText);
     }
 
     @And("^I close browser$")

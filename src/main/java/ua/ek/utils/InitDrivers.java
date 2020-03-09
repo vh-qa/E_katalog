@@ -3,9 +3,7 @@ package ua.ek.utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,28 +12,27 @@ import java.util.concurrent.TimeUnit;
 
 public class InitDrivers {
 
-    private final static int THREE_SECONDS = 3;
-    protected WebDriver driver;
+    private WebDriver driver;
 
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser) throws Exception {
-        initDrivers(browser);
+        initWebDrivers(browser);
 
         // An implicit wait of three seconds is written to increase the stability of the tests.
         // This timeout applies to all web elements.
         // Explicit waits are prescribed for specific web elements
         // (the necessary conditions and the necessary waiting time),
         // implicit waits does not affect such elements.
-        driver.manage().timeouts().implicitlyWait(THREE_SECONDS, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
 
-    public WebDriver getDriver() {
+    public WebDriver getWebDriver() {
         return driver;
     }
 
-    private void initDrivers(String browser) {
+    private void initWebDrivers(String browser) {
 
         Properties properties = new Properties();
         try {

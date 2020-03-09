@@ -1,6 +1,5 @@
-package ua.ek.bdd.steps.userregistration;
+package ua.ek.bdd.userregistration;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,17 +8,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.auth.AuthStep;
-import ua.ek.steps.auth.RegistrationStep;
+import ua.ek.steps.registration.AuthStep;
+import ua.ek.steps.registration.RegistrationStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
+import ua.ek.utils.IWaitTimes;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class UserRegistrationSteps {
+public class UserRegistrationTestBdd {
 
     WebDriver driver;
     Helper helper;
@@ -28,10 +28,10 @@ public class UserRegistrationSteps {
     RegistrationStep registrationStep;
     AssertUtils assertUtils;
 
-    public UserRegistrationSteps() {
+    public UserRegistrationTestBdd() {
         initDrivers("chrome");
 
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
         helper = new Helper(driver);
@@ -57,7 +57,7 @@ public class UserRegistrationSteps {
     @Then("^I should see 'Регистрация' link on auth form$")
     public void validateRegistrationForm() {
         assertUtils.makeAssert(
-                helper.getWebElementText(registrationStep.getRegistrationPage().getRegisterLink()),
+                helper.getTextFromWebElement(registrationStep.getRegistrationPage().getRegisterLink()),
                 "Регистрация");
     }
 
@@ -68,7 +68,7 @@ public class UserRegistrationSteps {
 
     @And("^I enter login \"([^\"]*)\"$")
     public void enterLogin(String login) {
-       registrationStep.enterLogin(login);
+        registrationStep.enterLogin(login);
     }
 
     @And("^I enter email \"([^\"]*)\"$")

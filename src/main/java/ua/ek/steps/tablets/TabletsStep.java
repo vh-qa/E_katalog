@@ -1,33 +1,36 @@
 package ua.ek.steps.tablets;
 
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import ua.ek.pages.tablets.TabletsManufacturerPage;
-import ua.ek.pages.tablets.TabletsPage;
+import ua.ek.steps.HomeStep;
 import ua.ek.steps.base.BaseStep;
-import ua.ek.utils.Helper;
+import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
+import ua.ek.utils.AssertUtils;
 import ua.ek.utils.IManufacturers;
 import ua.ek.utils.IWaitTimes;
 import ua.ek.utils.IDisplayDiagonals;
 
 public class TabletsStep extends BaseStep {
 
-    private WebDriver driver;
-    private Helper helper;
+    private HomeStep homeStep;
+    private TabletsStep tabletsStep;
+    private AppleTabletsStep appleTabletsStep;
 
     public TabletsStep(WebDriver driver) {
         super(driver);
-        this.driver = driver;
-        helper = new Helper(driver);
     }
 
-    public TabletsPage goTabletsPage(WebDriver driver){
-        helper.clickWebElement(getHomePage().getComputersLink());
-        helper.clickElementWithJS(getHomePage().getTabletsLink());
-        return new TabletsPage(driver);
+    public TabletsStep goTabletsPage(){
+        getHelper().clickWebElement(getHomePage().getComputersLink());
+        getHelper().clickElementWithJS(getHomePage().getTabletsLink());
+        return this;
     }
 
-    public TabletsPage clickManufacturer(String manufacturerName) {
+    public TabletsStep clickManufacturer(String manufacturerName) {
 
         switch (manufacturerName.trim().toLowerCase()) {
             case IManufacturers.APPLE:
@@ -43,16 +46,16 @@ public class TabletsStep extends BaseStep {
                 break;
         }
 
-        return new TabletsPage(driver);
+        return this;
     }
 
     public void clickManufacturer(WebElement webElement) {
-//      helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
-        helper.elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
-        helper.clickElementWithJS(webElement);
+//      getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
+        getHelper().elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
+        getHelper().clickElementWithJS(webElement);
     }
 
-    public TabletsPage clickDisplayDiagonal(int displayDiagonal) {
+    public TabletsStep clickDisplayDiagonal(int displayDiagonal) {
         switch (displayDiagonal) {
             case IDisplayDiagonals.TEN_INCH:
                 clickDisplayDiagonal(getTabletsPage().getDisplayDiagonal10inch());
@@ -61,17 +64,44 @@ public class TabletsStep extends BaseStep {
                 break;
         }
 
-        return new TabletsPage(driver);
+        return this;
     }
 
     public void clickDisplayDiagonal(WebElement webElement) {
- //     helper.waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
-        helper.elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
-        helper.clickElementWithJS(webElement);
+ //     getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
+        getHelper().elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
+        getHelper().clickElementWithJS(webElement);
     }
 
-    public TabletsManufacturerPage clickShowButton() {
-        helper.clickElementWithJS(getTabletsPage().getShowButton());
-        return new TabletsManufacturerPage(driver);
+    public TabletsStep clickShowButton() {
+        getHelper().clickElementWithJS(getTabletsPage().getShowButton());
+        return this;
+    }
+
+    // Methods for BDD
+
+    @Given("^I am on home page$")
+    public void goHomePage()  {
+        homeStep.goHomePage();
+    }
+
+    @When("^I go tablets page$")
+    public void goTabletsPageBDD()  {
+        tabletsStep.goTabletsPage();
+    }
+
+    @And("^I click on \"([^\"]*)\" checkbox$")
+    public void clickCheckBox(String manufacturer)  {
+        tabletsStep.clickManufacturer(manufacturer);
+    }
+
+    @And("^I click on 'Показать' button$")
+    public void clickShowButtonBDD()  {
+        tabletsStep.clickShowButton();
+    }
+
+    @Then("^I am on page with list of Apples tablets$")
+    public void pageWithListOfApplesTablets() {
+        AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), "Планшеты Apple");
     }
 }

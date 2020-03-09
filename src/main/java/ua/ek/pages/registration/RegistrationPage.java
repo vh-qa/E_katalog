@@ -98,10 +98,6 @@ public class RegistrationPage extends BasePage {
         return successfulUserRegistrationElement;
     }
 
-    public WebElement getSuccessfulUserRegistrationText() {
-        return successfulUserRegistrationText;
-    }
-
     public WebElement getSuccessfulUserRegistrationButton() {
         return successfulUserRegistrationButton;
     }
@@ -120,21 +116,5 @@ public class RegistrationPage extends BasePage {
 
     public By getPasswordErrorElement(){
         return passwordErrorElement;
-    }
-
-    public String getLoginErrorMessage(){
-        return getHelper().getWebElementText(loginErrorElement);
-    }
-
-    public String getEmailErrorMessage(){
-        return getHelper().getWebElementText(emailErrorElement);
-    }
-
-    public String getEmailIncorrectErrorMessage(){
-        return getHelper().getWebElementText(emailIncorrectErrorElement);
-    }
-
-    public String getPasswordErrorMessage(){
-        return getHelper().getWebElementText(passwordErrorElement);
     }
 }
