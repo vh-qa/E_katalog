@@ -9,6 +9,7 @@
             <package name="ua.ek" />
         </packages>
         <classes>
+            <class name="ua.ek.registration.AuthPageTest" />
             <class name="ua.ek.registration.RegistrationPageTest" />
         </classes>
     </test>
@@ -22,4 +23,5 @@
 <!--            <class name="ua.ek.registration.RegistrationPageTest" />-->
 <!--        </classes>-->
 <!--    </test>-->
+    
 </suite>
