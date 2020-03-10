@@ -13,7 +13,6 @@ import ua.ek.steps.tablets.*;
 import ua.ek.steps.tablets.filters.PriceFilterStep;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.InitDrivers;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 

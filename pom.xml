@@ -23,7 +23,13 @@
     <common.config>${basedir}/src/main/resources/common.properties</common.config>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <cucumber.report.json.location>${project.basedir}/json</cucumber.report.json.location>
-    <generated.report.location>${project.build.directory}/cluecumber-report</generated.report.location>
+
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <aspectj.version>1.9.5</aspectj.version>
+        <allure-testng.version>2.13.2</allure-testng.version>
+
+        <allure.version>2.13.2</allure.version>
+        <java.version>1.8</java.version>
 
     </properties>
 
@@ -48,7 +54,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.1.0</version>
-            <!--            <scope>test</scope>   -->
+<!--            <scope>test</scope>-->
         </dependency>
 
         <!-- Log4j2 -->
@@ -97,6 +103,27 @@
             </exclusions>
         </dependency>
 
+        <!-- Allure -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.30</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Rest Assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -130,28 +157,73 @@
         </resources>
 
         <plugins>
+
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M4</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <systemProperties>
-                        <property>
-                            <name>common.cfg</name>
-<!--                            <value>${common.config}</value>   -->
-                            <value>${basedir}/src/main/resources/common.properties</value>
-                        </property>
-                    </systemProperties>
-                    <!--Путь к конфигурации testng.xml-->
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <suiteXmlFiles>
                         <suiteXmlFile>suits/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <systemProperties>
+                        <property>
+<!--                            <name>allure.results.directory</name>-->
+<!--                            <value>${project.build.directory}/target/allure-results</value>-->
+                        </property>
+                    </systemProperties>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>2.10.0</reportVersion>
+<!--                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>-->
                 </configuration>
             </plugin>
 
         </plugins>
 
     </build>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+<!--                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>

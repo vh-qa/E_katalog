@@ -1,5 +1,6 @@
 package ua.ek.registration;
 
+import io.qameta.allure.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
@@ -17,7 +18,8 @@ public class AuthPageTest extends BaseTest {
 
     // Positive scenario
 
-    @Test
+    @Test(description = "Positive auth scenario")
+    @Description("Test Description: Successful auth test using valid login and password")
     public void authSuccessfulTestWithLogin() {
         User user = DataGenerator.getPositiveUserData();
 
@@ -32,7 +34,8 @@ public class AuthPageTest extends BaseTest {
         getUserProfileStep().clickLogOutFromUserProfileLink();
     }
 
-    @Test
+    @Test(description = "Positive auth scenario")
+    @Description("Test Description: Successful auth test using valid email and password")
     public void authSuccessfulTestWithEmail() {
         User user = DataGenerator.getPositiveUserData();
 
@@ -49,7 +52,8 @@ public class AuthPageTest extends BaseTest {
 
     // Negative scenario
 
-    @Test
+    @Test(description = "Negative auth scenario")
+    @Description("Test Description: Unsuccessful auth test using invalid login")
     public void authUnSuccessfulTestWithLogin() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
 
@@ -63,7 +67,8 @@ public class AuthPageTest extends BaseTest {
         getAuthStep().clickCloseLinkRegistrationForm();
     }
 
-    @Test
+    @Test(description = "Negative auth scenario")
+    @Description("Test Description: Unsuccessful auth test using invalid email")
     public void authUnSuccessfulTestWithEmail() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
 
@@ -77,7 +82,8 @@ public class AuthPageTest extends BaseTest {
         getAuthStep().clickCloseLinkRegistrationForm();
     }
 
-    @Test
+    @Test(description = "Negative auth scenario")
+    @Description("Test Description: Unsuccessful auth test using invalid password")
     public void authUnSuccessfulTestWithPassword() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
 
