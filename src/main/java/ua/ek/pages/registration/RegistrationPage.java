@@ -9,21 +9,24 @@ import ua.ek.base.BasePage;
 public class RegistrationPage extends BasePage {
 
     // 'Регистрация' link on the registration form
-    @FindBy(xpath = ".//em[contains(text(), 'Регистрация')]")
+    @FindBy(xpath = ".//div[@class='signin-with signin-with-reg d-flex justify-content-center align-items-center']/span[@class='j-wrap orange']")
     private WebElement registerLink;
 
     // Locators for registration form fields
 
-    @FindBy(xpath = ".//input[@placeholder='Имя']")
+    @FindBy(xpath = ".//div[@class='registration-name ek-form-group']/input[@class='ek-form-control']")
     private WebElement loginField;
 
-    @FindBy(xpath = ".//input[@placeholder='e-mail']")
+    @FindBy(xpath = ".//div[@class='registration-email ek-form-group']/input[@class='ek-form-control']")
     private WebElement emailField;
 
-    @FindBy(xpath = ".//input[@placeholder='пароль']")
+    @FindBy(xpath = ".//div[@class='registration-password ek-form-group']/input[@class='ek-form-control']")
     private WebElement passwordField;
 
-    @FindBy(xpath = ".//input[@name='new_reg_' and @class='l-but2']")
+    @FindBy(xpath = ".//div[@class='registration-actions r-text']/button[@class='ek-form-btn']")
+    private WebElement backButtonRegistration;
+
+    @FindBy(xpath = ".//div[@class='registration-actions r-text']/button[@class='ek-form-btn blue']")
     private WebElement submitButton;
 
     @FindBy(xpath = ".//input[@name='rules_accepted_']")
@@ -34,33 +37,33 @@ public class RegistrationPage extends BasePage {
 
     // Locators for successful user registration
 
-    @FindBy(xpath = ".//div[@class='l-div']/div[@class='l-ok']")
+    @FindBy(xpath = ".//div[@id='mui_user_login_window']/div[@class='modal-header']")
     private WebElement successfulUserRegistrationElement; // Регистрация прошла успешно!
 
-    @FindBy(xpath = ".//div[@class='l-d2']")
+    @FindBy(xpath = ".//div[@class='ek-form-group']/div[@class='ek-form-text']")
     private WebElement successfulUserRegistrationText;
 
-    @FindBy(xpath = ".//input[@class='l-but2']")
+    @FindBy(xpath = ".//div[@class='d-flex justify-content-end']")
     private WebElement successfulUserRegistrationButton; // Подтвердить
 
     // Locators for error text links
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Имя')]")
+    @FindBy(xpath = ".//div[@class='registration-name ek-form-group invalid']/div[@class='ek-form-text']")
     private WebElement loginError; // Заполните поле "Имя"
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'email')]")
+    @FindBy(xpath = ".//div[@class='registration-email ek-form-group invalid']/div[@class='ek-form-text']")
     private WebElement emailError; // Заполните поле "email"
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(),'e-mail')]")
+    @FindBy(xpath = ".//div[@class='registration-email ek-form-group invalid']/div[@class='ek-form-text']")
     private WebElement emailIncorrectError; // Поле "e-mail" введено некорректно
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Пароль')]")
+    @FindBy(xpath = ".//div[@class='registration-password ek-form-group invalid']/div[@class='ek-form-text']")
     private WebElement passwordError; // Заполните поле "Пароль"
 
-    private By loginErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Имя')]");
-    private By emailErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'email')]");
-    private By emailIncorrectErrorElement = By.xpath(".//div[@id='mui_user_login_window_reg']/div[@class='l-err' and contains(text(),'e-mail')]");
-    private By passwordErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Пароль')]");
+    private By loginErrorElement = By.xpath(".//div[@class='registration-name ek-form-group invalid']/div[@class='ek-form-text']");
+    private By emailErrorElement = By.xpath(".//div[@class='registration-email ek-form-group invalid']/div[@class='ek-form-text']");
+    private By emailIncorrectErrorElement = By.xpath(".//div[@class='registration-email ek-form-group invalid']/div[@class='ek-form-text']");
+    private By passwordErrorElement = By.xpath(".//div[@class='registration-password ek-form-group invalid']/div[@class='ek-form-text']");
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -80,6 +83,10 @@ public class RegistrationPage extends BasePage {
 
     public WebElement getPasswordField() {
         return passwordField;
+    }
+
+    public WebElement getBackButtonRegistration() {
+        return backButtonRegistration;
     }
 
     public WebElement getSubmitButton() {

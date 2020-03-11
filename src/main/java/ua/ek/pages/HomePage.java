@@ -14,6 +14,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = ".//span[@class='wu_entr']//em")
     private WebElement enterLink; // "Войти" link
 
+    @FindBy(xpath = ".//div[@id='mui_user_login_window']/div[@style='display: block;']")
+    private WebElement titleAuthRegistrationForm; // Войдите с помощью
+
     @FindBy(xpath = ".//ul[contains(@class,'mainmenu-list')]/li/a[contains(text(),'Компьютеры')]")
     private WebElement computersLink; // Menu "Компьютеры"
 

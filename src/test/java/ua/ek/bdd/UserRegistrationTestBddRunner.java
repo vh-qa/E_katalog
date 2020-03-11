@@ -29,7 +29,7 @@ public class UserRegistrationTestBddRunner {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @Test(dataProvider = "getFeatures")
+    @Test(groups="cucumber", dataProvider = "getFeatures")
     public void authLoginTest(CucumberFeatureWrapper cucumberFeatureWrapper) {
         testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
     }

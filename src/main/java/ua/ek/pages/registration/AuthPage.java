@@ -7,34 +7,31 @@ import ua.ek.base.BasePage;
 
 public class AuthPage extends BasePage {
 
-    @FindBy(xpath = ".//div[@class='l-m']/div/em[contains(text(),'Войти')]")
+    @FindBy(xpath = ".//div[@class='signin-with-wrap clearfix']/div[@class=\"signin-with signin-with-ek d-flex justify-content-center align-items-center\"]")
     private WebElement authLink; // 'Войти' link on the registration form
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/input[@type='text']")
+    @FindBy(xpath = ".//div[@class='signin-name ek-form-group']/input[@class='ek-form-control']")
     private WebElement loginOrEmailAuthField;
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/div/input[@type='password']")
+    @FindBy(xpath = ".//div[@class='signin-password ek-form-group']/input[@class='ek-form-control']")
     private WebElement passwordAuthField;
 
-    @FindBy(xpath = ".//input[@id='wu_l_frm']")
+    @FindBy(xpath = ".//div[@class='signin-remember grey d-flex align-items-center']/input[@name='remember_me_']")
     private WebElement rememberMeCheckBoxAuth;
 
-    @FindBy(xpath = ".//input[@type='submit' and @value='Войти']")
+    @FindBy(xpath = ".//div[@class='signin-actions ml-auto']/button[@class='ek-form-btn']")
+    private WebElement backButtonAuth;
+
+    @FindBy(xpath = ".//div[@class='signin-actions ml-auto']/button[@class='ek-form-btn blue']")
     private WebElement submitButtonAuth;
 
-//    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите логин')]")
-//    private WebElement errorLoginAuth; // Введите логин/email!
+    @FindBy(xpath = ".//div[@class='signin-name ek-form-group invalid']/div[@class='ek-form-text']")
+    private WebElement errorLoginAuth; // Введите логин/email!
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/div[@class='l-err']")
-    private WebElement errorLoginAuth;
+    @FindBy(xpath = ".//div[@class='signin-password ek-form-group invalid']/div[@class='ek-form-text']")
+    private WebElement errorPasswordAuth; // Введите пароль!
 
-//    @FindBy(xpath = ".//div[@class='l-err' and contains(text(),'Введите пароль')]")
-//    private WebElement errorPasswordAuth; // Введите пароль!
-
-    @FindBy(xpath = ".//div[@id='mui_user_login_window_avt']/div[@class='l-err']")
-    private WebElement errorPasswordAuth;
-
-    @FindBy(xpath = ".//div[@class='jclose']")
+    @FindBy(xpath = ".//button[@class='swal2-close']")
     private WebElement closeLinkRegistrationForm;
 
     public AuthPage(WebDriver driver) {
@@ -57,6 +54,10 @@ public class AuthPage extends BasePage {
         return rememberMeCheckBoxAuth;
     }
 
+    public WebElement getBackButtonAuth() {
+        return backButtonAuth;
+    }
+
     public WebElement getSubmitButtonAuth() {
         return submitButtonAuth;
     }
@@ -73,3 +74,4 @@ public class AuthPage extends BasePage {
         return closeLinkRegistrationForm;
     }
 }
+

@@ -5,19 +5,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ua.ek.steps.HomeStep;
 import ua.ek.steps.registration.AuthStep;
 import ua.ek.steps.registration.RegistrationStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
-import ua.ek.utils.IWaitTimes;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+import ua.ek.utils.InitDrivers;
 
 public class UserRegistrationTestBdd {
 
@@ -29,10 +22,15 @@ public class UserRegistrationTestBdd {
     AssertUtils assertUtils;
 
     public UserRegistrationTestBdd() {
-        initDrivers("chrome");
 
-        driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        InitDrivers initDrivers = new InitDrivers();
+        try {
+            initDrivers.setUp("chrome");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        driver = initDrivers.getWebDriver();
 
         helper = new Helper(driver);
         homeStep = new HomeStep(driver);
@@ -90,27 +88,5 @@ public class UserRegistrationTestBdd {
     public void shouldSeeSuccessfulRegistrationMessage(String successfulRegistrationText)  {
         AssertUtils.makeAssert(registrationStep.getRegistrationPage().getSuccessfulUserRegistrationElement().getText(),
                 successfulRegistrationText);
-    }
-
-    private void initDrivers(String browser) {
-
-        Properties properties = new Properties();
-        try {
-            properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/properties/common.properties"), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        switch (browser) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", properties.getProperty("chrome.driver"));
-                driver = new ChromeDriver();
-                break;
-            case "firefox":
-                driver = new FirefoxDriver();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown browser " + browser);
-        }
     }
 }

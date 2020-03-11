@@ -15,107 +15,107 @@ import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.InitDrivers;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-
 import static org.testng.FileAssert.fail;
 
-public abstract class BaseTest extends InitDrivers {
+ public abstract class BaseTest extends InitDrivers {
 
-    private final static Logger LOG = LogManager.getLogger(BasePage.class);
-    private StringBuffer verificationErrors = new StringBuffer();
+     private final static Logger LOG = LogManager.getLogger(BasePage.class);
+     private StringBuffer verificationErrors = new StringBuffer();
 
-    private HomeStep homeStep;
-    private RegistrationStep registrationStep;
-    private AuthStep authStep;
-    private UserProfileStep userProfileStep;
-    private TabletStep tabletStep;
-    private TabletsStep tabletsStep;
-    private TabletsListStep tabletsListStep;
-    private TabletsManufacturerStep tabletsManufacturerStep;
-    private AppleTabletsStep appleTabletsStep;
-    private SearchStep searchStep;
-    private PriceFilterStep priceFilterStep;
+     private HomeStep homeStep;
+     private RegistrationStep registrationStep;
+     private AuthStep authStep;
+     private UserProfileStep userProfileStep;
+     private TabletStep tabletStep;
+     private TabletsStep tabletsStep;
+     private TabletsListStep tabletsListStep;
+     private TabletsManufacturerStep tabletsManufacturerStep;
+     private AppleTabletsStep appleTabletsStep;
+     private SearchStep searchStep;
+     private PriceFilterStep priceFilterStep;
 
-    private void init (WebDriver driver){
-        homeStep = new HomeStep(driver);
-        registrationStep = new RegistrationStep(driver);
-        authStep = new AuthStep(driver);
-        userProfileStep = new UserProfileStep(driver);
-        tabletStep = new TabletStep(driver);
-        tabletsStep = new TabletsStep(driver);
-        tabletsListStep = new TabletsListStep(driver);
-        tabletsManufacturerStep = new TabletsManufacturerStep(driver);
-        appleTabletsStep = new AppleTabletsStep(driver);
-        searchStep = new SearchStep(driver);
-        priceFilterStep = new PriceFilterStep(driver);
-    }
+     private void init(WebDriver driver) {
+         homeStep = new HomeStep(driver);
+         registrationStep = new RegistrationStep(driver);
+         authStep = new AuthStep(driver);
+         userProfileStep = new UserProfileStep(driver);
+         tabletStep = new TabletStep(driver);
+         tabletsStep = new TabletsStep(driver);
+         tabletsListStep = new TabletsListStep(driver);
+         tabletsManufacturerStep = new TabletsManufacturerStep(driver);
+         appleTabletsStep = new AppleTabletsStep(driver);
+         searchStep = new SearchStep(driver);
+         priceFilterStep = new PriceFilterStep(driver);
+     }
 
-    @BeforeClass
-    public void initSteps(){
-        init(getWebDriver());
-    }
+     @BeforeClass
+     public void initSteps() {
+         init(getWebDriver());
+     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() throws Exception {
-        getWebDriver().quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
-        }
-    }
+     @AfterClass(alwaysRun = true)
+     public void tearDown() throws Exception {
+         getWebDriver().quit();
 
-    @BeforeMethod
-    public void initStepsAndLogTestStart(Method method, Object[] params) {
-        homeStep.goHomePage();
-        LOG.info("Start test {} with parameters {}",
-                method.getName(), Arrays.toString(params));
-    }
+         String verificationErrorString = verificationErrors.toString();
+         if (!"".equals(verificationErrorString)) {
+             fail(verificationErrorString);
+         }
+     }
 
-    @AfterMethod(alwaysRun = true)
-    public void logTestStop(Method method) {
-        LOG.info("Stop test {}", method.getName());
-    }
+     @BeforeMethod
+     public void initStepsAndLogTestStart(Method method, Object[] params) {
+         homeStep.goHomePage();
+         LOG.info("Start test {} with parameters {}",
+                 method.getName(), Arrays.toString(params));
+     }
 
-    public HomeStep getHomeStep() {
-        return homeStep;
-    }
+     @AfterMethod(alwaysRun = true)
+     public void logTestStop(Method method) {
+         LOG.info("Stop test {}", method.getName());
+     }
 
-    public RegistrationStep getRegistrationStep() {
-        return registrationStep;
-    }
+     public HomeStep getHomeStep() {
+         return homeStep;
+     }
 
-    public AuthStep getAuthStep() {
-        return authStep;
-    }
+     public RegistrationStep getRegistrationStep() {
+         return registrationStep;
+     }
 
-    public UserProfileStep getUserProfileStep() {
-        return userProfileStep;
-    }
+     public AuthStep getAuthStep() {
+         return authStep;
+     }
 
-    public TabletStep getTabletStep() {
-        return tabletStep;
-    }
+     public UserProfileStep getUserProfileStep() {
+         return userProfileStep;
+     }
 
-    public TabletsStep getTabletsStep() {
-        return tabletsStep;
-    }
+     public TabletStep getTabletStep() {
+         return tabletStep;
+     }
 
-    public TabletsListStep getTabletsListStep() {
-        return tabletsListStep;
-    }
+     public TabletsStep getTabletsStep() {
+         return tabletsStep;
+     }
 
-    public TabletsManufacturerStep getTabletsManufacturerStep() {
-        return tabletsManufacturerStep;
-    }
+     public TabletsListStep getTabletsListStep() {
+         return tabletsListStep;
+     }
 
-    public AppleTabletsStep getAppleTabletsStep() {
-        return appleTabletsStep;
-    }
+     public TabletsManufacturerStep getTabletsManufacturerStep() {
+         return tabletsManufacturerStep;
+     }
 
-    public SearchStep getSearchStep() {
-        return searchStep;
-    }
+     public AppleTabletsStep getAppleTabletsStep() {
+         return appleTabletsStep;
+     }
 
-    public PriceFilterStep getPriceFilterStep() {
-        return priceFilterStep;
-    }
-}
+     public SearchStep getSearchStep() {
+         return searchStep;
+     }
+
+     public PriceFilterStep getPriceFilterStep() {
+         return priceFilterStep;
+     }
+ }

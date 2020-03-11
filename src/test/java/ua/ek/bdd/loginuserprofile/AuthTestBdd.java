@@ -5,18 +5,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ua.ek.base.BaseTest;
 import ua.ek.steps.HomeStep;
 import ua.ek.steps.registration.AuthStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.Helper;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+import ua.ek.utils.InitDrivers;
 
 public class AuthTestBdd extends BaseTest {
 
@@ -27,10 +21,15 @@ public class AuthTestBdd extends BaseTest {
     AssertUtils assertUtils;
 
     public AuthTestBdd() {
-        initDrivers("chrome");
 
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        InitDrivers initDrivers = new InitDrivers();
+        try {
+            initDrivers.setUp("chrome");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        driver = initDrivers.getWebDriver();
 
         helper = new Helper(driver);
         homeStep = new HomeStep(driver);
@@ -105,27 +104,5 @@ public class AuthTestBdd extends BaseTest {
     public void shouldSeeErrorMessageForLogin(String errorMessageForLogin)  {
         AssertUtils.makeAssert(authStep.getAuthPage().getErrorLoginAuth().getText(),
                 errorMessageForLogin);
-    }
-
-    private void initDrivers(String browser) {
-
-        Properties properties = new Properties();
-        try {
-            properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/properties/common.properties"), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        switch (browser) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", properties.getProperty("chrome.driver"));
-                driver = new ChromeDriver();
-                break;
-            case "firefox":
-                driver = new FirefoxDriver();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown browser " + browser);
-        }
     }
 }
