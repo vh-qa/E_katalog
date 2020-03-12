@@ -22,10 +22,10 @@ public class TabletsPage extends BasePage {
     private WebElement displayDiagonal10inch;
 
     // Operating systems
-    @FindBy(xpath = ".//label[@for='c36034']/a") // Android 9 Pie
+    @FindBy(xpath = ".//label[@for='c36034']/a")
     private WebElement operatingSystemAndroid9Pie;
 
-    @FindBy(xpath = ".//label[@for='c3871']/a") // iOS
+    @FindBy(xpath = ".//label[@for='c3871']/a")
     private WebElement operatingSystemIos;
 
     // Internal memory

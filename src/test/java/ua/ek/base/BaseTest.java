@@ -3,119 +3,79 @@ package ua.ek.base;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.registration.AuthStep;
-import ua.ek.steps.registration.RegistrationStep;
-import ua.ek.steps.registration.UserProfileStep;
-import ua.ek.steps.search.SearchStep;
-import ua.ek.steps.tablets.*;
-import ua.ek.steps.tablets.filters.PriceFilterStep;
-import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
-import ua.ek.utils.InitDrivers;
+import ua.ek.steps.base.BaseStep;
+import ua.ek.utils.IWaitTimes;
+import ua.ek.utils.StepFactory;
+import ua.ek.utils.StepType;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import static org.testng.FileAssert.fail;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
- public abstract class BaseTest extends InitDrivers {
+public abstract class BaseTest {
 
-     private final static Logger LOG = LogManager.getLogger(BasePage.class);
-     private StringBuffer verificationErrors = new StringBuffer();
+    private WebDriver driver;
+    private HomeStep homeStep;
+    private final static Logger LOG = LogManager.getLogger(BasePage.class);
 
-     private HomeStep homeStep;
-     private RegistrationStep registrationStep;
-     private AuthStep authStep;
-     private UserProfileStep userProfileStep;
-     private TabletStep tabletStep;
-     private TabletsStep tabletsStep;
-     private TabletsListStep tabletsListStep;
-     private TabletsManufacturerStep tabletsManufacturerStep;
-     private AppleTabletsStep appleTabletsStep;
-     private SearchStep searchStep;
-     private PriceFilterStep priceFilterStep;
+    public BaseStep getStep(StepType stepType) {
+        StepFactory stepFactory = new StepFactory();
+        return stepFactory.createStep(stepType, driver);
+    }
 
-     private void init(WebDriver driver) {
-         homeStep = new HomeStep(driver);
-         registrationStep = new RegistrationStep(driver);
-         authStep = new AuthStep(driver);
-         userProfileStep = new UserProfileStep(driver);
-         tabletStep = new TabletStep(driver);
-         tabletsStep = new TabletsStep(driver);
-         tabletsListStep = new TabletsListStep(driver);
-         tabletsManufacturerStep = new TabletsManufacturerStep(driver);
-         appleTabletsStep = new AppleTabletsStep(driver);
-         searchStep = new SearchStep(driver);
-         priceFilterStep = new PriceFilterStep(driver);
-     }
+    @Parameters("browser")
+    @BeforeClass(alwaysRun = true)
+    public void setUp(@Optional("chrome") String browser) {
+        initWebDrivers(browser);
 
-     @BeforeClass
-     public void initSteps() {
-         init(getWebDriver());
-     }
+        driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+    }
 
-     @AfterClass(alwaysRun = true)
-     public void tearDown() throws Exception {
-         getWebDriver().quit();
+    private void initWebDrivers(String browser) {
 
-         String verificationErrorString = verificationErrors.toString();
-         if (!"".equals(verificationErrorString)) {
-             fail(verificationErrorString);
-         }
-     }
+        Properties properties = new Properties();
+        try {
+            properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/properties/common.properties"), "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-     @BeforeMethod
-     public void initStepsAndLogTestStart(Method method, Object[] params) {
-         homeStep.goHomePage();
-         LOG.info("Start test {} with parameters {}",
-                 method.getName(), Arrays.toString(params));
-     }
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", properties.getProperty("chrome.driver"));
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown browser " + browser);
+        }
+    }
 
-     @AfterMethod(alwaysRun = true)
-     public void logTestStop(Method method) {
-         LOG.info("Stop test {}", method.getName());
-     }
+    @AfterClass(alwaysRun = true)
+    public void tearDown() throws Exception {
+        driver.quit();
+    }
 
-     public HomeStep getHomeStep() {
-         return homeStep;
-     }
+    @BeforeMethod
+    public void initStepsAndLogTestStart(Method method, Object[] params) {
+        homeStep = new HomeStep(driver);
+        homeStep.goHomePage();
 
-     public RegistrationStep getRegistrationStep() {
-         return registrationStep;
-     }
+        LOG.info("Start test {} with parameters {}",
+                method.getName(), Arrays.toString(params));
+    }
 
-     public AuthStep getAuthStep() {
-         return authStep;
-     }
-
-     public UserProfileStep getUserProfileStep() {
-         return userProfileStep;
-     }
-
-     public TabletStep getTabletStep() {
-         return tabletStep;
-     }
-
-     public TabletsStep getTabletsStep() {
-         return tabletsStep;
-     }
-
-     public TabletsListStep getTabletsListStep() {
-         return tabletsListStep;
-     }
-
-     public TabletsManufacturerStep getTabletsManufacturerStep() {
-         return tabletsManufacturerStep;
-     }
-
-     public AppleTabletsStep getAppleTabletsStep() {
-         return appleTabletsStep;
-     }
-
-     public SearchStep getSearchStep() {
-         return searchStep;
-     }
-
-     public PriceFilterStep getPriceFilterStep() {
-         return priceFilterStep;
-     }
- }
+    @AfterMethod(alwaysRun = true)
+    public void logTestStop(Method method) {
+        LOG.info("Stop test {}", method.getName());
+    }
+}

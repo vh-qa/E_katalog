@@ -3,41 +3,19 @@ package ua.ek.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.ek.base.BasePage;
-import java.util.Map;
-
 import static org.testng.Assert.assertEquals;
 
 public class AssertUtils {
 
     private final static Logger LOG = LogManager.getLogger(BasePage.class);
-    private static StringBuffer verificationErrors = new StringBuffer();
 
-    public static void makeAssert(String actualErrorMessage, String expectedErrorMessage){
+    public static void makeAssert(String actualMessage, String expectedMessage) {
         try {
-            assertEquals(actualErrorMessage, expectedErrorMessage);
+            assertEquals(actualMessage, expectedMessage);
             LOG.info("Actual Error message: {} - Expected error message: {}",
-                    actualErrorMessage, expectedErrorMessage);
+                    actualMessage, expectedMessage);
         } catch (Error e) {
-            verificationErrors.append(e.toString());
-        }
-    }
-
-    public static void makeAssert(String actualErrorMessage, String expectedErrorMessage,
-                                    Map<String, String> params){
-
-        try {
-            assertEquals(actualErrorMessage, expectedErrorMessage);
-            LOG.info("Actual Error message: {} - Expected error message: {}",
-                    actualErrorMessage, expectedErrorMessage);
-        } catch (Error e) {
-
-            verificationErrors.append("<<<<<<<<<<<<<<<<<<<<" + "\n");
-
-            for(Map.Entry<String, String> entry : params.entrySet()){
-                verificationErrors.append(entry.getKey() + " = " + entry.getValue() + "; " + "\n\n");
-            }
-
-            verificationErrors.append(e.toString() + "\n" + ">>>>>>>>>>>>>>>>>>>>");
+            e.printStackTrace();
         }
     }
 }

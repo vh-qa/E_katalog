@@ -1,41 +1,33 @@
-package ua.ek.bdd.tabletsfilter;
+package ua.ek.steps.bdd.tabletsfilter;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
-import ua.ek.base.BaseTest;
 import ua.ek.steps.HomeStep;
+import ua.ek.steps.base.BaseBddStep;
 import ua.ek.steps.tablets.TabletsStep;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
-import ua.ek.utils.AssertUtils;
-import ua.ek.utils.Helper;
-import ua.ek.utils.InitDrivers;
+import ua.ek.utils.*;
 
-public class TabletsFilterTestBdd extends BaseTest {
+public class TabletsFilterTestBdd {
 
-    WebDriver driver;
-    Helper helper;
-    HomeStep homeStep;
-    TabletsStep tabletsStep;
-    AppleTabletsStep appleTabletsStep;
+    private WebDriver driver;
+    private Helper helper;
+
+    private HomeStep homeStep;
+    private TabletsStep tabletsStep;
+    private AppleTabletsStep appleTabletsStep;
 
     public TabletsFilterTestBdd() {
-
-        InitDrivers initDrivers = new InitDrivers();
-        try {
-            initDrivers.setUp("chrome");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        driver = initDrivers.getWebDriver();
-
+        driver = BaseBddStep.getWebDriver();
         helper = new Helper(driver);
-        homeStep = new HomeStep(driver);
-        tabletsStep = new TabletsStep(driver);
-        appleTabletsStep = new AppleTabletsStep(driver);
+
+        StepFactory stepFactory = new StepFactory();
+        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, driver);
+        tabletsStep = (TabletsStep) stepFactory.createStep(StepType.TABLETS_STEP, driver);
+        appleTabletsStep = (AppleTabletsStep) stepFactory.createStep(StepType.APPLE_TABLETS_STEP, driver);
     }
 
     @Given("^I am on home page$")

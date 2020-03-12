@@ -1,7 +1,6 @@
 package ua.ek.utils;
 
 import ua.ek.model.User;
-
 import java.util.Random;
 
 public class DataGenerator {

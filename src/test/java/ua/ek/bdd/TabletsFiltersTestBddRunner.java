@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 @CucumberOptions(
 
         features = "src/main/resources/features/tabletsfilter",
-        glue = "ua.ek.bdd.tabletsfilter",
+        glue = "ua.ek.steps.bdd.tabletsfilter",
         tags = "@TabletsFilters",
         plugin = {
                 "pretty",

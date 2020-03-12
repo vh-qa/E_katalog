@@ -7,14 +7,14 @@ import ua.ek.base.BasePage;
 
 public class TabletsListPage extends BasePage {
 
-@FindBy(xpath = ".//td[@class='list-filter-param']/a")
-private WebElement textPricesField;
+    @FindBy(xpath = ".//td[@class='list-filter-param']/a")
+    private WebElement textPricesField;
 
     public TabletsListPage(WebDriver driver) {
         super(driver);
     }
 
-    public WebElement getTextPricesField(){
+    public WebElement getTextPricesField() {
         return textPricesField;
     }
 }

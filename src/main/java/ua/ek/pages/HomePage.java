@@ -12,18 +12,18 @@ public class HomePage extends BasePage {
     private WebElement deliveryRegionLink;
 
     @FindBy(xpath = ".//span[@class='wu_entr']//em")
-    private WebElement enterLink; // "Войти" link
+    private WebElement enterLink;
 
     @FindBy(xpath = ".//div[@id='mui_user_login_window']/div[@style='display: block;']")
-    private WebElement titleAuthRegistrationForm; // Войдите с помощью
+    private WebElement titleAuthRegistrationForm;
 
     @FindBy(xpath = ".//ul[contains(@class,'mainmenu-list')]/li/a[contains(text(),'Компьютеры')]")
-    private WebElement computersLink; // Menu "Компьютеры"
+    private WebElement computersMenuLink;
 
     @FindBy(xpath = "(.//div[@class='mainmenu-sublist']/a[@class='mainmenu-subitem mainmenu-icon30'])[1]")
-    private WebElement tabletsLink; // SubMenu "Планшеты"
+    private WebElement tabletsSubMenuLink;
 
-    @FindBy(xpath = ".//*[@id='li_br116']/label") // Apple
+    @FindBy(xpath = ".//*[@id='li_br116']/label")
     private WebElement manufacturerApple;
 
     public HomePage(WebDriver driver) {
@@ -44,12 +44,12 @@ public class HomePage extends BasePage {
         return enterLink;
     }
 
-    public WebElement getComputersLink() {
-        return computersLink;
+    public WebElement getComputersMenuLink() {
+        return computersMenuLink;
     }
 
-    public WebElement getTabletsLink() {
-        return tabletsLink;
+    public WebElement getTabletsSubMenuLink() {
+        return tabletsSubMenuLink;
     }
 
     public WebElement getManufacturerApple() {

@@ -13,33 +13,32 @@ public class HomeStep extends BaseStep {
         this.driver = driver;
     }
 
-    public HomeStep goHomePage(){
-
+    public HomeStep goHomePage() {
         driver.get(getHomePage().getBaseUrl());
         return this;
     }
 
     public HomeStep clickEnterLink() {
-            getHelper().clickWebElement(getHomePage().getEnterLink());
-            return this;
+        getHelper().clickWebElement(getHomePage().getEnterLink());
+        return this;
     }
 
     public HomeStep clickTabletsLink() {
-        getHelper().clickWebElement(getHomePage().getComputersLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsLink());
+        getHelper().clickWebElement(getHomePage().getComputersMenuLink());
+        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 
     public HomeStep clickTabletLink() {
-        getHelper().clickWebElement(getHomePage().getComputersLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsLink());
+        getHelper().clickWebElement(getHomePage().getComputersMenuLink());
+        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 
-    public HomeStep clickAppleTabletsCheckBox(){
-        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, getHomePage().getComputersLink());
-        getHelper().clickElementWithJS(getHomePage().getComputersLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsLink());
+    public HomeStep clickAppleTabletsCheckBox() {
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, getHomePage().getComputersMenuLink());
+        getHelper().clickElementWithJS(getHomePage().getComputersMenuLink());
+        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
 
         getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, getHomePage().getManufacturerApple());
         getHelper().clickElementWithJS(getHomePage().getManufacturerApple());

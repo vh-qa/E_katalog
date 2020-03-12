@@ -7,8 +7,8 @@ import ua.ek.base.BasePage;
 
 public class AuthPage extends BasePage {
 
-    @FindBy(xpath = ".//div[@class='signin-with-wrap clearfix']/div[@class=\"signin-with signin-with-ek d-flex justify-content-center align-items-center\"]")
-    private WebElement authLink; // 'Войти' link on the registration form
+    @FindBy(xpath = ".//div[@class='signin-with-wrap clearfix']/div[@class='signin-with signin-with-ek d-flex justify-content-center align-items-center']")
+    private WebElement authLinkOnAuthForm;
 
     @FindBy(xpath = ".//div[@class='signin-name ek-form-group']/input[@class='ek-form-control']")
     private WebElement loginOrEmailAuthField;
@@ -26,10 +26,10 @@ public class AuthPage extends BasePage {
     private WebElement submitButtonAuth;
 
     @FindBy(xpath = ".//div[@class='signin-name ek-form-group invalid']/div[@class='ek-form-text']")
-    private WebElement errorLoginAuth; // Введите логин/email!
+    private WebElement errorLoginAuth;
 
     @FindBy(xpath = ".//div[@class='signin-password ek-form-group invalid']/div[@class='ek-form-text']")
-    private WebElement errorPasswordAuth; // Введите пароль!
+    private WebElement errorPasswordAuth;
 
     @FindBy(xpath = ".//button[@class='swal2-close']")
     private WebElement closeLinkRegistrationForm;
@@ -38,8 +38,8 @@ public class AuthPage extends BasePage {
         super(driver);
     }
 
-    public WebElement getAuthLink() {
-        return authLink;
+    public WebElement getAuthLinkOnAuthForm() {
+        return authLinkOnAuthForm;
     }
 
     public WebElement getLoginOrEmailAuthField() {
@@ -74,4 +74,3 @@ public class AuthPage extends BasePage {
         return closeLinkRegistrationForm;
     }
 }
-

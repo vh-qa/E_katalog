@@ -4,14 +4,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
 import ua.ek.model.User;
+import ua.ek.steps.registration.RegistrationStep;
 import ua.ek.utils.AssertUtils;
 import ua.ek.utils.DataGenerator;
+import ua.ek.utils.PropertyReader;
+import ua.ek.utils.StepType;
 
 public class RegistrationPageTest extends BaseTest {
 
+    private RegistrationStep registrationStep;
+
     @BeforeMethod
     public void openRegistryFormBeforeTest() {
-        getRegistrationStep().goAuthPage()
+        registrationStep = (RegistrationStep) getStep(StepType.REGISTRATION_STEP);
+        registrationStep.goAuthPage()
                         .clickRegisterLink();
     }
 
@@ -19,38 +25,63 @@ public class RegistrationPageTest extends BaseTest {
 
     @Test
     public void loginFieldRegistrationFormTestEmptyLogin() {
-        getRegistrationStep().enterLogin("")
+        User user = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
+        registrationStep.enterLogin(user.getLogin())
                         .clickSubmitButton();
+        String errorLoginExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "registration.form.login.error.message")
+                .getProperty("registration.form.login.error.message");
 
-        AssertUtils.makeAssert(getRegistrationStep().getLoginErrorMessage(),
-                "Заполните поле \"Имя\"");
+        AssertUtils.makeAssert(registrationStep.getLoginErrorMessage(), errorLoginExpectedMessage);
     }
 
     @Test
     public void emailFieldRegistrationFormTestEmptyEmail() {
-        getRegistrationStep().enterEmail("")
+        User user = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
+        registrationStep.enterEmail(user.getEmail())
                         .clickSubmitButton();
 
-        AssertUtils.makeAssert(getRegistrationStep().getEmailErrorMessage(),
-                "Заполните поле \"email\"");
+        String errorEmailExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "registration.form.email.error.message")
+                .getProperty("registration.form.email.error.message");
+
+        AssertUtils.makeAssert(registrationStep.getEmailErrorMessage(), errorEmailExpectedMessage);
     }
 
     @Test
     public void emailFieldRegistrationFormTestIncorrectEmail() {
-        getRegistrationStep().enterEmail("some-email")
+
+        String userIncorrectEmail = PropertyReader
+                .from("/properties/common.properties",
+                        "user.incorrect.email")
+                .getProperty("user.incorrect.email");
+
+        String errorIncorrectEmailExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "registration.form.incorrect.email.error.message")
+                .getProperty("registration.form.incorrect.email.error.message");
+
+        registrationStep.enterEmail(userIncorrectEmail)
                         .clickSubmitButton();
 
-        AssertUtils.makeAssert(getRegistrationStep().getEmailIncorrectErrorMessage(),
-                "Поле \"e-mail\" введено некорректно");
+        AssertUtils.makeAssert(registrationStep.getEmailIncorrectErrorMessage(),
+                                                errorIncorrectEmailExpectedMessage);
     }
 
     @Test
     public void passwordFieldRegistrationFormEmptyPassword() {
-        getRegistrationStep().enterPassword("")
+        User user = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
+        registrationStep.enterPassword(user.getPassword())
                         .clickSubmitButton();
 
-        AssertUtils.makeAssert(getRegistrationStep().getPasswordErrorMessage(),
-                "Заполните поле \"Пароль\"");
+        String errorPasswordExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "registration.form.password.error.message")
+                .getProperty("registration.form.password.error.message");
+
+        AssertUtils.makeAssert(registrationStep.getPasswordErrorMessage(), errorPasswordExpectedMessage);
     }
 
     // Positive scenario
@@ -59,12 +90,17 @@ public class RegistrationPageTest extends BaseTest {
     public void successfulUserRegistration() {
         User user = DataGenerator.getUser();
 
-        getRegistrationStep().enterLogin(user.getLogin())
+        registrationStep.enterLogin(user.getLogin())
                         .enterEmail(user.getEmail())
                         .enterPassword(user.getPassword())
                         .clickSubmitButton();
 
-        AssertUtils.makeAssert(getRegistrationStep().getSuccessfulUserRegistrationTextFromWebElement(),
-                "Регистрация прошла успешно!");
+        String successfulRegistrationExpectedMessage = PropertyReader
+                .from("/properties/expectedMessages.properties",
+                        "registration.form.successful.expected.message")
+                .getProperty("registration.form.successful.expected.message");
+
+        AssertUtils.makeAssert(registrationStep.getSuccessfulUserRegistrationTextFromWebElement(),
+                                                successfulRegistrationExpectedMessage);
     }
 }

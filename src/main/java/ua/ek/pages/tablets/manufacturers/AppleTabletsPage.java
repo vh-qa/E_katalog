@@ -12,7 +12,6 @@ public class AppleTabletsPage extends BasePage {
     @FindBy(xpath = ".//*[@id='tt-info']/a")
     private WebElement showButton;
 
-    //  @FindBy(xpath = ".//div[@class='page-title']/h1[@class='t2' and contains(text(), '%s')]")
     @FindBy(xpath = ".//div[@class='page-title']/h1")
     private WebElement pageTitle;
 

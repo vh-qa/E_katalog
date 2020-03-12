@@ -1,10 +1,11 @@
 @LoginUserProfile
-  Feature: Login User Profile
+Feature: Login User Profile
 
   As an user of the e-katalog
   I want to login my user profile using my credentials
   in order to be able to login and logout
 
+    @SuccessfulLogin
     Scenario: Successful Login
 
       Given I am on home page
@@ -17,6 +18,7 @@
       Then I should see "some_login_15" link
       And I close browser
 
+    @UnSuccessfulLogin
     Scenario Outline: Negative login scenario
       Given I am on home page
       When I click on sign in link
@@ -34,6 +36,7 @@
       | some_new_login   | 123456789                  | Пароль указан неверно! |
       | some_new_login   | !@#$%^&*(                  | Пароль указан неверно! |
 
+    @UnSuccessfulPassword
     Scenario Outline: Negative password scenario
       Given I am on home page
       When I click on sign in link

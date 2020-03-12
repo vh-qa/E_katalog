@@ -1,40 +1,30 @@
-package ua.ek.bdd.loginuserprofile;
+package ua.ek.steps.bdd.loginuserprofile;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
-import ua.ek.base.BaseTest;
 import ua.ek.steps.HomeStep;
+import ua.ek.steps.base.BaseBddStep;
 import ua.ek.steps.registration.AuthStep;
-import ua.ek.utils.AssertUtils;
-import ua.ek.utils.Helper;
-import ua.ek.utils.InitDrivers;
+import ua.ek.utils.*;
 
-public class AuthTestBdd extends BaseTest {
+public class AuthTestBdd {
 
-    WebDriver driver;
-    Helper helper;
-    HomeStep homeStep;
-    AuthStep authStep;
-    AssertUtils assertUtils;
+    private WebDriver driver;
+    private Helper helper;
+
+    private HomeStep homeStep;
+    private AuthStep authStep;
 
     public AuthTestBdd() {
-
-        InitDrivers initDrivers = new InitDrivers();
-        try {
-            initDrivers.setUp("chrome");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        driver = initDrivers.getWebDriver();
-
+        driver = BaseBddStep.getWebDriver();
         helper = new Helper(driver);
-        homeStep = new HomeStep(driver);
-        authStep = new AuthStep(driver);
-        assertUtils = new AssertUtils();
+
+        StepFactory stepFactory = new StepFactory();
+        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, driver);
+        authStep = (AuthStep) stepFactory.createStep(StepType.AUTH_STEP, driver);
     }
 
     // Positive scenario
@@ -49,10 +39,9 @@ public class AuthTestBdd extends BaseTest {
         homeStep.clickEnterLink();
     }
 
-    //  @Then("^I am on auth form$")
     @Then("^I should see 'Войти' link on auth form$")
     public void validateAuthForm() {
-        assertUtils.makeAssert(helper.getTextFromWebElement(authStep.getAuthPage().getAuthLink()),
+        AssertUtils.makeAssert(helper.getTextFromWebElement(authStep.getAuthPage().getAuthLinkOnAuthForm()),
                 "Войти");
     }
 
@@ -82,7 +71,7 @@ public class AuthTestBdd extends BaseTest {
     }
 
     @And("^I close browser$")
-    public void closeBrowser(){
+    public void closeBrowser() {
         driver.close();
     }
 
@@ -95,13 +84,13 @@ public class AuthTestBdd extends BaseTest {
     }
 
     @Then("^I should see (.*?) error message for password$")
-    public void shouldSeeErrorMessageForPassword(String errorMessageForPassword)  {
+    public void shouldSeeErrorMessageForPassword(String errorMessageForPassword) {
         AssertUtils.makeAssert(authStep.getAuthPage().getErrorPasswordAuth().getText(),
                 errorMessageForPassword);
     }
 
     @Then("^I should see (.*?) error message for login$")
-    public void shouldSeeErrorMessageForLogin(String errorMessageForLogin)  {
+    public void shouldSeeErrorMessageForLogin(String errorMessageForLogin) {
         AssertUtils.makeAssert(authStep.getAuthPage().getErrorLoginAuth().getText(),
                 errorMessageForLogin);
     }

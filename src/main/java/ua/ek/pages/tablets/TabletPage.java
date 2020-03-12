@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
 
 public class TabletPage extends BasePage {
+
     @FindBy(xpath = ".//div/input[@name='minPrice_']")
     private WebElement minPriceField;
 
@@ -15,7 +16,6 @@ public class TabletPage extends BasePage {
     @FindBy(xpath = ".//input[@type='submit' and @class='price-sub']")
     private WebElement submitButton;
 
-//  @FindBy(xpath=".//a[@class='ib']/u[contains(text(),'7000 — 10000')]")
     @FindBy(xpath = ".//u[contains(text(),'7000 — 10000')]")
     private WebElement fixedPriceLink;
 

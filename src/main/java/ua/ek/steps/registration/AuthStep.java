@@ -1,16 +1,28 @@
 package ua.ek.steps.registration;
 
 import org.openqa.selenium.WebDriver;
-import ua.ek.steps.HomeStep;
+import ua.ek.pages.registration.AuthPage;
+import ua.ek.pages.registration.UserProfilePage;
 import ua.ek.steps.base.BaseStep;
-import ua.ek.utils.AssertUtils;
+import ua.ek.utils.PageType;
 
 public class AuthStep extends BaseStep {
 
+    private AuthPage authPage;
+    private UserProfilePage userProfilePage;
 
     public AuthStep(WebDriver driver) {
         super(driver);
+        authPage = (AuthPage)getPage(PageType.AUTH_PAGE, driver);
+        userProfilePage = (UserProfilePage)getPage(PageType.USER_PROFILE_PAGE, driver);
+    }
 
+    public AuthPage getAuthPage() {
+        return authPage;
+    }
+
+    public UserProfilePage getUserProfilePage() {
+        return userProfilePage;
     }
 
     public AuthStep goAuthPage() {
@@ -19,40 +31,40 @@ public class AuthStep extends BaseStep {
     }
 
     public AuthStep clickAuthLink() {
-        getHelper().clickWebElement(getAuthPage().getAuthLink());
+        getHelper().clickWebElement(authPage.getAuthLinkOnAuthForm());
         return this;
     }
 
     public AuthStep enterLoginOrEmail(String loginOrEmail) {
-        getHelper().enterTextInTextField(getAuthPage().getLoginOrEmailAuthField(), loginOrEmail);
+        getHelper().enterTextInTextField(authPage.getLoginOrEmailAuthField(), loginOrEmail);
         return this;
     }
 
     public AuthStep enterPassword(String password) {
-        getHelper().enterTextInTextField(getAuthPage().getPasswordAuthField(), password);
+        getHelper().enterTextInTextField(authPage.getPasswordAuthField(), password);
         return this;
     }
 
     public AuthStep clickRememberMeCheckBoxAuth() {
-        getHelper().clickWebElement(getAuthPage().getRememberMeCheckBoxAuth());
+        getHelper().clickWebElement(authPage.getRememberMeCheckBoxAuth());
         return this;
     }
 
     public AuthStep clickSubmitButton() {
-        getHelper().clickWebElement(getAuthPage().getSubmitButtonAuth());
+        getHelper().clickWebElement(authPage.getSubmitButtonAuth());
         return this;
     }
 
     public String getErrorAuthLoginText() {
-        return getHelper().getTextFromWebElement(getAuthPage().getErrorLoginAuth());
+        return getHelper().getTextFromWebElement(authPage.getErrorLoginAuth());
     }
 
     public String getErrorAuthPasswordText() {
-        return getHelper().getTextFromWebElement(getAuthPage().getErrorPasswordAuth());
+        return getHelper().getTextFromWebElement(authPage.getErrorPasswordAuth());
     }
 
     public AuthStep clickCloseLinkRegistrationForm() {
-        getHelper().clickWebElement(getAuthPage().getCloseLinkRegistrationForm());
+        getHelper().clickWebElement(authPage.getCloseLinkRegistrationForm());
         return this;
     }
 }

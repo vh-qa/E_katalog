@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 @CucumberOptions(
 
         features = "src/main/resources/features/loginuserprofile",
-        glue = "ua.ek.bdd.loginuserprofile",
-        tags = "@LoginUserProfile",
+        glue = "ua.ek.steps.bdd.loginuserprofile",
+        tags = "@SuccessfulLogin",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",
@@ -28,7 +28,7 @@ public class AuthTestBddRunner {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @Test(groups="cucumber", dataProvider = "getFeatures")
+    @Test(groups = "cucumber", dataProvider = "getFeatures")
     public void authLoginTest(CucumberFeatureWrapper cucumberFeatureWrapper) {
         testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
     }

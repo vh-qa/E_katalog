@@ -1,63 +1,75 @@
 package ua.ek.tablets;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
 import ua.ek.model.Price;
+import ua.ek.steps.tablets.TabletStep;
+import ua.ek.steps.tablets.TabletsListStep;
 import ua.ek.utils.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TabletTest extends BaseTest {
 
-//    @Test(testName = "Tablets Prices Test", dataProvider = "tabletsPricesDataProvider")
-//    public void tabletsPricesTest(double minPrice, double maxPrice, String expectedMessage) {
+    private TabletStep tabletStep;
+    private TabletsListStep tabletsListStep;
+
+    @BeforeMethod
+    public void init(){
+        tabletStep = (TabletStep)getStep(StepType.TABLET_STEP);
+        tabletsListStep = (TabletsListStep) getStep((StepType.TABLETS_LIST_STEP));
+    }
 
     @Test(testName = "Tablets Prices Test")
     public void tabletsPricesTest() {
 
-        List<Price> prices = null;
-
-        try {
-            prices = getPrices();
-        } catch (IOException e) {
-            e.getMessage();
-        }
+        List<Price> prices = getPrices();
 
         for (Price price : prices) {
-            getTabletStep().goTabletPage();
-            getTabletStep().enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()));
-            getTabletStep().enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()));
-            getTabletStep().submitButtonClick();
+            tabletStep.goTabletPage();
+            tabletStep.enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()));
+            tabletStep.enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()));
+            tabletStep.submitButtonClick();
 
-            AssertUtils.makeAssert(getTabletsListStep().getTextPrices(), price.getExpectedMessage());
+            AssertUtils.makeAssert(tabletsListStep.getTextPrices(), price.getExpectedMessage());
         }
     }
 
     @Test
     public void tabletsFixedPricesLinkTest() {
-        getTabletStep().goTabletPage();
-        getTabletStep().clickFixedPriceLink();
-        AssertUtils.makeAssert(getTabletsListStep().getTextPrices(),
-                " от 7000  до 10000 грн.");
+        String resultPrice = PropertyReader
+                .from("/properties/expectedMessages.properties",
+                        "result.price.1")
+                .getProperty("result.price.1");
+
+        tabletStep.goTabletPage();
+        tabletStep.clickFixedPriceLink();
+        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), resultPrice);
     }
 
     @Test
     public void tabletsDisplayDiagonalLinkTest() {
-        getTabletStep().goTabletPage();
-        getTabletStep().clickDisplayDiagonalLink();
-        AssertUtils.makeAssert(getTabletsListStep().getTextPrices(),
-                "Планшеты 10 дюймов ");
+        String tabletDiagonalSize = PropertyReader
+                .from("/properties/expectedMessages.properties",
+                        "tablet.diagonal.size")
+                .getProperty("tablet.diagonal.size");
+        tabletStep.goTabletPage();
+        tabletStep.clickDisplayDiagonalLink();
+        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), tabletDiagonalSize);
     }
 
     @Test
     public void tabletsManufacturersLinkTest() {
-        getTabletStep().goTabletPage();
-        getTabletStep().clickManufacturerLink();
-        AssertUtils.makeAssert(getTabletsListStep().getTextPrices(),
-                "Планшеты Apple ");
+        String searchResultText = PropertyReader
+                .from("/properties/expectedMessages.properties",
+                        "search.result.text")
+                .getProperty("search.result.text");
+        tabletStep.goTabletPage();
+        tabletStep.clickManufacturerLink();
+        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), searchResultText);
     }
 
     @DataProvider(name = "tabletsPricesDataProvider")
@@ -66,7 +78,7 @@ public class TabletTest extends BaseTest {
                 "tablets.test.prices.data.file", "prices");
     }
 
-    private List<Price> getPrices() throws IOException {
+    private List<Price> getPrices() {
         List<Object> objectList = new ArrayList<>();
         List<Price> prices = new ArrayList<>();
 

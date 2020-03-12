@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 @CucumberOptions(
 
         features = "src/main/resources/features/userregistration",
-        glue = "ua.ek.bdd.userregistration",
+        glue = "ua.ek.steps.bdd.userregistration",
         tags = "@UserRegistration",
         plugin = {
                 "pretty",
