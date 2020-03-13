@@ -7,8 +7,8 @@ Feature: Tablets Filter advanced selection
 
   Scenario: Successful tablets manufacturer filter selection
 
-    Given I am on home page
-    When I go tablets page
-    And I click on "apple" checkbox
-    And I click on 'Показать' button
-    Then I am on page with list of Apples tablets
+    Given User open the home page
+    When User go tablets page
+    And User click on apple checkbox
+    And User click on show button
+    Then User should see page with text 'Планшеты Apple '

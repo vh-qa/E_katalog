@@ -44,7 +44,6 @@ public class TabletsStep extends BaseStep {
     }
 
     public void clickManufacturer(WebElement webElement) {
-        getHelper().elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
         getHelper().clickElementWithJS(webElement);
     }
 

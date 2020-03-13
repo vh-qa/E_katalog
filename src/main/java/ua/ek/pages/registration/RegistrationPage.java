@@ -8,7 +8,7 @@ import ua.ek.base.BasePage;
 
 public class RegistrationPage extends BasePage {
 
-    @FindBy(xpath = ".//div[@class='signin-with signin-with-reg d-flex justify-content-center align-items-center']/span[@class='j-wrap orange']")
+    @FindBy(xpath = ".//div[contains(@class,'signin-with-reg')]/span[@class='j-wrap orange']")
     private WebElement registerLinkOnRegistrationForm;
 
     // Locators for registration form fields

@@ -32,51 +32,52 @@ public class UserRegistrationTestBdd {
 
     // Positive scenario
 
-    @Given("^I am on home page$")
-    public void goHomePage() {
+    @Given("^User open the home page$")
+    public void userOpenHomePage() {
         homeStep.goHomePage();
     }
 
-    @When("^I click on sign in link$")
-    public void clickSignInLink() {
+    @When("^User click on sign in link$")
+    public void userClickSignInLinkOnHomePage() {
         homeStep.clickEnterLink();
     }
 
-    @Then("^I should see 'Регистрация' link on auth form$")
-    public void validateRegistrationForm() {
+    @Then("^User should see (.*?) link on auth form$")
+    public void userValidateRegistrationForm(String registrationLink) {
         AssertUtils.makeAssert(
-                helper.getTextFromWebElement(registrationStep.getRegistrationPage().getRegisterLinkOnRegistrationForm()),
-                "Регистрация");
+                helper.getTextFromWebElement
+                        (registrationStep.getRegistrationPage().getRegisterLinkOnRegistrationForm()), registrationLink);
     }
 
-    @When("^I click on registration link on auth form$")
-    public void clickRegistrationLink() {
+    @When("^User click on registration link on registration form$")
+    public void userClickRegistrationLinkOnRegistrationForm() {
         registrationStep.clickRegisterLink();
     }
 
-    @And("^I enter login \"([^\"]*)\"$")
-    public void enterLogin(String login) {
+    @And("^User enter login (.*?)$")
+    public void userEnterLogin(String login) {
         registrationStep.enterLogin(login);
     }
 
-    @And("^I enter email \"([^\"]*)\"$")
-    public void enterEmail(String email)  {
+    @And("^User enter email (.*?)$")
+    public void userEnterEmail(String email) {
         registrationStep.enterEmail(email);
     }
 
-    @And("^I enter password \"([^\"]*)\"$")
-    public void enterPassword(String password)  {
+    @And("^User enter password (.*?)$")
+    public void userEnterPassword(String password) {
         registrationStep.enterPassword(password);
     }
 
-    @And("^I click submit button$")
-    public void clickSubmitButton() {
+    @And("^User click on submit button$")
+    public void userClickSubmitButton() {
         registrationStep.clickSubmitButton();
     }
 
-    @Then("^I should see form with text \\\"([^\\\"]*)\\\"$")
-    public void shouldSeeSuccessfulRegistrationMessage(String successfulRegistrationText)  {
-        AssertUtils.makeAssert(registrationStep.getRegistrationPage().getSuccessfulUserRegistrationElement().getText(),
-                successfulRegistrationText);
+    @Then("^User should see form with text (.*?)$")
+    public void userShouldSeeSuccessfulRegistrationMessage(String successfulRegistrationText) {
+        AssertUtils.makeAssert(
+                helper.getTextFromWebElement
+                        (registrationStep.getRegistrationPage().getSuccessfulUserRegistrationElement()), successfulRegistrationText);
     }
 }

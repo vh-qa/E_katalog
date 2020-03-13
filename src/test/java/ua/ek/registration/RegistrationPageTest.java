@@ -23,7 +23,7 @@ public class RegistrationPageTest extends BaseTest {
 
     // Negative scenario
 
-    @Test
+    @Test(priority=1)
     public void loginFieldRegistrationFormTestEmptyLogin() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
         registrationStep.enterLogin(user.getLogin())
@@ -36,7 +36,7 @@ public class RegistrationPageTest extends BaseTest {
         AssertUtils.makeAssert(registrationStep.getLoginErrorMessage(), errorLoginExpectedMessage);
     }
 
-    @Test
+    @Test(priority=2)
     public void emailFieldRegistrationFormTestEmptyEmail() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
         registrationStep.enterEmail(user.getEmail())
@@ -50,7 +50,7 @@ public class RegistrationPageTest extends BaseTest {
         AssertUtils.makeAssert(registrationStep.getEmailErrorMessage(), errorEmailExpectedMessage);
     }
 
-    @Test
+    @Test(priority=3)
     public void emailFieldRegistrationFormTestIncorrectEmail() {
 
         String userIncorrectEmail = PropertyReader
@@ -70,7 +70,7 @@ public class RegistrationPageTest extends BaseTest {
                                                 errorIncorrectEmailExpectedMessage);
     }
 
-    @Test
+    @Test(priority=4)
     public void passwordFieldRegistrationFormEmptyPassword() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
         registrationStep.enterPassword(user.getPassword())
@@ -86,7 +86,7 @@ public class RegistrationPageTest extends BaseTest {
 
     // Positive scenario
 
-    @Test
+    @Test(priority=5)
     public void successfulUserRegistration() {
         User user = DataGenerator.getUser();
 

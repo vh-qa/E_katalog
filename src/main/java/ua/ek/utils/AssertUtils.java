@@ -10,12 +10,8 @@ public class AssertUtils {
     private final static Logger LOG = LogManager.getLogger(BasePage.class);
 
     public static void makeAssert(String actualMessage, String expectedMessage) {
-        try {
-            assertEquals(actualMessage, expectedMessage);
-            LOG.info("Actual Error message: {} - Expected error message: {}",
-                    actualMessage, expectedMessage);
-        } catch (Error e) {
-            e.printStackTrace();
-        }
+        assertEquals(actualMessage, expectedMessage);
+        LOG.info("Actual Error message: {} - Expected error message: {}",
+                actualMessage, expectedMessage);
     }
 }

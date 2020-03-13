@@ -7,7 +7,7 @@ import ua.ek.base.BasePage;
 
 public class AuthPage extends BasePage {
 
-    @FindBy(xpath = ".//div[@class='signin-with-wrap clearfix']/div[@class='signin-with signin-with-ek d-flex justify-content-center align-items-center']")
+    @FindBy(xpath = ".//div[contains(@class, 'signin-with-ek')]")
     private WebElement authLinkOnAuthForm;
 
     @FindBy(xpath = ".//div[@class='signin-name ek-form-group']/input[@class='ek-form-control']")
@@ -16,7 +16,7 @@ public class AuthPage extends BasePage {
     @FindBy(xpath = ".//div[@class='signin-password ek-form-group']/input[@class='ek-form-control']")
     private WebElement passwordAuthField;
 
-    @FindBy(xpath = ".//div[@class='signin-remember grey d-flex align-items-center']/input[@name='remember_me_']")
+    @FindBy(xpath = ".//input[@name='remember_me_']")
     private WebElement rememberMeCheckBoxAuth;
 
     @FindBy(xpath = ".//div[@class='signin-actions ml-auto']/button[@class='ek-form-btn']")

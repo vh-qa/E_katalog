@@ -23,7 +23,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "(.//div[@class='mainmenu-sublist']/a[@class='mainmenu-subitem mainmenu-icon30'])[1]")
     private WebElement tabletsSubMenuLink;
 
-    @FindBy(xpath = ".//*[@id='li_br116']/label")
+    @FindBy(xpath = ".//label[@class='brand-best' and @for='br116']")
     private WebElement manufacturerApple;
 
     public HomePage(WebDriver driver) {

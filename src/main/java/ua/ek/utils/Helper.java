@@ -78,7 +78,7 @@ public class Helper {
     }
 
     public void clickElementWithJS(WebElement webElement) {
-        elementToBeSelected(webElement, IWaitTimes.THREE_SECONDS);
+        elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", webElement);

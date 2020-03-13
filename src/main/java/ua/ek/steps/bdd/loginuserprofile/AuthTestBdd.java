@@ -1,5 +1,6 @@
 package ua.ek.steps.bdd.loginuserprofile;
 
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -29,69 +30,69 @@ public class AuthTestBdd {
 
     // Positive scenario
 
-    @Given("^I am on home page$")
-    public void goHomePage() {
+    @Given("^User open the home page$")
+    public void userOpenHomePage() {
         homeStep.goHomePage();
     }
 
-    @When("^I click on sign in link$")
-    public void clickSignInLink() {
+    @When("^User click on sign in link$")
+    public void userClickSignInLinkOnHomePage() {
         homeStep.clickEnterLink();
     }
 
-    @Then("^I should see 'Войти' link on auth form$")
-    public void validateAuthForm() {
-        AssertUtils.makeAssert(helper.getTextFromWebElement(authStep.getAuthPage().getAuthLinkOnAuthForm()),
-                "Войти");
+    @Then("^User should see (.*?) link on auth form$")
+    public void userValidateAuthForm(String linkText) {
+        AssertUtils.makeAssert(helper.getTextFromWebElement
+                              (authStep.getAuthPage().getAuthLinkOnAuthForm()), linkText);
     }
 
-    @When("^I click on sign in link on auth form$")
-    public void clickSignInLinkOnAuthForm() {
+    @When("^User click on sign in link on auth form$")
+    public void userClickSignInLinkOnAuthForm() {
         authStep.clickAuthLink();
     }
 
-    @When("^I enter login \"([^\"]*)\"$")
-    public void enterLogin(String login) {
+    @When("^User enter login (.*?)$")
+    public void userEnterLogin(String login) {
         authStep.enterLoginOrEmail(login);
     }
 
-    @When("^I enter password \"([^\"]*)\"$")
-    public void enterPassword(String password) {
+    @When("^User enter password (.*?)$")
+    public void userEnterPassword(String password) {
         authStep.enterPassword(password);
     }
 
-    @And("^I click submit button$")
-    public void clickSubmitButton() {
+    @And("^User click on submit button$")
+    public void userClickSubmitButton() {
         authStep.clickSubmitButton();
     }
 
-    @Then("^I should see \"([^\"]*)\" link$")
-    public void shouldSeeLink(String nickText) {
+    @Then("^User should see (.*?) link$")
+    public void userShouldSeeLink(String nickText) {
         AssertUtils.makeAssert(authStep.getUserProfilePage().getNickLink().getText(), nickText);
-    }
-
-    @And("^I close browser$")
-    public void closeBrowser() {
-        driver.close();
     }
 
     // Negative scenario
 
-    @When("^I login with credentials (.*?) and (.*?)$")
-    public void loginWithCredentials(String login, String password) {
+    @When("^User login with credentials (.*?) and (.*?)$")
+    public void userLoginWithCredentials(String login, String password) {
         authStep.enterLoginOrEmail(login);
         authStep.enterPassword(password);
     }
 
-    @Then("^I should see (.*?) error message for password$")
-    public void shouldSeeErrorMessageForPassword(String errorMessageForPassword) {
+    @Then("^User should see (.*?) error message for password$")
+    public void userShouldSeeErrorMessageForPassword(String errorMessageForPassword) {
         AssertUtils.makeAssert(authStep.getAuthPage().getErrorPasswordAuth().getText(),
                 errorMessageForPassword);
     }
 
-    @Then("^I should see (.*?) error message for login$")
-    public void shouldSeeErrorMessageForLogin(String errorMessageForLogin) {
+    @Then("^User should see (.*?) error message for login$")
+    public void userShouldSeeErrorMessageForLogin(String errorMessageForLogin) {
         AssertUtils.makeAssert(authStep.getAuthPage().getErrorLoginAuth().getText(),
                 errorMessageForLogin);
+    }
+
+    @After
+    public void closeBrowser(){
+        driver.quit();
     }
 }

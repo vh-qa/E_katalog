@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
         features = "src/main/resources/features/loginuserprofile",
         glue = "ua.ek.steps.bdd.loginuserprofile",
-        tags = "@SuccessfulLogin",
+        tags = "@LoginUserProfile",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",

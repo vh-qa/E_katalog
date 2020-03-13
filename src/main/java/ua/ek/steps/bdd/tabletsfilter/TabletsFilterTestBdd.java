@@ -30,28 +30,28 @@ public class TabletsFilterTestBdd {
         appleTabletsStep = (AppleTabletsStep) stepFactory.createStep(StepType.APPLE_TABLETS_STEP, driver);
     }
 
-    @Given("^I am on home page$")
-    public void i_am_on_home_page()  {
+    @Given("^User open the home page$")
+    public void userOpenHomePage()  {
         homeStep.goHomePage();
     }
 
-    @When("^I go tablets page$")
-    public void i_click_on_Компьютеры_link()  {
+    @When("^User go tablets page$")
+    public void userOpenTabletsPage()  {
         tabletsStep.goTabletsPage();
     }
 
-    @And("^I click on \"([^\"]*)\" checkbox$")
-    public void i_click_on_checkbox(String manufacturer)  {
+    @And("^User click on (.*?) checkbox$")
+    public void userClickOnManufacturerCheckBox(String manufacturer)  {
         tabletsStep.clickManufacturer(manufacturer);
     }
 
-    @And("^I click on 'Показать' button$")
-    public void i_click_on_Показать_button()  {
+    @And("^User click on show button$")
+    public void userClickOnShowButton()  {
         tabletsStep.clickShowButton();
     }
 
-    @Then("^I am on page with list of Apples tablets$")
-    public void i_am_on_page_with_list_of_Apples_tablets() {
-        AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), "Планшеты Apple");
+    @Then("^User should see page with text (.*?)$")
+    public void userShouldSeePageWithListOfAppleTablets(String text) {
+        AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), text);
     }
 }

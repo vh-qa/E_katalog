@@ -8,13 +8,13 @@ import ua.ek.base.BasePage;
 public class TabletsPage extends BasePage {
 
     // Manufacturers
-    @FindBy(xpath = ".//*[@id='li_br116']/label")
+    @FindBy(xpath = ".//li[@id='li_br116']/label[@for='br116']/a")
     private WebElement manufacturerApple;
 
-    @FindBy(xpath = ".//*[@id='li_br1364']/label/a")
+    @FindBy(xpath = ".//label[@for='br1364']/a")
     private WebElement manufacturerGoogle;
 
-    @FindBy(xpath = ".//*[@id='li_br147']/label/a")
+    @FindBy(xpath = ".//label[@for='br147']/a")
     private WebElement manufacturerSamsung;
 
     // Display diagonals
@@ -32,7 +32,7 @@ public class TabletsPage extends BasePage {
     @FindBy(xpath = ".//label[@for='c9535']/a")
     private WebElement internalMemory256Gb;
 
-    @FindBy(xpath = ".//*[@id='tt-info']/a")
+    @FindBy(xpath = ".//a[@class='show-models']")
     private WebElement showButton;
 
     public TabletsPage(WebDriver driver) {
