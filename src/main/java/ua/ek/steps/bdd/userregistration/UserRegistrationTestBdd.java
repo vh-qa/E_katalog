@@ -1,5 +1,6 @@
 package ua.ek.steps.bdd.userregistration;
 
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -79,5 +80,20 @@ public class UserRegistrationTestBdd {
         AssertUtils.makeAssert(
                 helper.getTextFromWebElement
                         (registrationStep.getRegistrationPage().getSuccessfulUserRegistrationElement()), successfulRegistrationText);
+    }
+
+    @Then("^User should see (.*?) error message for login$")
+    public void userShouldSeeErrorMessageForLogin(String errorMessageForLogin){
+        AssertUtils.makeAssert(registrationStep.getLoginErrorMessage(), errorMessageForLogin);
+    }
+
+    @Then("^User should see (.*?) error message for email$")
+    public void userShouldSeeErrorMessageForEmail(String errorMessageForEmail){
+        AssertUtils.makeAssert(registrationStep.getEmailErrorMessage(), errorMessageForEmail);
+    }
+
+    @After
+    public void closeBrowser(){
+        driver.quit();
     }
 }

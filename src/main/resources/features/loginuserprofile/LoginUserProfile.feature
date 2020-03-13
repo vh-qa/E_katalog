@@ -26,7 +26,7 @@ Feature: Login User Profile
       When User click on sign in link on auth form
       And User login with credentials <login> and <password>
       And User click on submit button
-      And User should see <error_message> error message for password
+      Then User should see <error_message> error message for password
 
       Examples:
       | login            | password                   | error_message          |
@@ -44,7 +44,7 @@ Feature: Login User Profile
       When User click on sign in link on auth form
       And User login with credentials <login> and <password>
       And User click on submit button
-      And User should see <error_message> error message for login
+      Then User should see <error_message> error message for login
 
       Examples:
       | login                           | password          | error_message                              |
