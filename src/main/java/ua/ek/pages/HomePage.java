@@ -4,59 +4,55 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
-import ua.ek.pages.registration.AuthPage;
-import ua.ek.pages.tablets.TabletPage;
-import ua.ek.pages.tablets.TabletsPage;
-import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
+import ua.ek.utils.PropertyReader;
 
 public class HomePage extends BasePage {
+
+    @FindBy(xpath = ".//div[@class='cr-contr']/div/em")
+    private WebElement deliveryRegionLink;
+
+    @FindBy(xpath = ".//span[@class='wu_entr']//em")
+    private WebElement enterLink;
+
+    @FindBy(xpath = ".//div[@id='mui_user_login_window']/div[@style='display: block;']")
+    private WebElement titleAuthRegistrationForm;
+
+    @FindBy(xpath = ".//ul[contains(@class,'mainmenu-list')]/li/a[contains(text(),'Компьютеры')]")
+    private WebElement computersMenuLink;
+
+    @FindBy(xpath = "(.//div[@class='mainmenu-sublist']/a[@class='mainmenu-subitem mainmenu-icon30'])[1]")
+    private WebElement tabletsSubMenuLink;
+
+    @FindBy(xpath = ".//label[@class='brand-best' and @for='br116']")
+    private WebElement manufacturerApple;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = ".//ul[contains(@class,'mainmenu-list')]/li/a[contains(text(),'Компьютеры')]")
-    private WebElement computersLink; // Menu "Компьютеры"
-
-    @FindBy(xpath = "(.//div[@class='mainmenu-sublist']/a[@class='mainmenu-subitem mainmenu-icon30'])[1]")
-    private WebElement tabletsLink; // SubMenu "Планшеты"
-
-    @FindBy(xpath = ".//*[@id='li_br116']/label") // Apple
-    private WebElement manufacturerApple;
-
-    public AuthPage clickEnterLink() {
-        if (getEnterLink() != null) {
-            clickWebElement(getEnterLink());
-            return new AuthPage(driver);
-        }
-        return null;
+    public String getBaseUrl(){
+        return PropertyReader
+                .from("/properties/common.properties", "base.url")
+                .getProperty("base.url");
     }
 
-    public TabletsPage clickTabletsLink() {
-        clickWebElement(computersLink);
-        clickElementWithJS(tabletsLink);
-
-        return new TabletsPage(driver);
+    public WebElement getDeliveryRegionLink() {
+        return deliveryRegionLink;
     }
 
-    public TabletPage clickTabletLink() {
-        clickWebElement(computersLink);
-        clickElementWithJS(tabletsLink);
-
-        return new TabletPage(driver);
+    public WebElement getEnterLink() {
+        return enterLink;
     }
 
-    public AppleTabletsPage clickAppleTabletsCheckBox(){
-        waitUntilElementIsVisible(FIVE_SECONDS, computersLink);
-        clickElementWithJS(computersLink);
-        clickElementWithJS(tabletsLink);
-
-        waitUntilElementIsVisible(FIVE_SECONDS, manufacturerApple);
-        clickElementWithJS(manufacturerApple);
-
-        return new AppleTabletsPage(driver);
+    public WebElement getComputersMenuLink() {
+        return computersMenuLink;
     }
 
-    public WebElement getWebElement(WebElement webElement){
-        return webElement;
+    public WebElement getTabletsSubMenuLink() {
+        return tabletsSubMenuLink;
+    }
+
+    public WebElement getManufacturerApple() {
+        return manufacturerApple;
     }
 }

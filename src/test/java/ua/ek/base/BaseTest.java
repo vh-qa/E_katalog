@@ -2,31 +2,74 @@ package ua.ek.base;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import ua.ek.utils.InitDrivers;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.*;
+import ua.ek.steps.HomeStep;
+import ua.ek.steps.base.BaseStep;
+import ua.ek.utils.IWaitTimes;
+import ua.ek.utils.StepFactory;
+import ua.ek.utils.StepType;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
-import static org.testng.FileAssert.fail;
+public abstract class BaseTest {
 
-public abstract class BaseTest extends InitDrivers {
+    private WebDriver driver;
+    private HomeStep homeStep;
+    private final static Logger LOG = LogManager.getLogger(BasePage.class);
 
-    protected final static Logger LOG = LogManager.getLogger(BasePage.class);
-    protected StringBuffer verificationErrors = new StringBuffer();
+    public BaseStep getStep(StepType stepType) {
+        StepFactory stepFactory = new StepFactory();
+        return stepFactory.createStep(stepType, driver);
+    }
+
+    @Parameters("browser")
+    @BeforeClass(alwaysRun = true)
+    public void setUp(@Optional("chrome") String browser) {
+        initWebDrivers(browser);
+
+        driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+    }
+
+    private void initWebDrivers(String browser) {
+
+        Properties properties = new Properties();
+        try {
+            properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/properties/common.properties"), "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", properties.getProperty("chrome.driver"));
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown browser " + browser);
+        }
+    }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
         driver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
-        }
     }
 
     @BeforeMethod
-    public void logTestStart(Method method, Object[] params) {
+    public void initStepsAndLogTestStart(Method method, Object[] params) {
+        homeStep = new HomeStep(driver);
+        homeStep.goHomePage();
+
         LOG.info("Start test {} with parameters {}",
                 method.getName(), Arrays.toString(params));
     }

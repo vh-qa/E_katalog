@@ -16,22 +16,40 @@ public class TabletPage extends BasePage {
     @FindBy(xpath = ".//input[@type='submit' and @class='price-sub']")
     private WebElement submitButton;
 
+    @FindBy(xpath = ".//u[contains(text(),'7000 — 10000')]")
+    private WebElement fixedPriceLink;
+
+    @FindBy(xpath = ".//a[@class='ib']/u[contains(text(),'Диагональ 10\"')]")
+    private WebElement displayDiagonalLink;
+
+    @FindBy(xpath = ".//div[@class='brands-tags']/a[contains(text(),'Apple')]")
+    private WebElement manufacturerLink;
+
     public TabletPage(WebDriver driver) {
         super(driver);
     }
 
-    public TabletPage enterMinPrice(String minPrice) {
-        enterTextInTextField(minPriceField, minPrice);
-        return this;
+    public WebElement getMinPriceField() {
+        return minPriceField;
     }
 
-    public TabletPage enterMaxPrice(String maxPrice) {
-        enterTextInTextField(maxPriceField, maxPrice);
-        return this;
+    public WebElement getMaxPriceField() {
+        return maxPriceField;
     }
 
-    public TabletsList submitButtonClick(){
-        waitUntilElementIsVisible(FIVE_SECONDS, submitButton).click();
-        return new TabletsList(driver);
+    public WebElement getSubmitButton() {
+        return submitButton;
+    }
+
+    public WebElement getFixedPriceLink() {
+        return fixedPriceLink;
+    }
+
+    public WebElement getDisplayDiagonalLink() {
+        return displayDiagonalLink;
+    }
+
+    public WebElement getManufacturerLink() {
+        return manufacturerLink;
     }
 }

@@ -1,20 +1,34 @@
 package ua.ek.tablets.manufacturers;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
-import ua.ek.pages.PageManager;
-import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
+import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.AssertUtils;
+import ua.ek.utils.PropertyReader;
+import ua.ek.utils.StepType;
 
 public class AppleTabletsTest extends BaseTest {
 
-    private PageManager pageManager = new PageManager();
+    private AppleTabletsStep appleTabletsStep;
+
+    @BeforeMethod
+    public void init() {
+        appleTabletsStep = (AppleTabletsStep) getStep(StepType.APPLE_TABLETS_STEP);
+    }
 
     @Test
-    public void xpathTest(){
-        AppleTabletsPage appleTabletsPage = pageManager.goAppleTabletsPage(driver);
-        appleTabletsPage.clickShowButton();
+    public void xpathTest() {
 
-        AssertUtils.makeAssert(appleTabletsPage.getPageTitleText(), "Планшеты Apple ");
+        String pageTitleText = PropertyReader
+                .from("/properties/common.properties",
+                        "apple.tablets")
+                .getProperty("apple.tablets");
+
+        appleTabletsStep.goTabletsPage()
+                        .clickAppleManufacturerCheckBox()
+                        .clickShowButton();
+
+        AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), pageTitleText);
     }
 }

@@ -1,91 +1,108 @@
 package ua.ek.registration;
 
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.annotations.DataProvider;
+import io.qameta.allure.Description;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ua.ek.base.BaseTest;
-import ua.ek.pages.PageManager;
-import ua.ek.pages.registration.AuthPage;
+import ua.ek.model.User;
+import ua.ek.steps.registration.AuthStep;
+import ua.ek.steps.registration.UserProfileStep;
 import ua.ek.utils.AssertUtils;
-import ua.ek.utils.Helper;
+import ua.ek.utils.DataGenerator;
 import ua.ek.utils.PropertyReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import ua.ek.utils.StepType;
 
 public class AuthPageTest extends BaseTest {
 
-    private PageManager pageManager = new PageManager();
+    private User userPositive = DataGenerator.getPositiveUserData();
+    private AuthStep authStep;
+    private UserProfileStep userProfileStep;
 
-    @Test(testName = "Login Tests Chrome", dataProvider = "testAuthDataProvider")
-    public void registrationFormTest(String login, String email, String password,
-                             String expectedLoginErrorMessage,
-                             String expectedEmailErrorMessage,
-                             String expectedPasswordErrorMessage) {
+    @BeforeMethod
+    public void openAuthFormBeforeTest() {
+        authStep = (AuthStep) getStep(StepType.AUTH_STEP);
+        userProfileStep = (UserProfileStep) getStep(StepType.USER_PROFILE_STEP);
 
-        AuthPage authPage = pageManager.goAuthPage(driver);
-        authPage
-                .enterLogin(login)
-                .enterEmail(email)
+        authStep.goAuthPage()
+                .clickAuthLink();
+    }
+
+    // Positive scenario
+
+    @Test(priority = 15, description = "Positive auth scenario")
+    @Description("Test Description: Successful auth test using valid login and password")
+    public void authSuccessfulTestWithLogin() {
+        String loginExpectedMessage = PropertyReader
+                .from("/properties/expectedMessages.properties",
+                        "auth.form.login.expected.message")
+                .getProperty("auth.form.login.expected.message");
+
+        makePositiveAuth(userPositive.getLogin(), userPositive.getPassword(), loginExpectedMessage);
+    }
+
+    @Test(priority = 25, description = "Positive auth scenario")
+    @Description("Test Description: Successful auth test using valid email and password")
+    public void authSuccessfulTestWithEmail() {
+        String loginExpectedMessage = PropertyReader
+                .from("/properties/expectedMessages.properties",
+                        "auth.form.login.expected.message")
+                .getProperty("auth.form.login.expected.message");
+        makePositiveAuth(userPositive.getEmail(), userPositive.getPassword(), loginExpectedMessage);
+    }
+
+    // Negative scenario
+
+    @Test(priority = 3, description = "Negative auth scenario")
+    @Description("Test Description: Unsuccessful auth test using invalid login")
+    public void authUnSuccessfulTestWithEmptyLogin() {
+        User userNegative = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
+        String errorLoginExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "auth.form.login.error.message")
+                .getProperty("auth.form.login.error.message");
+        auth(userNegative.getLogin(), userNegative.getPassword());
+        makeNegativeAuth(authStep.getErrorAuthLoginText(), errorLoginExpectedMessage);
+    }
+
+    @Test(priority = 4, description = "Negative auth scenario")
+    @Description("Test Description: Unsuccessful auth test using invalid email")
+    public void authUnSuccessfulTestWithEmptyEmail() {
+        User userNegative = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
+        String errorEmailExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "auth.form.email.error.message")
+                .getProperty("auth.form.email.error.message");
+        auth(userNegative.getEmail(), userNegative.getPassword());
+        makeNegativeAuth(authStep.getErrorAuthLoginText(), errorEmailExpectedMessage);
+    }
+
+    @Test(priority = 5, description = "Negative auth scenario")
+    @Description("Test Description: Unsuccessful auth test using invalid password")
+    public void authUnSuccessfulTestWithEmptyPassword() {
+        User userNegative = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
+        String errorPasswordExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "auth.form.password.error.message")
+                .getProperty("auth.form.password.error.message");
+        auth(userNegative.getLogin(), userNegative.getPassword());
+        makeNegativeAuth(authStep.getErrorAuthPasswordText(), errorPasswordExpectedMessage);
+    }
+
+    private void makePositiveAuth(String loginOrEmail, String password, String expectedMessage) {
+        auth(loginOrEmail, password);
+        AssertUtils.makeAssert(userProfileStep.getNickLinkText(), expectedMessage);
+        userProfileStep.clickLogOutFromUserProfileLink();
+    }
+
+    private void makeNegativeAuth(String actualMessage, String expectedMessage) {
+        AssertUtils.makeAssert(actualMessage, expectedMessage);
+        authStep.clickCloseLinkRegistrationForm();
+    }
+
+    private void auth(String loginOrEmail, String password) {
+        authStep.enterLoginOrEmail(loginOrEmail)
                 .enterPassword(password)
-                .submit();
-
-        Map<String, String> params = new HashMap<>();
-        params.put("login", login);
-        params.put("email", email);
-        params.put("password", password);
-
-        if(Helper.isWebElementPresent(driver, authPage.getLoginErrorElement())){
-            checkErrorMessage(authPage.getLoginErrorMessage(), expectedLoginErrorMessage, params);
-        }
-
-        if(Helper.isWebElementPresent(driver, authPage.getEmailErrorElement())){
-            checkErrorMessage(authPage.getEmailErrorMessage(), expectedEmailErrorMessage, params);
-        }
-
-        if(Helper.isWebElementPresent(driver, authPage.getPasswordErrorElement())){
-            checkErrorMessage(authPage.getPasswordErrorMessage(), expectedPasswordErrorMessage, params);
-        }
-
-        authPage.clickCloseLink();
-    }
-
-    private void checkErrorMessage(String actualErrorMessage, String expectedErrorMessage,
-                                   Map<String, String> params) {
-        if (!expectedErrorMessage.equals("")) {
-            asserts(expectedErrorMessage, actualErrorMessage, params);
-        }
-    }
-
-    private void asserts(String actualErrorMessage, String expectedErrorMessage, Map<String, String> params) {
-        AssertUtils.makeAssert(actualErrorMessage, expectedErrorMessage, params);
-    }
-
-    @DataProvider(name = "testAuthDataProvider")
-    private Object[][] testAuthDataProvider() throws IOException {
-
-        String pathData = PropertyReader
-                          .from("/properties/common.properties", "auth.test.data.file")
-                          .getProperty("auth.test.data.file");
-
-        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(pathData));
-
-        XSSFSheet sheet = workbook.getSheet("AuthData");
-        Object[][] authData = new Object[sheet.getLastRowNum()][6];
-
-        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-            XSSFRow parRow = sheet.getRow(i);
-            authData[i - 1][0] = (parRow.getCell(0) == null) ? "" : parRow.getCell(0).getStringCellValue();
-            authData[i - 1][1] = (parRow.getCell(1) == null) ? "" : parRow.getCell(1).getStringCellValue();
-            authData[i - 1][2] = (parRow.getCell(2) == null) ? "" : parRow.getCell(2).getStringCellValue();
-            authData[i - 1][3] = (parRow.getCell(3) == null) ? "" : parRow.getCell(3).getStringCellValue();
-            authData[i - 1][4] = (parRow.getCell(4) == null) ? "" : parRow.getCell(4).getStringCellValue();
-            authData[i - 1][5] = (parRow.getCell(5) == null) ? "" : parRow.getCell(5).getStringCellValue();
-        }
-
-        return authData;
+                .clickRememberMeCheckBoxAuth() // uncheck checkbox
+                .clickSubmitButton();
     }
 }

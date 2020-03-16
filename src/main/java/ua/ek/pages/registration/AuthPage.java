@@ -1,108 +1,76 @@
 package ua.ek.pages.registration;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ua.ek.base.BasePage;
-import ua.ek.pages.HomePage;
 
 public class AuthPage extends BasePage {
 
-    @FindBy(xpath = ".//em[contains(text(), 'Регистрация')]")
-    private WebElement registerLink;
+    @FindBy(xpath = ".//div[contains(@class, 'signin-with-ek')]")
+    private WebElement authLinkOnAuthForm;
 
-    @FindBy(xpath = ".//input[@placeholder='Имя']")
-    private WebElement loginField;
+    @FindBy(xpath = ".//div[@class='signin-name ek-form-group']/input[@class='ek-form-control']")
+    private WebElement loginOrEmailAuthField;
 
-    @FindBy(xpath = ".//input[@placeholder='e-mail']")
-    private WebElement emailField;
+    @FindBy(xpath = ".//div[@class='signin-password ek-form-group']/input[@class='ek-form-control']")
+    private WebElement passwordAuthField;
 
-    @FindBy(xpath = ".//input[@placeholder='пароль']")
-    private WebElement passwordField;
+    @FindBy(xpath = ".//input[@name='remember_me_']")
+    private WebElement rememberMeCheckBoxAuth;
 
-    @FindBy(xpath = ".//input[@name='new_reg_' and @class='l-but2']")
-    private WebElement submit;
+    @FindBy(xpath = ".//div[@class='signin-actions ml-auto']/button[@class='ek-form-btn']")
+    private WebElement backButtonAuth;
 
-    @FindBy(xpath = ".//input[@name='rules_accepted_']")
-    private WebElement userAgreement;
+    @FindBy(xpath = ".//div[@class='signin-actions ml-auto']/button[@class='ek-form-btn blue']")
+    private WebElement submitButtonAuth;
 
-    @FindBy(xpath = ".//div[@class='jclose']")
-    private WebElement closeLink;
+    @FindBy(xpath = ".//div[@class='signin-name ek-form-group invalid']/div[@class='ek-form-text']")
+    private WebElement errorLoginAuth;
 
-    // Locators for error text links
+    @FindBy(xpath = ".//div[@class='signin-password ek-form-group invalid']/div[@class='ek-form-text']")
+    private WebElement errorPasswordAuth;
 
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Имя')]")
-    private WebElement loginError; // Заполните поле "Имя"
-
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'email')]")
-    private WebElement emailFillError; // Заполните поле "email"
-
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'e-mail')]")
-    private WebElement emailCorrectError; // Поле "e-mail" введено некорректно
-
-    @FindBy(xpath = ".//div[@class='l-err' and contains(text(), 'Пароль')]")
-    private WebElement passwordError; // Заполните поле "Пароль"
-
-    private By loginErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Имя')]");
-    private By emailErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'email')]");
-    private By passwordErrorElement = By.xpath(".//div[@class='l-err' and contains(text(), 'Пароль')]");
+    @FindBy(xpath = ".//button[@class='swal2-close']")
+    private WebElement closeLinkRegistrationForm;
 
     public AuthPage(WebDriver driver) {
         super(driver);
     }
 
-    public AuthPage clickRegisterLink() {
-        clickWebElement(registerLink);
-        return this;
+    public WebElement getAuthLinkOnAuthForm() {
+        return authLinkOnAuthForm;
     }
 
-    public AuthPage enterLogin(String login) {
-        enterTextInTextField(loginField, login);
-        return this;
+    public WebElement getLoginOrEmailAuthField() {
+        return loginOrEmailAuthField;
     }
 
-    public AuthPage enterEmail(String email) {
-        enterTextInTextField(emailField, email);
-        return this;
+    public WebElement getPasswordAuthField() {
+        return passwordAuthField;
     }
 
-    public AuthPage enterPassword(String password) {
-        enterTextInTextField(passwordField, password);
-        return this;
+    public WebElement getRememberMeCheckBoxAuth() {
+        return rememberMeCheckBoxAuth;
     }
 
-    public BasePage clickCloseLink() {
-        getWebElementText(closeLink);
-        return new HomePage(driver);
+    public WebElement getBackButtonAuth() {
+        return backButtonAuth;
     }
 
-    public BasePage submit() {
-        clickWebElement(submit);
-        return this;
+    public WebElement getSubmitButtonAuth() {
+        return submitButtonAuth;
     }
 
-    public By getLoginErrorElement(){
-        return loginErrorElement;
+    public WebElement getErrorLoginAuth() {
+        return errorLoginAuth;
     }
 
-    public By getEmailErrorElement(){
-        return emailErrorElement;
+    public WebElement getErrorPasswordAuth() {
+        return errorPasswordAuth;
     }
 
-    public By getPasswordErrorElement(){
-        return passwordErrorElement;
-    }
-
-    public String getLoginErrorMessage(){
-        return getWebElementText(loginErrorElement);
-    }
-
-    public String getEmailErrorMessage(){
-        return getWebElementText(emailErrorElement);
-    }
-
-    public String getPasswordErrorMessage(){
-        return getWebElementText(passwordErrorElement);
+    public WebElement getCloseLinkRegistrationForm() {
+        return closeLinkRegistrationForm;
     }
 }
