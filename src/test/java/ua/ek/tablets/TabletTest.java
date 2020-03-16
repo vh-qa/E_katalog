@@ -29,12 +29,12 @@ public class TabletTest extends BaseTest {
         List<Price> prices = getPrices();
 
         for (Price price : prices) {
-            tabletStep.goTabletPage();
-            tabletStep.enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()));
-            tabletStep.enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()));
-            tabletStep.submitButtonClick();
+            tabletStep.goTabletPage()
+                      .enterMinPrice(Helper.convertDoubleToString(price.getMinPrice()))
+                      .enterMaxPrice(Helper.convertDoubleToString(price.getMaxPrice()))
+                      .submitButtonClick();
 
-            AssertUtils.makeAssert(tabletsListStep.getTextPrices(), price.getExpectedMessage());
+            AssertUtils.makeAssert(tabletsListStep.getStickerTextElement(), price.getExpectedMessage());
         }
     }
 
@@ -42,12 +42,13 @@ public class TabletTest extends BaseTest {
     public void tabletsFixedPricesLinkTest() {
         String resultPrice = PropertyReader
                 .from("/properties/expectedMessages.properties",
-                        "result.price.1")
-                .getProperty("result.price.1");
+                        "result.price_7000-10000")
+                .getProperty("result.price_7000-10000");
 
-        tabletStep.goTabletPage();
-        tabletStep.clickFixedPriceLink();
-        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), resultPrice);
+        tabletStep.goTabletPage()
+                  .clickFixedPriceLink();
+
+        AssertUtils.makeAssert(tabletsListStep.getStickerTextElement(), resultPrice);
     }
 
     @Test
@@ -56,9 +57,11 @@ public class TabletTest extends BaseTest {
                 .from("/properties/expectedMessages.properties",
                         "tablet.diagonal.size")
                 .getProperty("tablet.diagonal.size");
-        tabletStep.goTabletPage();
-        tabletStep.clickDisplayDiagonalLink();
-        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), tabletDiagonalSize);
+
+        tabletStep.goTabletPage()
+                  .clickDisplayDiagonalLink();
+
+        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), tabletDiagonalSize);
     }
 
     @Test
@@ -67,9 +70,11 @@ public class TabletTest extends BaseTest {
                 .from("/properties/expectedMessages.properties",
                         "search.result.text")
                 .getProperty("search.result.text");
-        tabletStep.goTabletPage();
-        tabletStep.clickManufacturerLink();
-        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), searchResultText);
+
+        tabletStep.goTabletPage()
+                  .clickManufacturerLink();
+
+        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), searchResultText);
     }
 
     @DataProvider(name = "tabletsPricesDataProvider")

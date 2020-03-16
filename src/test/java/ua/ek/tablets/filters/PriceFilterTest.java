@@ -38,14 +38,14 @@ public class PriceFilterTest extends BaseTest {
 
         String resultPrice = PropertyReader
                 .from("/properties/expectedMessages.properties",
-                        "result.price")
-                .getProperty("result.price");
+                        "result.price_10000-14999")
+                .getProperty("result.price_10000-14999");
 
         tabletStep.goTabletPage();
         priceFilterStep.enterMinPriceInMinPriceField(minPrice)
                         .enterMaxPriceInMinPriceField(maxPrice)
                         .clickShowButton();
 
-        AssertUtils.makeAssert(tabletsListStep.getTextPrices(), resultPrice);
+        AssertUtils.makeAssert(tabletsListStep.getStickerTextElement(), resultPrice);
     }
 }

@@ -14,12 +14,12 @@ public class UserProfileStep extends BaseStep {
         userProfilePage = (UserProfilePage)getPage(PageType.USER_PROFILE_PAGE, driver);
     }
 
-    public UserProfileStep clickLogOutFromUserProfileLink() {
+    public void clickLogOutFromUserProfileLink() {
         getHelper().clickWebElement(userProfilePage.getLogOutFromUserProfileLink());
-        return this;
     }
 
     public String getNickLinkText(){
-        return getHelper().getTextFromWebElement(userProfilePage.getNickLink());
+        return getHelper().getTextFromStalenessOfWebElement(userProfilePage.getNickLink());
+//      return getHelper().getTextFromWebElement(userProfilePage.getNickLink());
     }
 }

@@ -69,7 +69,7 @@ public class AuthTestBdd {
 
     @Then("^User should see (.*?) link$")
     public void userShouldSeeLink(String nickText) {
-        AssertUtils.makeAssert(authStep.getUserProfilePage().getNickLink().getText(), nickText);
+        AssertUtils.makeAssert(authStep.getUserProfileNickLinkText(), nickText);
     }
 
     // Negative scenario

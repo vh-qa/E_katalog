@@ -30,18 +30,36 @@ public class Helper {
         return waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement).getText().trim();
     }
 
+    public String getTextFromStalenessOfWebElement(WebElement webElement) {
+        if(waitUntilElementIsStalenessOf(webElement, IWaitTimes.FIVE_SECONDS)) {
+            return webElement.getText().trim();
+        }else{
+            waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
+            return webElement.getText().trim();
+        }
+    }
+
     public void clickWebElement(WebElement webElement) {
         waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
         webElement.click();
     }
 
-    public WebElement waitUntilElementIsVisible(Integer waitTime, WebElement webElement) {
+    public void clickStalenessOfWebElement(WebElement webElement) {
+        waitUntilElementIsStalenessOf(webElement, IWaitTimes.FIVE_SECONDS);
+        webElement.click();
+    }
+
+    public WebElement waitUntilElementIsVisible(int waitTime, WebElement webElement) {
         return waitUtils.visibilityOf(webElement, waitTime);
     }
 
-    public WebElement waitUntilElementIsVisible(Integer waitTime, By by) {
+    public WebElement waitUntilElementIsVisible(int waitTime, By by) {
         WebElement webElement = driver.findElement(by);
         return waitUtils.visibilityOf(webElement, waitTime);
+    }
+
+    public Boolean waitUntilElementIsStalenessOf(WebElement webElement, int waitTime) {
+        return stalenessOf(webElement, waitTime);
     }
 
     public Boolean visibilityOf(Integer waitTime, WebElement webElement) {
@@ -58,8 +76,16 @@ public class Helper {
         return false;
     }
 
-    public Boolean elementToBeSelected(WebElement webElement, Integer waitTime) {
+    public Boolean elementToBeSelected(WebElement webElement, int waitTime) {
         return waitUtils.elementToBeSelected(webElement, waitTime);
+    }
+
+    public WebElement visibilityOf(WebElement webElement, int waitTime){
+        return waitUtils.visibilityOf(webElement, waitTime);
+    }
+
+    public Boolean stalenessOf(WebElement webElement, int waitTime) {
+        return waitUtils.stalenessOf(webElement, waitTime);
     }
 
     public Boolean presenceOfElementLocated(By by, int timeout) {
@@ -77,8 +103,22 @@ public class Helper {
         return webElement.isDisplayed();
     }
 
-    public void clickElementWithJS(WebElement webElement) {
+    public void clickStalenessOfWebElementWithJS(WebElement webElement) {
+        stalenessOf(webElement, IWaitTimes.FIVE_SECONDS);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", webElement);
+    }
+
+    public void clickToBeSelectedWebElementWithJS(WebElement webElement) {
         elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", webElement);
+    }
+
+    public void clickVisibleWebElementWithJS(WebElement webElement) {
+        visibilityOf(webElement, IWaitTimes.FIVE_SECONDS);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", webElement);
@@ -102,15 +142,15 @@ public class Helper {
         return String.valueOf(convertDoubleToInt(value));
     }
 
-    public static int convertStringToInt(String value){
+    public static int convertStringToInt(String value) {
         return Integer.parseInt(value);
     }
 
-    public static String convertStringFromUpperCaseToLowercase(String upperCaseString){
+    public static String convertStringFromUpperCaseToLowercase(String upperCaseString) {
         return upperCaseString.trim().toLowerCase();
     }
 
-    public static String getProperty(String propertyFileName, String propertyName){
+    public static String getProperty(String propertyFileName, String propertyName) {
         return PropertyReader
                 .from(propertyFileName, propertyName)
                 .getProperty(propertyName);

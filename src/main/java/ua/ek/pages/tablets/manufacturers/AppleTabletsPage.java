@@ -6,10 +6,10 @@ import ua.ek.base.BasePage;
 
 public class AppleTabletsPage extends BasePage {
 
-    @FindBy(xpath = ".//*[@id='li_br116']/label")
+    @FindBy(xpath = ".//label[@title='id: 116']")
     private WebElement manufacturerApple;
 
-    @FindBy(xpath = ".//*[@id='tt-info']/a")
+    @FindBy(xpath = ".//td[@id='tt-info']/a[@class='show-models']")
     private WebElement showButton;
 
     @FindBy(xpath = ".//div[@class='page-title']/h1")

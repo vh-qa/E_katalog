@@ -21,21 +21,26 @@ public class AppleTabletsStep extends BaseStep {
         super(driver);
         this.driver = driver;
         waitUtils = new WaitUtils(driver);
-        appleTabletsPage = (AppleTabletsPage)getPage(PageType.APPLE_TABLETS_PAGE, driver);
+        appleTabletsPage = (AppleTabletsPage) getPage(PageType.APPLE_TABLETS_PAGE, driver);
     }
 
-    public AppleTabletsStep goAppleTabletsPage(){
+    public AppleTabletsStep goTabletsPage() {
         getHelper().clickWebElement(getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
-        getHelper().clickElementWithJS(appleTabletsPage.getAppleManufacturerCheckBox());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
+        return this;
+    }
+
+    public AppleTabletsStep clickAppleManufacturerCheckBox() {
+        getHelper().waitUntilElementIsVisible(FIVE_SECONDS, appleTabletsPage.getAppleManufacturerCheckBox());
+        getHelper().clickStalenessOfWebElementWithJS(appleTabletsPage.getAppleManufacturerCheckBox());
         return this;
     }
 
     public AppleTabletsStep clickShowButton() {
 
         // Explicit wait
-        getHelper().elementToBeClickable(appleTabletsPage.getShowButton(), FIVE_SECONDS);
-        getHelper().clickElementWithJS(appleTabletsPage.getShowButton());
+//      getHelper().elementToBeClickable(appleTabletsPage.getShowButton(), FIVE_SECONDS);
+        getHelper().clickStalenessOfWebElementWithJS(appleTabletsPage.getShowButton());
 
         return this;
     }
@@ -44,14 +49,14 @@ public class AppleTabletsStep extends BaseStep {
 
         // Fluent wait
         WebElement webElementFluentWay = waitUtils.fluentWait(By.xpath(appleTabletsPage.getPageTitleXpath()),
-                                                                        FIVE_SECONDS, MILLISECOND_500);
+                FIVE_SECONDS, MILLISECOND_500);
 
         // Custom wait
         WebElement webElementCustomWait = getHelper().waitUntilElementIsVisible(FIVE_SECONDS,
-                                            By.xpath(appleTabletsPage.getPageTitleXpath()));
+                By.xpath(appleTabletsPage.getPageTitleXpath()));
         WebDriverWait wait = new WebDriverWait(driver, FIVE_SECONDS);
         wait.until(CustomWaits.isElementContainsText(webElementCustomWait, "Apple"));
 
-        return webElementCustomWait.getText();
+        return webElementCustomWait.getText().trim();
     }
 }

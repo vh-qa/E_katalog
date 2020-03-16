@@ -8,7 +8,7 @@ import ua.ek.base.BasePage;
 public class TabletsPage extends BasePage {
 
     // Manufacturers
-    @FindBy(xpath = ".//li[@id='li_br116']/label[@for='br116']/a")
+    @FindBy(xpath = ".//label[@title='id: 116']")
     private WebElement manufacturerApple;
 
     @FindBy(xpath = ".//label[@for='br1364']/a")

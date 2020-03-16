@@ -19,7 +19,7 @@ public class TabletStep extends BaseStep {
 
     public TabletStep goTabletPage() {
         getHelper().clickWebElement(getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 

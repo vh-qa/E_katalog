@@ -17,4 +17,8 @@ public class TabletsManufacturerStep extends BaseStep {
     public TabletsManufacturerPage getTabletsManufacturerPage() {
         return tabletsManufacturerPage;
     }
+
+    public String getTabletsListTitle(){
+        return getHelper().getTextFromWebElement(tabletsManufacturerPage.getPageTitle());
+    }
 }

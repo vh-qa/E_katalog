@@ -1,5 +1,6 @@
 package ua.ek.steps.bdd.tabletsfilter;
 
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -53,5 +54,10 @@ public class TabletsFilterTestBdd {
     @Then("^User should see page with text (.*?)$")
     public void userShouldSeePageWithListOfAppleTablets(String text) {
         AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), text);
+    }
+
+    @After
+    public void closeBrowser(){
+        driver.quit();
     }
 }

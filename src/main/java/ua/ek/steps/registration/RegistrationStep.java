@@ -23,6 +23,10 @@ public class RegistrationStep extends BaseStep {
         return this;
     }
 
+    public String getRegisterLinkOnRegistrationFormText(){
+        return getHelper().getTextFromStalenessOfWebElement(registrationPage.getRegisterLinkOnRegistrationForm());
+    }
+
     public RegistrationStep clickRegisterLink() {
         getHelper().clickWebElement(registrationPage.getRegisterLinkOnRegistrationForm());
         return this;
@@ -53,8 +57,12 @@ public class RegistrationStep extends BaseStep {
         return this;
     }
 
-    public String getSuccessfulUserRegistrationTextFromWebElement() {
-        return getHelper().getTextFromWebElement(registrationPage.getSuccessfulUserRegistrationElement());
+    public String getSuccessfulUserRegistrationTextFromHeaderElement() {
+        return getHelper().getTextFromStalenessOfWebElement(registrationPage.getSuccessfulUserRegistrationHeaderElement());
+    }
+
+    public String getSuccessfulUserRegistrationButtonText(){
+        return getHelper().getTextFromStalenessOfWebElement(registrationPage.getSuccessfulUserRegistrationButton());
     }
 
     public String getLoginErrorMessage(){

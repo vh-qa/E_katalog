@@ -34,7 +34,7 @@ public class TabletsTest extends BaseTest {
                    .clickDisplayDiagonal(Helper.convertDoubleToInt(displayDiagonal))
                    .clickShowButton();
 
-        AssertUtils.makeAssert(tabletsManufacturerStep.getTabletsManufacturerPage().getPageTitle(), expectedMessage);
+        AssertUtils.makeAssert(tabletsManufacturerStep.getTabletsListTitle(), expectedMessage);
     }
 
     @DataProvider(name = "testTabletsDataProvider")

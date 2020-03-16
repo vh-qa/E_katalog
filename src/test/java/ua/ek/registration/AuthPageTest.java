@@ -21,50 +21,50 @@ public class AuthPageTest extends BaseTest {
     @BeforeMethod
     public void openAuthFormBeforeTest() {
         authStep = (AuthStep) getStep(StepType.AUTH_STEP);
-        authStep.goAuthPage().clickAuthLink();
-
         userProfileStep = (UserProfileStep) getStep(StepType.USER_PROFILE_STEP);
+
+        authStep.goAuthPage()
+                .clickAuthLink();
     }
 
     // Positive scenario
 
-    @Test(description = "Positive auth scenario")
+    @Test(priority = 15, description = "Positive auth scenario")
     @Description("Test Description: Successful auth test using valid login and password")
     public void authSuccessfulTestWithLogin() {
         String loginExpectedMessage = PropertyReader
                 .from("/properties/expectedMessages.properties",
                         "auth.form.login.expected.message")
                 .getProperty("auth.form.login.expected.message");
-        auth(userPositive.getLogin(), (userPositive.getPassword()), loginExpectedMessage);
-        authStep.clickCloseLinkRegistrationForm();
+
+        makePositiveAuth(userPositive.getLogin(), userPositive.getPassword(), loginExpectedMessage);
     }
 
-    @Test(description = "Positive auth scenario")
+    @Test(priority = 25, description = "Positive auth scenario")
     @Description("Test Description: Successful auth test using valid email and password")
     public void authSuccessfulTestWithEmail() {
         String loginExpectedMessage = PropertyReader
                 .from("/properties/expectedMessages.properties",
                         "auth.form.login.expected.message")
                 .getProperty("auth.form.login.expected.message");
-        auth(userPositive.getEmail(), (userPositive.getPassword()), loginExpectedMessage);
-        authStep.clickCloseLinkRegistrationForm();
+        makePositiveAuth(userPositive.getEmail(), userPositive.getPassword(), loginExpectedMessage);
     }
 
     // Negative scenario
 
-    @Test(description = "Negative auth scenario")
+    @Test(priority = 3, description = "Negative auth scenario")
     @Description("Test Description: Unsuccessful auth test using invalid login")
     public void authUnSuccessfulTestWithEmptyLogin() {
-        User user = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
+        User userNegative = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
         String errorLoginExpectedMessage = PropertyReader
                 .from("/properties/messagesFromWebSite.properties",
                         "auth.form.login.error.message")
                 .getProperty("auth.form.login.error.message");
-        auth(user.getLogin(), user.getPassword(), errorLoginExpectedMessage);
-        authStep.clickCloseLinkRegistrationForm();
+        auth(userNegative.getLogin(), userNegative.getPassword());
+        makeNegativeAuth(authStep.getErrorAuthLoginText(), errorLoginExpectedMessage);
     }
 
-    @Test(description = "Negative auth scenario")
+    @Test(priority = 4, description = "Negative auth scenario")
     @Description("Test Description: Unsuccessful auth test using invalid email")
     public void authUnSuccessfulTestWithEmptyEmail() {
         User userNegative = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
@@ -72,11 +72,11 @@ public class AuthPageTest extends BaseTest {
                 .from("/properties/messagesFromWebSite.properties",
                         "auth.form.email.error.message")
                 .getProperty("auth.form.email.error.message");
-        auth(userNegative.getEmail(), userNegative.getPassword(), errorEmailExpectedMessage);
-        authStep.clickCloseLinkRegistrationForm();
+        auth(userNegative.getEmail(), userNegative.getPassword());
+        makeNegativeAuth(authStep.getErrorAuthLoginText(), errorEmailExpectedMessage);
     }
 
-    @Test(description = "Negative auth scenario")
+    @Test(priority = 5, description = "Negative auth scenario")
     @Description("Test Description: Unsuccessful auth test using invalid password")
     public void authUnSuccessfulTestWithEmptyPassword() {
         User userNegative = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
@@ -84,17 +84,25 @@ public class AuthPageTest extends BaseTest {
                 .from("/properties/messagesFromWebSite.properties",
                         "auth.form.password.error.message")
                 .getProperty("auth.form.password.error.message");
-        auth(userNegative.getLogin(), userNegative.getPassword(), errorPasswordExpectedMessage);
+        auth(userNegative.getLogin(), userNegative.getPassword());
+        makeNegativeAuth(authStep.getErrorAuthPasswordText(), errorPasswordExpectedMessage);
+    }
+
+    private void makePositiveAuth(String loginOrEmail, String password, String expectedMessage) {
+        auth(loginOrEmail, password);
+        AssertUtils.makeAssert(userProfileStep.getNickLinkText(), expectedMessage);
+        userProfileStep.clickLogOutFromUserProfileLink();
+    }
+
+    private void makeNegativeAuth(String actualMessage, String expectedMessage) {
+        AssertUtils.makeAssert(actualMessage, expectedMessage);
         authStep.clickCloseLinkRegistrationForm();
     }
 
-    public void auth(String loginOrEmail, String password, String expectedMessage) {
+    private void auth(String loginOrEmail, String password) {
         authStep.enterLoginOrEmail(loginOrEmail)
                 .enterPassword(password)
                 .clickRememberMeCheckBoxAuth() // uncheck checkbox
                 .clickSubmitButton();
-
-        AssertUtils.makeAssert(userProfileStep.getNickLinkText(), expectedMessage);
-        userProfileStep.clickLogOutFromUserProfileLink();
     }
 }

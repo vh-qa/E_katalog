@@ -11,4 +11,4 @@ Feature: Tablets Filter advanced selection
     When User go tablets page
     And User click on apple checkbox
     And User click on show button
-    Then User should see page with text 'Планшеты Apple '
+    Then User should see page with text Планшеты Apple

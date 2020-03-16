@@ -25,23 +25,23 @@ public class HomeStep extends BaseStep {
 
     public HomeStep clickTabletsLink() {
         getHelper().clickWebElement(getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 
     public HomeStep clickTabletLink() {
         getHelper().clickWebElement(getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 
     public HomeStep clickAppleTabletsCheckBox() {
         getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getComputersMenuLink());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
 
         getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, getHomePage().getManufacturerApple());
-        getHelper().clickElementWithJS(getHomePage().getManufacturerApple());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getManufacturerApple());
 
         return this;
     }

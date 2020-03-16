@@ -10,22 +10,23 @@ import ua.ek.utils.StepType;
 
 public class AppleTabletsTest extends BaseTest {
 
-   private AppleTabletsStep appleTabletsStep;
+    private AppleTabletsStep appleTabletsStep;
 
     @BeforeMethod
-    public void init(){
-        appleTabletsStep = (AppleTabletsStep)getStep(StepType.APPLE_TABLETS_STEP);
+    public void init() {
+        appleTabletsStep = (AppleTabletsStep) getStep(StepType.APPLE_TABLETS_STEP);
     }
 
     @Test
-    public void xpathTest(){
+    public void xpathTest() {
 
         String pageTitleText = PropertyReader
                 .from("/properties/common.properties",
                         "apple.tablets")
                 .getProperty("apple.tablets");
 
-        appleTabletsStep.goAppleTabletsPage()
+        appleTabletsStep.goTabletsPage()
+                        .clickAppleManufacturerCheckBox()
                         .clickShowButton();
 
         AssertUtils.makeAssert(appleTabletsStep.getPageTitleText(), pageTitleText);

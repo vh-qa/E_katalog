@@ -46,8 +46,8 @@ public class UserRegistrationTestBdd {
     @Then("^User should see (.*?) link on auth form$")
     public void userValidateRegistrationForm(String registrationLink) {
         AssertUtils.makeAssert(
-                helper.getTextFromWebElement
-                        (registrationStep.getRegistrationPage().getRegisterLinkOnRegistrationForm()), registrationLink);
+                registrationStep.getRegisterLinkOnRegistrationFormText(),
+                registrationLink);
     }
 
     @When("^User click on registration link on registration form$")
@@ -78,8 +78,8 @@ public class UserRegistrationTestBdd {
     @Then("^User should see form with text (.*?)$")
     public void userShouldSeeSuccessfulRegistrationMessage(String successfulRegistrationText) {
         AssertUtils.makeAssert(
-                helper.getTextFromWebElement
-                        (registrationStep.getRegistrationPage().getSuccessfulUserRegistrationElement()), successfulRegistrationText);
+                registrationStep.getSuccessfulUserRegistrationTextFromHeaderElement(),
+                successfulRegistrationText);
     }
 
     @Then("^User should see (.*?) error message for login$")

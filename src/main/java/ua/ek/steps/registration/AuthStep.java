@@ -13,8 +13,8 @@ public class AuthStep extends BaseStep {
 
     public AuthStep(WebDriver driver) {
         super(driver);
-        authPage = (AuthPage)getPage(PageType.AUTH_PAGE, driver);
-        userProfilePage = (UserProfilePage)getPage(PageType.USER_PROFILE_PAGE, driver);
+        authPage = (AuthPage) getPage(PageType.AUTH_PAGE, driver);
+        userProfilePage = (UserProfilePage) getPage(PageType.USER_PROFILE_PAGE, driver);
     }
 
     public AuthPage getAuthPage() {
@@ -55,6 +55,10 @@ public class AuthStep extends BaseStep {
         return this;
     }
 
+    public String getUserProfileNickLinkText() {
+        return getHelper().getTextFromStalenessOfWebElement(userProfilePage.getNickLink());
+    }
+
     public String getErrorAuthLoginText() {
         return getHelper().getTextFromWebElement(authPage.getErrorLoginAuth());
     }
@@ -64,7 +68,7 @@ public class AuthStep extends BaseStep {
     }
 
     public AuthStep clickCloseLinkRegistrationForm() {
-        getHelper().clickWebElement(authPage.getCloseLinkRegistrationForm());
+        getHelper().clickVisibleWebElementWithJS(authPage.getCloseLinkRegistrationForm());
         return this;
     }
 }

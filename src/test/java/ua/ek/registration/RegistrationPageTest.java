@@ -23,11 +23,12 @@ public class RegistrationPageTest extends BaseTest {
 
     // Negative scenario
 
-    @Test(priority=1)
+    @Test(priority = 1)
     public void loginFieldRegistrationFormTestEmptyLogin() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithLogin();
         registrationStep.enterLogin(user.getLogin())
                         .clickSubmitButton();
+
         String errorLoginExpectedMessage = PropertyReader
                 .from("/properties/messagesFromWebSite.properties",
                         "registration.form.login.error.message")
@@ -36,7 +37,7 @@ public class RegistrationPageTest extends BaseTest {
         AssertUtils.makeAssert(registrationStep.getLoginErrorMessage(), errorLoginExpectedMessage);
     }
 
-    @Test(priority=2)
+    @Test(priority = 2)
     public void emailFieldRegistrationFormTestEmptyEmail() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithEmail();
         registrationStep.enterEmail(user.getEmail())
@@ -50,9 +51,8 @@ public class RegistrationPageTest extends BaseTest {
         AssertUtils.makeAssert(registrationStep.getEmailErrorMessage(), errorEmailExpectedMessage);
     }
 
-    @Test(priority=3)
+    @Test(priority = 3)
     public void emailFieldRegistrationFormTestIncorrectEmail() {
-
         String userIncorrectEmail = PropertyReader
                 .from("/properties/common.properties",
                         "user.incorrect.email")
@@ -64,13 +64,32 @@ public class RegistrationPageTest extends BaseTest {
                 .getProperty("registration.form.incorrect.email.error.message");
 
         registrationStep.enterEmail(userIncorrectEmail)
+                .clickSubmitButton();
+
+        AssertUtils.makeAssert(registrationStep.getEmailIncorrectErrorMessage(),
+                errorIncorrectEmailExpectedMessage);
+    }
+
+    @Test(priority = 4)
+    public void emailFieldRegistrationFormTestIncorrectEmailSymbols() {
+        String userIncorrectEmail = PropertyReader
+                .from("/properties/common.properties",
+                        "user.incorrect.email.symbols")
+                .getProperty("user.incorrect.email.symbols");
+
+        String errorIncorrectEmailExpectedMessage = PropertyReader
+                .from("/properties/messagesFromWebSite.properties",
+                        "registration.form.incorrect.email.symbols.error.message")
+                .getProperty("registration.form.incorrect.email.symbols.error.message");
+
+        registrationStep.enterEmail(userIncorrectEmail)
                         .clickSubmitButton();
 
         AssertUtils.makeAssert(registrationStep.getEmailIncorrectErrorMessage(),
                                                 errorIncorrectEmailExpectedMessage);
     }
 
-    @Test(priority=4)
+    @Test(priority = 5)
     public void passwordFieldRegistrationFormEmptyPassword() {
         User user = DataGenerator.getUserDataForUnSuccessfulTestWithPassword();
         registrationStep.enterPassword(user.getPassword())
@@ -86,7 +105,7 @@ public class RegistrationPageTest extends BaseTest {
 
     // Positive scenario
 
-    @Test(priority=5)
+    @Test(priority = 6)
     public void successfulUserRegistration() {
         User user = DataGenerator.getUser();
 
@@ -100,7 +119,7 @@ public class RegistrationPageTest extends BaseTest {
                         "registration.form.successful.expected.message")
                 .getProperty("registration.form.successful.expected.message");
 
-        AssertUtils.makeAssert(registrationStep.getSuccessfulUserRegistrationTextFromWebElement(),
+        AssertUtils.makeAssert(registrationStep.getSuccessfulUserRegistrationTextFromHeaderElement(),
                                                 successfulRegistrationExpectedMessage);
     }
 }

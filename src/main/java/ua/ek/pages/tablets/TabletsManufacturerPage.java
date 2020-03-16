@@ -14,7 +14,7 @@ public class TabletsManufacturerPage extends BasePage {
         super(driver);
     }
 
-    public String getPageTitle(){
-        return pageTitle.getText();
+    public WebElement getPageTitle(){
+        return pageTitle;
     }
 }

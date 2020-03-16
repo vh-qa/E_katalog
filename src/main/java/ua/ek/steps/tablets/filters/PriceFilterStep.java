@@ -3,7 +3,6 @@ package ua.ek.steps.tablets.filters;
 import org.openqa.selenium.WebDriver;
 import ua.ek.pages.tablets.filters.PriceFilter;
 import ua.ek.steps.base.BaseStep;
-import ua.ek.utils.IWaitTimes;
 import ua.ek.utils.PageType;
 
 public class PriceFilterStep extends BaseStep {
@@ -26,8 +25,7 @@ public class PriceFilterStep extends BaseStep {
     }
 
     public PriceFilterStep clickShowButton() {
-        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
-                priceFilter.getShowButton()).click();
+        getHelper().clickStalenessOfWebElement(priceFilter.getShowButton());
         return this;
     }
 }

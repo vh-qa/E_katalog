@@ -20,7 +20,7 @@ public class TabletsStep extends BaseStep {
 
     public TabletsStep goTabletsPage(){
         getHelper().clickWebElement(getHomePage().getComputersMenuLink());
-        getHelper().clickElementWithJS(getHomePage().getTabletsSubMenuLink());
+        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 
@@ -44,7 +44,7 @@ public class TabletsStep extends BaseStep {
     }
 
     public void clickManufacturer(WebElement webElement) {
-        getHelper().clickElementWithJS(webElement);
+        getHelper().clickStalenessOfWebElementWithJS(webElement);
     }
 
     public TabletsStep clickDisplayDiagonal(int displayDiagonal) {
@@ -61,11 +61,11 @@ public class TabletsStep extends BaseStep {
 
     public void clickDisplayDiagonal(WebElement webElement) {
         getHelper().elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
-        getHelper().clickElementWithJS(webElement);
+        getHelper().clickStalenessOfWebElementWithJS(webElement);
     }
 
     public TabletsStep clickShowButton() {
-        getHelper().clickElementWithJS(tabletsPage.getShowButton());
+        getHelper().clickStalenessOfWebElementWithJS(tabletsPage.getShowButton());
         return this;
     }
 }

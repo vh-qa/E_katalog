@@ -36,11 +36,11 @@ public class RegistrationPage extends BasePage {
 
     // Locators for successful user registration
 
-    @FindBy(xpath = ".//div[@id='mui_user_login_window']/div[@class='modal-header']")
-    private WebElement successfulUserRegistrationElement;
+    @FindBy(xpath = ".//div[@class='modal-header']")
+    private WebElement successfulUserRegistrationHeaderElement;
 
     @FindBy(xpath = ".//div[@class='ek-form-group']/div[@class='ek-form-text']")
-    private WebElement successfulUserRegistrationText;
+    private WebElement successfulUserRegistrationElementWithLongText;
 
     @FindBy(xpath = ".//div[@class='d-flex justify-content-end']")
     private WebElement successfulUserRegistrationButton;
@@ -100,8 +100,8 @@ public class RegistrationPage extends BasePage {
         return closeLinkRegistrationForm;
     }
 
-    public WebElement getSuccessfulUserRegistrationElement() {
-        return successfulUserRegistrationElement;
+    public WebElement getSuccessfulUserRegistrationHeaderElement() {
+        return successfulUserRegistrationHeaderElement;
     }
 
     public WebElement getSuccessfulUserRegistrationButton() {

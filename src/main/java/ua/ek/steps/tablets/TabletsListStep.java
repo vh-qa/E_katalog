@@ -14,7 +14,11 @@ public class TabletsListStep extends BaseStep {
         tabletsListPage = (TabletsListPage)getPage(PageType.TABLETS_LIST_PAGE, driver);
     }
 
-    public String getTextPrices(){
-        return getHelper().getTextFromWebElement(tabletsListPage.getTextPricesField());
+    public String getTabletsListTitle(){
+        return getHelper().getTextFromWebElement(tabletsListPage.getTabletsListTitle());
+    }
+
+    public String getStickerTextElement(){
+        return getHelper().getTextFromWebElement(tabletsListPage.getStickerTextElement());
     }
 }

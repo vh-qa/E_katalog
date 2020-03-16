@@ -27,8 +27,8 @@ public class SearchTest extends BaseTest {
 
         String searchResultText = PropertyReader
                 .from("/properties/expectedMessages.properties",
-                        "search.result.text")
-                .getProperty("search.result.text");
+                        "search.result.text.lowcase")
+                .getProperty("search.result.text.lowcase");
 
         searchStep.goSearchPage()
                        .enterSearchTextInSearchField(searchText)

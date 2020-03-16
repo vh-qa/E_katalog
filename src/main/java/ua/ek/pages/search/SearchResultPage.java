@@ -7,7 +7,7 @@ import ua.ek.base.BasePage;
 
 public class SearchResultPage extends BasePage {
 
-    @FindBy(xpath = ".//h1[@class='t2']")
+    @FindBy(xpath = ".//h1[@class='t2']/b[@class='hst']")
     private WebElement searchListTitleElement;
 
     public SearchResultPage(WebDriver driver) {
