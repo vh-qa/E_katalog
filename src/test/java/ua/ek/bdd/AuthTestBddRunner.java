@@ -2,10 +2,7 @@ package ua.ek.bdd;
 
 import cucumber.api.testng.*;
 import cucumber.api.CucumberOptions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 @CucumberOptions(
 
@@ -19,7 +16,7 @@ import org.testng.annotations.Test;
                 "rerun:target/cucumber-reports/rerun.txt"
         })
 
-public class AuthTestBddRunner {
+public class AuthTestBddRunner extends AbstractTestNGCucumberTests {
 
     private TestNGCucumberRunner testNGCucumberRunner;
 
@@ -28,7 +25,7 @@ public class AuthTestBddRunner {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @Test(groups = "cucumber", dataProvider = "getFeatures")
+    @Test(groups = "cucumber", dataProvider = "features")
     public void authLoginTest(CucumberFeatureWrapper cucumberFeatureWrapper) {
         testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
     }

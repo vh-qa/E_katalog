@@ -7,7 +7,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.base.BaseBddStep;
 import ua.ek.steps.registration.AuthStep;
 import ua.ek.steps.registration.RegistrationStep;
 import ua.ek.utils.*;
@@ -22,7 +21,9 @@ public class UserRegistrationTestBdd {
     private RegistrationStep registrationStep;
 
     public UserRegistrationTestBdd() {
-        driver = BaseBddStep.getWebDriver();
+        InitRemoteDrivers initRemoteDrivers = new InitRemoteDrivers();
+        initRemoteDrivers.initWithDefaultValues();
+        driver = initRemoteDrivers.getDriver();
         helper = new Helper(driver);
 
         StepFactory stepFactory = new StepFactory();

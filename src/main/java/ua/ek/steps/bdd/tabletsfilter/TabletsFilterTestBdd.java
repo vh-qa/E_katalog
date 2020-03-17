@@ -7,7 +7,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.base.BaseBddStep;
 import ua.ek.steps.tablets.TabletsStep;
 import ua.ek.steps.tablets.manufacturers.AppleTabletsStep;
 import ua.ek.utils.*;
@@ -22,7 +21,9 @@ public class TabletsFilterTestBdd {
     private AppleTabletsStep appleTabletsStep;
 
     public TabletsFilterTestBdd() {
-        driver = BaseBddStep.getWebDriver();
+        InitRemoteDrivers initRemoteDrivers = new InitRemoteDrivers();
+        initRemoteDrivers.initWithDefaultValues();
+        driver = initRemoteDrivers.getDriver();
         helper = new Helper(driver);
 
         StepFactory stepFactory = new StepFactory();

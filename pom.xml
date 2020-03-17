@@ -84,7 +84,6 @@
         </dependency>
 
         <!-- Cucumber -->
-
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -102,6 +101,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.temyers/cucumber-jvm-parallel-plugin -->
+<!--        <dependency>-->
+<!--            <groupId>com.github.temyers</groupId>-->
+<!--            <artifactId>cucumber-jvm-parallel-plugin</artifactId>-->
+<!--            <version>5.0.0</version>-->
+<!--        </dependency>-->
 
         <!-- Allure -->
         <dependency>
@@ -148,7 +154,6 @@
     </dependencies>
 
     <build>
-
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -172,6 +177,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+<!--                    <forkCount>10</forkCount>-->
+<!--                    <reuseForks>true</reuseForks>-->
+<!--                    <includes>-->
+<!--                        <include>-->
+<!--                            **/Parallel*IT.class-->
+<!--                        </include>-->
+<!--                    </includes>-->
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
@@ -196,6 +208,28 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>com.github.temyers</groupId>-->
+<!--                <artifactId>cucumber-jvm-parallel-plugin</artifactId>-->
+<!--                <version>5.0.0</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>generateRunners</id>-->
+<!--                            <phase>validate</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>generateRunners</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <glue>ua.ek.bdd.loginuserprofile</glue>-->
+<!--                                <featuresDirectory>scr/main/resources/features/loginuserprofile</featuresDirectory>-->
+<!--                                <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>-->
+<!--                                <format>json,html</format>-->
+<!--                                <tags>@SuccessfulLogin</tags>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--            </plugin>-->
 
             <plugin>
                 <groupId>io.qameta.allure</groupId>

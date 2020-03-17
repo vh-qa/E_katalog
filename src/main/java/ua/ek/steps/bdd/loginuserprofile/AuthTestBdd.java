@@ -8,7 +8,7 @@ import cucumber.api.java.en.When;
 
 import org.openqa.selenium.WebDriver;
 import ua.ek.steps.HomeStep;
-import ua.ek.steps.base.BaseBddStep;
+import ua.ek.utils.InitRemoteDrivers;
 import ua.ek.steps.registration.AuthStep;
 import ua.ek.utils.*;
 
@@ -21,7 +21,9 @@ public class AuthTestBdd {
     private AuthStep authStep;
 
     public AuthTestBdd() {
-        driver = BaseBddStep.getWebDriver();
+        InitRemoteDrivers initRemoteDrivers = new InitRemoteDrivers();
+        initRemoteDrivers.initWithDefaultValues();
+        driver = initRemoteDrivers.getDriver();
         helper = new Helper(driver);
 
         StepFactory stepFactory = new StepFactory();
@@ -44,7 +46,7 @@ public class AuthTestBdd {
     @Then("^User should see (.*?) link on auth form$")
     public void userValidateAuthForm(String linkText) {
         AssertUtils.makeAssert(helper.getTextFromWebElement
-                              (authStep.getAuthPage().getAuthLinkOnAuthForm()), linkText);
+                (authStep.getAuthPage().getAuthLinkOnAuthForm()), linkText);
     }
 
     @When("^User click on sign in link on auth form$")
@@ -93,7 +95,7 @@ public class AuthTestBdd {
     }
 
     @After
-    public void closeBrowser(){
+    public void closeBrowser() {
         driver.quit();
     }
 }

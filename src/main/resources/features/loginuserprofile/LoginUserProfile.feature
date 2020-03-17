@@ -1,3 +1,7 @@
+#Author       :   VH
+#Scenario     :   Successful and unsuccessful login
+#Application  :   E_katalog
+
 @LoginUserProfile
 Feature: Login User Profile
 

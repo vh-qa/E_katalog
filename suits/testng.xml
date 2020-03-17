@@ -2,26 +2,30 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <!-- TestNG configuration -->
-<suite name="Cross Browser  Suite">
-    <test name="Registration Tests Chrome">
+<suite name="Grid Cross Browser Suite" thread-count="3" parallel="tests">
+
+    <parameter name="baseUrl" value="https://ek.ua/"></parameter>
+    <parameter name="os" value="WINDOWS"></parameter>
+    <parameter name="node" value="http://192.168.1.3:5555"></parameter>
+    
+    <test name="Login Tests Chrome" group-by-instances="true" preserve-order="true">
         <parameter name="browser" value="chrome" />
         <packages>
-            <package name="ua.ek" />
+            <package name="ua.ek.steps.bdd.loginuserprofile" />
         </packages>
         <classes>
-            <class name="ua.ek.registration.AuthPageTest" />
-            <class name="ua.ek.registration.RegistrationPageTest" />
+            <class name="ua.ek.steps.bdd.loginuserprofile.AuthTestBdd" />
         </classes>
     </test>
 
-<!--    <test name="Registration Tests Firefox">-->
-<!--        <parameter name="browser" value="firefox" />-->
-<!--        <packages>-->
-<!--            <package name="ua.ek" />-->
-<!--        </packages>-->
-<!--        <classes>-->
-<!--            <class name="ua.ek.registration.RegistrationPageTest" />-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="Tablets Filters Tests Firefox" group-by-instances="true" preserve-order="true">
+        <parameter name="browser" value="firefox" />
+        <packages>
+            <package name="ua.ek.steps.bdd.tabletsfilter" />
+        </packages>
+        <classes>
+            <class name="ua.ek.steps.bdd.tabletsfilter.TabletsFilterTestBdd" />
+        </classes>
+    </test>
 
 </suite>
