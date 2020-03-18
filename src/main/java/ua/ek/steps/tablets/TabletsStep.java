@@ -24,17 +24,17 @@ public class TabletsStep extends BaseStep {
         return this;
     }
 
-    public TabletsStep clickManufacturer(String manufacturerName) {
+    public TabletsStep clickManufacturerCheckBox(String manufacturerName) {
 
         switch (manufacturerName.trim().toLowerCase()) {
             case IManufacturers.APPLE:
-                clickManufacturer(tabletsPage.getManufacturerApple());
+                clickManufacturerCheckBox(tabletsPage.getManufacturerApple());
                 break;
             case IManufacturers.GOOGLE:
-                clickManufacturer(tabletsPage.getManufacturerGoogle());
+                clickManufacturerCheckBox(tabletsPage.getManufacturerGoogle());
                 break;
             case IManufacturers.SAMSUNG:
-                clickManufacturer(tabletsPage.getManufacturerSamsung());
+                clickManufacturerCheckBox(tabletsPage.getManufacturerSamsung());
                 break;
             default:
                 break;
@@ -43,14 +43,14 @@ public class TabletsStep extends BaseStep {
         return this;
     }
 
-    public void clickManufacturer(WebElement webElement) {
+    public void clickManufacturerCheckBox(WebElement webElement) {
         getHelper().clickStalenessOfWebElementWithJS(webElement);
     }
 
-    public TabletsStep clickDisplayDiagonal(int displayDiagonal) {
+    public TabletsStep clickDisplayDiagonalCheckBox(int displayDiagonal) {
         switch (displayDiagonal) {
             case IDisplayDiagonals.TEN_INCH:
-                clickDisplayDiagonal(tabletsPage.getDisplayDiagonal10inch());
+                clickDisplayDiagonalCheckBox(tabletsPage.getDisplayDiagonal10inch());
                 break;
             default:
                 break;
@@ -59,7 +59,7 @@ public class TabletsStep extends BaseStep {
         return this;
     }
 
-    public void clickDisplayDiagonal(WebElement webElement) {
+    public void clickDisplayDiagonalCheckBox(WebElement webElement) {
         getHelper().elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
         getHelper().clickStalenessOfWebElementWithJS(webElement);
     }

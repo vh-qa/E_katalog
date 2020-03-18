@@ -11,20 +11,20 @@
     <test name="Login Tests Chrome" group-by-instances="true" preserve-order="true">
         <parameter name="browser" value="chrome" />
         <packages>
-            <package name="ua.ek.steps.bdd.loginuserprofile" />
+            <package name="ua.ek.steps.bdd.registration.loginuserprofile" />
         </packages>
         <classes>
-            <class name="ua.ek.steps.bdd.loginuserprofile.AuthTestBdd" />
+            <class name="ua.ek.steps.bdd.registration.loginuserprofile.AuthTestBdd" />
         </classes>
     </test>
 
     <test name="Tablets Filters Tests Firefox" group-by-instances="true" preserve-order="true">
         <parameter name="browser" value="firefox" />
         <packages>
-            <package name="ua.ek.steps.bdd.tabletsfilter" />
+            <package name="ua.ek.steps.bdd.tablets" />
         </packages>
         <classes>
-            <class name="ua.ek.steps.bdd.tabletsfilter.TabletsFilterTestBdd" />
+            <class name="ua.ek.steps.bdd.tablets.filters.TabletsFilterTestBdd" />
         </classes>
     </test>
 

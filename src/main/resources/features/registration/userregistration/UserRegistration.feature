@@ -1,3 +1,7 @@
+#Author       :   VH
+#Scenario     :   Successful and unsuccessful user registration
+#Application  :   E_katalog
+
 @UserRegistration
 Feature: User Registration
 
@@ -12,9 +16,9 @@ Feature: User Registration
     When User click on sign in link
     Then User should see Или зарегистрируйтесь link on auth form
     When User click on registration link on registration form
-    And User enter login some_login_31
-    And User enter email some_email_31@company.com
-    And User enter password some_password_31
+    And User enter login some_login_32
+    And User enter email some_email_32@company.com
+    And User enter password some_password_32
     And User click on submit button
     Then User should see form with text Регистрация прошла успешно!
 

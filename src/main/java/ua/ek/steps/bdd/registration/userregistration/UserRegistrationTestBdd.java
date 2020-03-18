@@ -1,4 +1,4 @@
-package ua.ek.steps.bdd.userregistration;
+package ua.ek.steps.bdd.registration.userregistration;
 
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;

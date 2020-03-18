@@ -19,7 +19,7 @@ public class PriceFilterStep extends BaseStep {
         return this;
     }
 
-    public PriceFilterStep enterMaxPriceInMinPriceField(String maxPrice) {
+    public PriceFilterStep enterMaxPriceInMaxPriceField(String maxPrice) {
         getHelper().enterTextInTextField(priceFilter.getMaxPriceInput(), maxPrice);
         return this;
     }

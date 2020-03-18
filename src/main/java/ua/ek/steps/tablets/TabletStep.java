@@ -33,7 +33,7 @@ public class TabletStep extends BaseStep {
         return this;
     }
 
-    public TabletsListStep submitButtonClick() {
+    public TabletsListStep clickSubmitButton() {
         getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
                 tabletPage.getSubmitButton()).click();
         return new TabletsListStep(driver);

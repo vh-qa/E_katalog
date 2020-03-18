@@ -1,4 +1,4 @@
-package ua.ek.bdd;
+package ua.ek.bdd.search;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.CucumberFeatureWrapper;
@@ -7,12 +7,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import ua.ek.utils.SeleniumGridUtils;
 
 @CucumberOptions(
 
-        features = "src/main/resources/features/userregistration",
-        glue = "ua.ek.steps.bdd.userregistration",
-        tags = "@UserRegistration",
+        features = "src/main/resources/features/search",
+        glue = "ua.ek.steps.bdd.search",
+        tags = "@TabletsSearch",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",
@@ -20,17 +21,17 @@ import org.testng.annotations.Test;
                 "rerun:target/cucumber-reports/rerun.txt"
         })
 
-public class UserRegistrationTestBddRunner {
-
+public class SearchTestBddRunner {
     private TestNGCucumberRunner testNGCucumberRunner;
 
     @BeforeClass
     public void setUp() {
+        SeleniumGridUtils.startSeleniumGrid();
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    @Test(groups="cucumber", dataProvider = "getFeatures")
-    public void authLoginTest(CucumberFeatureWrapper cucumberFeatureWrapper) {
+    @Test(groups = "cucumber", dataProvider = "getFeatures")
+    public void searchTest(CucumberFeatureWrapper cucumberFeatureWrapper) {
         testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
     }
 
@@ -42,5 +43,6 @@ public class UserRegistrationTestBddRunner {
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         testNGCucumberRunner.finish();
+        SeleniumGridUtils.stopSeleniumGrid();
     }
 }

@@ -1,4 +1,4 @@
-package ua.ek.steps.bdd.loginuserprofile;
+package ua.ek.steps.bdd.registration.loginuserprofile;
 
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
