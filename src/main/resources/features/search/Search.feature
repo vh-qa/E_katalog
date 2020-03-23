@@ -12,7 +12,8 @@ Feature: Tablets Search
   @SuccessfulTabletsSearch
   Scenario: Successful tablets search
 
-    Given User open the home page
+    Given User go to the search panel
     When User enter search text планшеты apple in search field
     And User click on search button
-    Then User should see page with text планшеты apple
+    Then User should see page with text планшеты apple according to the search text
+    And User close browser after tablets search

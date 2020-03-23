@@ -12,26 +12,24 @@ Feature: User Registration
   @SuccessfulRegistration
   Scenario: Successful user registration
 
-    Given User open the home page
-    When User click on sign in link
-    Then User should see Или зарегистрируйтесь link on auth form
+    Given User open the registration form
     When User click on registration link on registration form
-    And User enter login some_login_32
-    And User enter email some_email_32@company.com
-    And User enter password some_password_32
-    And User click on submit button
+    And User enter login some_login_32 on registration form
+    And User enter email some_email_32@company.com on registration form
+    And User enter password some_password_32 on registration form
+    And User click on submit button on registration form
     Then User should see form with text Регистрация прошла успешно!
+    And User close browser with registration form
 
   @UnSuccessfulRegistrationWithLogin
   Scenario Outline: Negative registration with login scenario
 
-    Given User open the home page
-    When User click on sign in link
-    Then User should see Или зарегистрируйтесь link on auth form
+    Given User open the registration form
     When User click on registration link on registration form
-    And User enter login <login>
-    And User click on submit button
-    Then User should see <error_message> error message for login
+    And User enter login <login> on registration form
+    And User click on submit button on registration form
+    Then User should see <error_message> error message for login on registration form
+    And User close browser with registration form
 
     Examples:
       | login            | error_message                            |
@@ -41,13 +39,12 @@ Feature: User Registration
   @UnSuccessfulRegistrationWithEmail
   Scenario Outline: Negative registration with email scenario
 
-    Given User open the home page
-    When User click on sign in link
-    Then User should see Или зарегистрируйтесь link on auth form
+    Given User open the registration form
     When User click on registration link on registration form
-    And User enter email <email>
-    And User click on submit button
-    Then User should see <error_message> error message for email
+    And User enter email <email> on registration form
+    And User click on submit button on registration form
+    Then User should see <error_message> error message for email on registration form
+    And User close browser with registration form
 
     Examples:
       | email            | error_message                               |

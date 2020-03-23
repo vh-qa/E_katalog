@@ -1,9 +1,9 @@
 package ua.ek.model;
 
 public class Price {
-    double minPrice;
-    double maxPrice;
-    String expectedMessage;
+    private double minPrice;
+    private double maxPrice;
+    private String expectedMessage;
 
     public double getMinPrice() {
         return minPrice;

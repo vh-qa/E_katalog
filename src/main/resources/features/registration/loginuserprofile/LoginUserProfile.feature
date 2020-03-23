@@ -12,25 +12,23 @@ Feature: Login User Profile
     @SuccessfulLogin
     Scenario: Successful Login
 
-      Given User open the home page
-      When User click on sign in link
-      Then User should see e-Katalog link on auth form
+      Given User open the auth form
       When User click on sign in link on auth form
-      And User enter login some_login_15
-      And User enter password some_password_15
-      And User click on submit button
+      And User enter login some_login_15 on auth form
+      And User enter password some_password_15 on auth form
+      And User click on submit button on auth form
       Then User should see some_login_15 link
+      And User close browser with auth form
 
     @UnSuccessfulLogin
     Scenario Outline: Negative login scenario
 
-      Given User open the home page
-      When User click on sign in link
-      Then User should see e-Katalog link on auth form
+      Given User open the auth form
       When User click on sign in link on auth form
       And User login with credentials <login> and <password>
-      And User click on submit button
-      Then User should see <error_message> error message for password
+      And User click on submit button on auth form
+      Then User should see <error_message> error message for password on auth form
+      And User close browser with auth form
 
       Examples:
       | login            | password                   | error_message          |
@@ -42,13 +40,12 @@ Feature: Login User Profile
     @UnSuccessfulPassword
     Scenario Outline: Negative password scenario
 
-      Given User open the home page
-      When User click on sign in link
-      Then User should see e-Katalog link on auth form
+      Given User open the auth form
       When User click on sign in link on auth form
       And User login with credentials <login> and <password>
-      And User click on submit button
-      Then User should see <error_message> error message for login
+      And User click on submit button on auth form
+      Then User should see <error_message> error message for login on auth form
+      And User close browser with auth form
 
       Examples:
       | login                           | password          | error_message                              |

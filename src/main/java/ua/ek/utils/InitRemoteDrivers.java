@@ -83,7 +83,7 @@ public class InitRemoteDrivers {
 
         driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        driver.get(baseUrl);
+ //     driver.get(baseUrl);
     }
 
     public String getBaseUrl() {

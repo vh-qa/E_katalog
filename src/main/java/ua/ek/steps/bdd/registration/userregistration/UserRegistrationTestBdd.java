@@ -1,54 +1,33 @@
 package ua.ek.steps.bdd.registration.userregistration;
 
-import cucumber.api.java.After;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import org.openqa.selenium.WebDriver;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
 import ua.ek.steps.HomeStep;
+import ua.ek.steps.base.BaseStepBdd;
 import ua.ek.steps.registration.AuthStep;
 import ua.ek.steps.registration.RegistrationStep;
 import ua.ek.utils.*;
 
-public class UserRegistrationTestBdd {
-
-    private WebDriver driver;
-    private Helper helper;
-
+public class UserRegistrationTestBdd extends BaseStepBdd {
     private HomeStep homeStep;
     private AuthStep authStep;
     private RegistrationStep registrationStep;
 
     public UserRegistrationTestBdd() {
-        InitRemoteDrivers initRemoteDrivers = new InitRemoteDrivers();
-        initRemoteDrivers.initWithDefaultValues();
-        driver = initRemoteDrivers.getDriver();
-        helper = new Helper(driver);
-
         StepFactory stepFactory = new StepFactory();
-        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, driver);
-        authStep = (AuthStep) stepFactory.createStep(StepType.AUTH_STEP, driver);
-        registrationStep = (RegistrationStep) stepFactory.createStep(StepType.REGISTRATION_STEP, driver);
+        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, getDriver());
+        authStep = (AuthStep) stepFactory.createStep(StepType.AUTH_STEP, getDriver());
+        registrationStep = (RegistrationStep) stepFactory.createStep(StepType.REGISTRATION_STEP, getDriver());
     }
 
     // Positive scenario
 
-    @Given("^User open the home page$")
-    public void userOpenHomePage() {
-        homeStep.goHomePage();
-    }
-
-    @When("^User click on sign in link$")
-    public void userClickSignInLinkOnHomePage() {
+    @Given("^User open the registration form$")
+    public void userOpenRegistrationForm(){
         homeStep.clickEnterLink();
-    }
-
-    @Then("^User should see (.*?) link on auth form$")
-    public void userValidateRegistrationForm(String registrationLink) {
-        AssertUtils.makeAssert(
-                registrationStep.getRegisterLinkOnRegistrationFormText(),
-                registrationLink);
     }
 
     @When("^User click on registration link on registration form$")
@@ -56,22 +35,22 @@ public class UserRegistrationTestBdd {
         registrationStep.clickRegisterLink();
     }
 
-    @And("^User enter login (.*?)$")
+    @And("^User enter login (.*?) on registration form$")
     public void userEnterLogin(String login) {
         registrationStep.enterLogin(login);
     }
 
-    @And("^User enter email (.*?)$")
+    @And("^User enter email (.*?) on registration form$")
     public void userEnterEmail(String email) {
         registrationStep.enterEmail(email);
     }
 
-    @And("^User enter password (.*?)$")
+    @And("^User enter password (.*?) on registration form$")
     public void userEnterPassword(String password) {
         registrationStep.enterPassword(password);
     }
 
-    @And("^User click on submit button$")
+    @And("^User click on submit button on registration form$")
     public void userClickSubmitButton() {
         registrationStep.clickSubmitButton();
     }
@@ -83,18 +62,19 @@ public class UserRegistrationTestBdd {
                 successfulRegistrationText);
     }
 
-    @Then("^User should see (.*?) error message for login$")
+    @Then("^User should see (.*?) error message for login on registration form$")
     public void userShouldSeeErrorMessageForLogin(String errorMessageForLogin){
         AssertUtils.makeAssert(registrationStep.getLoginErrorMessage(), errorMessageForLogin);
     }
 
-    @Then("^User should see (.*?) error message for email$")
+    @Then("^User should see (.*?) error message for email on registration form$")
     public void userShouldSeeErrorMessageForEmail(String errorMessageForEmail){
         AssertUtils.makeAssert(registrationStep.getEmailErrorMessage(), errorMessageForEmail);
+
     }
 
-    @After
-    public void closeBrowser(){
-        driver.quit();
+    @And("^User close browser with registration form$")
+    public void userCloseBrowserWithRegistrationForm(){
+        getDriver().quit();
     }
 }

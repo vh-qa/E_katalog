@@ -1,34 +1,27 @@
 package ua.ek.steps.bdd.search;
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import org.openqa.selenium.WebDriver;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
 import ua.ek.steps.HomeStep;
+import ua.ek.steps.base.BaseStepBdd;
 import ua.ek.steps.search.SearchStep;
 import ua.ek.utils.*;
 
-public class SearchTestBdd {
-    private WebDriver driver;
-    private Helper helper;
-
+public class SearchTestBdd extends BaseStepBdd {
     private HomeStep homeStep;
     private SearchStep searchStep;
 
     public SearchTestBdd() {
-        InitRemoteDrivers initRemoteDrivers = new InitRemoteDrivers();
-        initRemoteDrivers.initWithDefaultValues();
-        driver = initRemoteDrivers.getDriver();
-        helper = new Helper(driver);
-
         StepFactory stepFactory = new StepFactory();
-        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, driver);
-        searchStep = (SearchStep) stepFactory.createStep(StepType.SEARCH_STEP, driver);
+        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, getDriver());
+        searchStep = (SearchStep) stepFactory.createStep(StepType.SEARCH_STEP, getDriver());
     }
 
-    @Given("^User open the home page$")
-    public void userOpenHomePage() {
+    @Given("^User go to the search panel$")
+    public void userGoToSearchPanel() {
         homeStep.goHomePage();
     }
 
@@ -42,8 +35,13 @@ public class SearchTestBdd {
         searchStep.makeSearch();
     }
 
-    @Then("^User should see page with text (.*?)$")
+    @Then("^User should see page with text (.*?) according to the search text$")
     public void userShouldSeePageWithText(String searchResultText) {
         AssertUtils.makeAssert(searchStep.getSearchListTitleText(), searchResultText);
+    }
+
+    @And("^User close browser after tablets search$")
+    public void userCloseBrowserAfterTabletsSearch(){
+        getDriver().quit();
     }
 }

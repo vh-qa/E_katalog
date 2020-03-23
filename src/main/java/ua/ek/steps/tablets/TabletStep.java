@@ -18,8 +18,12 @@ public class TabletStep extends BaseStep {
     }
 
     public TabletStep goTabletPage() {
-        getHelper().clickWebElement(getHomePage().getComputersMenuLink());
-        getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
+//     getHelper().clickStalenessOfWebElementWithJS(getHomePage().getComputersMenuLink());
+//     getHelper().clickStalenessOfWebElementWithJS(getHomePage().getTabletsSubMenuLink());
+//      getHelper().clickToBeSelectedWebElementWithJS(getHomePage().getComputersMenuLink());
+//      getHelper().clickToBeSelectedWebElementWithJS(getHomePage().getTabletsSubMenuLink());
+        getHelper().clickVisibleWebElementWithJS(getHomePage().getComputersMenuLink());
+        getHelper().clickVisibleWebElementWithJS(getHomePage().getTabletsSubMenuLink());
         return this;
     }
 
