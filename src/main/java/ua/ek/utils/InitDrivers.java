@@ -28,21 +28,25 @@ public class InitDrivers {
 
         Properties properties = new Properties();
         try {
-            properties.load(new InputStreamReader(this.getClass().getResourceAsStream("/properties/common.properties"), "UTF-8"));
+            properties.load(new InputStreamReader
+                    (this.getClass()
+                            .getResourceAsStream(PropertyFiles.COMMON_PROPERTY.getPropertyFileName()),
+                                                 PropertyNames.CHARSET_NAME_UTF8.getPropertyName()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         switch (browser) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", properties.getProperty("chrome.driver"));
+            case IBrowsers.CHROME:
+                System.setProperty(PropertyNames.WEBDRIVER_CHROME_DRIVER.getPropertyName(),
+                        properties.getProperty(PropertyNames.CHROME_DRIVER.getPropertyName()));
                 driver = new ChromeDriver();
                 break;
-            case "firefox":
+            case IBrowsers.FIREFOX:
                 driver = new FirefoxDriver();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown browser " + browser);
+                throw new IllegalArgumentException(PropertyNames.UNKNOWN_BROWSER.getPropertyName() + " " + browser);
         }
     }
 }

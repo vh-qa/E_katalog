@@ -22,21 +22,21 @@ public class InitRemoteDrivers {
     private WebDriver driver;
 
     public void initWithDefaultValues() {
-        String baseUrl = PropertyReader
-                .from("/properties/common.properties", "base.url")
-                .getProperty("base.url");
+        String baseUrl = Helper
+                            .getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+                                    PropertyNames.BASE_URL.getPropertyName());
 
-        String browser = PropertyReader
-                .from("/properties/common.properties", "remote.driver.default.browser")
-                .getProperty("remote.driver.default.browser");
+        String browser = Helper
+                            .getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+                                    PropertyNames.REMOTE_DRIVER_DEFAULT_BROWSER.getPropertyName());
 
-        String os = PropertyReader
-                .from("/properties/common.properties", "remote.driver.default.os")
-                .getProperty("remote.driver.default.os");
+        String os = Helper
+                        .getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+                                PropertyNames.REMOTE_DRIVER_DEFAULT_OS.getPropertyName());
 
-        String node = PropertyReader
-                .from("/properties/common.properties", "remote.driver.default.node")
-                .getProperty("remote.driver.default.node");
+        String node = Helper
+                        .getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+                                PropertyNames.REMOTE_DRIVER_DEFAULT_NODE.getPropertyName());
 
         try {
             init(baseUrl, browser, os, node);
@@ -78,7 +78,7 @@ public class InitRemoteDrivers {
                 driver = new RemoteWebDriver(new URL(node + "/wd/hub"), firefoxOptions);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown browser " + browser);
+                throw new IllegalArgumentException(PropertyNames.UNKNOWN_BROWSER.getPropertyName() + " " + browser);
         }
 
         driver.manage().timeouts().implicitlyWait(IWaitTimes.THREE_SECONDS, TimeUnit.SECONDS);

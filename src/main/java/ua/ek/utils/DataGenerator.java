@@ -5,6 +5,15 @@ import java.util.Random;
 
 public class DataGenerator {
 
+    private static String login = Helper.getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+            PropertyNames.USER_LOGIN.getPropertyName());
+
+    private static String email = Helper.getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+            PropertyNames.USER_EMAIL.getPropertyName());
+
+    private static String password = Helper.getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+            PropertyNames.USER_PASSWORD.getPropertyName());
+
     public static User getUser(){
         User user = new User();
 
@@ -29,16 +38,6 @@ public class DataGenerator {
     }
 
     public static User getPositiveUserData(){
-
-        String login = Helper.getProperty("/properties/common.properties",
-                "user.login");
-
-        String email = Helper.getProperty("/properties/common.properties",
-                "user.email");
-
-        String password = Helper.getProperty("/properties/common.properties",
-                "user.password");
-
         User user = new User();
 
         user.setLogin(login);
@@ -49,13 +48,6 @@ public class DataGenerator {
     }
 
     public static User getUserDataForUnSuccessfulTestWithLogin() {
-
-        String email = Helper.getProperty("/properties/common.properties",
-                "user.email");
-
-        String password = Helper.getProperty("/properties/common.properties",
-                "user.password");
-
         User user = new User();
 
         user.setLogin("");
@@ -66,13 +58,6 @@ public class DataGenerator {
     }
 
     public static User getUserDataForUnSuccessfulTestWithEmail() {
-
-        String login = Helper.getProperty("/properties/common.properties",
-                "user.login");
-
-        String password = Helper.getProperty("/properties/common.properties",
-                "user.password");
-
         User user = new User();
 
         user.setLogin(login);
@@ -83,13 +68,6 @@ public class DataGenerator {
     }
 
     public static User getUserDataForUnSuccessfulTestWithPassword() {
-
-        String login = Helper.getProperty("/properties/common.properties",
-                "user.login");
-
-        String email = Helper.getProperty("/properties/common.properties",
-                "user.email");
-
         User user = new User();
 
         user.setLogin(login);

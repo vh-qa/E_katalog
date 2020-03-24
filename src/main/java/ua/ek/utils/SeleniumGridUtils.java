@@ -38,10 +38,8 @@ public class SeleniumGridUtils {
             e.printStackTrace();
         }
 
-        String nodePort = PropertyReader
-                .from("/properties/common.properties",
-                        "node.port.5555")
-                .getProperty("node.port.5555");
+        String nodePort = Helper.getProperty(PropertyFiles.COMMON_PROPERTY.getPropertyFileName(),
+                PropertyNames.NODE_PORT_5555.getPropertyName());
 
         createNode(nodePort);
 
