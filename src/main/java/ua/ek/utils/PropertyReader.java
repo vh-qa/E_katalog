@@ -32,8 +32,11 @@ public class PropertyReader {
         try {
 //          InputStream is = new FileInputStream(path);
 //          properties.get(propertyName).load(new InputStreamReader(is, "UTF-8"));
+
             properties.get(propertyName)
-                    .load(new InputStreamReader(this.getClass().getResourceAsStream(propertyFileName), "UTF-8"));
+                    .load(new InputStreamReader
+                            (this.getClass()
+                                    .getResourceAsStream(propertyFileName), "UTF-8"));
 
         } catch (IOException e) {
             e.printStackTrace();

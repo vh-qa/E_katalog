@@ -16,36 +16,36 @@ public class Helper {
     }
 
     public void enterTextInTextField(WebElement textField, String inputText) {
-        waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, textField);
+        waitUntilElementIsVisible(IWaitTimes.TEN_SECONDS, textField);
         textField.click();
         textField.clear();
         textField.sendKeys(inputText);
     }
 
     public String getTextFromWebElement(By by) {
-        return waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, by).getText().trim();
+        return waitUntilElementIsVisible(IWaitTimes.TEN_SECONDS, by).getText().trim();
     }
 
     public String getTextFromWebElement(WebElement webElement) {
-        return waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement).getText().trim();
+        return waitUntilElementIsVisible(IWaitTimes.TEN_SECONDS, webElement).getText().trim();
     }
 
     public String getTextFromStalenessOfWebElement(WebElement webElement) {
-        if(waitUntilElementIsStalenessOf(webElement, IWaitTimes.FIVE_SECONDS)) {
+        if(waitUntilElementIsStalenessOf(webElement, IWaitTimes.TEN_SECONDS)) {
             return webElement.getText().trim();
         }else{
-            waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
+            waitUntilElementIsVisible(IWaitTimes.TEN_SECONDS, webElement);
             return webElement.getText().trim();
         }
     }
 
     public void clickWebElement(WebElement webElement) {
-        waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, webElement);
+        waitUntilElementIsVisible(IWaitTimes.TEN_SECONDS, webElement);
         webElement.click();
     }
 
     public void clickStalenessOfWebElement(WebElement webElement) {
-        waitUntilElementIsStalenessOf(webElement, IWaitTimes.FIVE_SECONDS);
+        waitUntilElementIsStalenessOf(webElement, IWaitTimes.TEN_SECONDS);
         webElement.click();
     }
 
@@ -104,21 +104,21 @@ public class Helper {
     }
 
     public void clickStalenessOfWebElementWithJS(WebElement webElement) {
-        stalenessOf(webElement, IWaitTimes.FIVE_SECONDS);
+        stalenessOf(webElement, IWaitTimes.TEN_SECONDS);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", webElement);
     }
 
     public void clickToBeSelectedWebElementWithJS(WebElement webElement) {
-        elementToBeSelected(webElement, IWaitTimes.FIVE_SECONDS);
+        elementToBeSelected(webElement, IWaitTimes.TEN_SECONDS);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", webElement);
     }
 
     public void clickVisibleWebElementWithJS(WebElement webElement) {
-        visibilityOf(webElement, IWaitTimes.FIVE_SECONDS);
+        visibilityOf(webElement, IWaitTimes.TEN_SECONDS);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", webElement);
