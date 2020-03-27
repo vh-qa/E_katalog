@@ -9,6 +9,8 @@ Feature: Login User Profile
   I want to login my user profile using my credentials
   in order to be able to login and logout
 
+  Background: The User starts out on the auth form
+
     @SuccessfulLogin
     Scenario: Successful Login
 

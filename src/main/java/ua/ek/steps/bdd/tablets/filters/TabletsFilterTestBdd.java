@@ -5,79 +5,104 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import ua.ek.steps.HomeStep;
+import org.openqa.selenium.WebElement;
+import ua.ek.pages.tablets.TabletsListPage;
+import ua.ek.pages.tablets.TabletsPage;
+import ua.ek.pages.tablets.filters.PriceFilter;
 import ua.ek.steps.base.BaseStepBdd;
-import ua.ek.steps.tablets.TabletsListStep;
-import ua.ek.steps.tablets.TabletsStep;
-import ua.ek.steps.tablets.filters.PriceFilterStep;
 import ua.ek.utils.*;
 
 public class TabletsFilterTestBdd extends BaseStepBdd {
-    private HomeStep homeStep;
-    private TabletsStep tabletsStep;
-    private PriceFilterStep priceFilterStep;
-    private TabletsListStep tabletsListStep;
+    private PriceFilter priceFilter;
+    private TabletsPage tabletsPage;
+    private TabletsListPage tabletsListPage;
 
     public TabletsFilterTestBdd() {
-        StepFactory stepFactory = new StepFactory();
-        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, getDriver());
-        tabletsStep = (TabletsStep) stepFactory.createStep(StepType.TABLETS_STEP, getDriver());
-        priceFilterStep = (PriceFilterStep)stepFactory.createStep(StepType.PRICE_FILTER_STEP, getDriver());
-        tabletsListStep = (TabletsListStep)stepFactory.createStep(StepType.TABLETS_LIST_STEP, getDriver());
+        priceFilter = (PriceFilter)getPage(PageType.PRICE_FILTER_PAGE, getDriver());
+        tabletsPage = (TabletsPage)getPage(PageType.TABLETS_PAGE, getDriver());
+        tabletsListPage = (TabletsListPage)getPage(PageType.TABLETS_LIST_PAGE, getDriver());
     }
 
     @Given("^User go tablets page for testing right panel filters$")
     public void userOpenTabletsPage()  {
-        tabletsStep.goTabletsPage();
+        getHelper().clickToBeSelectedWebElementWithJS(getHomePage().getComputersMenuLink());
+        getHelper().clickToBeSelectedWebElementWithJS(getHomePage().getTabletsSubMenuLink());
     }
 
     @When("^User click on (.*?) checkbox in manufacturer filter panel$")
-    public void userClickOnManufacturerCheckBox(String manufacturer)  {
-        tabletsStep.clickManufacturerCheckBox(manufacturer);
+    public void userClickOnManufacturerCheckBox(String manufacturerName)  {
+        switch (manufacturerName.trim().toLowerCase()) {
+            case IManufacturers.APPLE:
+                clickManufacturerCheckBox(tabletsPage.getManufacturerApple());
+                break;
+            case IManufacturers.GOOGLE:
+                clickManufacturerCheckBox(tabletsPage.getManufacturerGoogle());
+                break;
+            case IManufacturers.SAMSUNG:
+                clickManufacturerCheckBox(tabletsPage.getManufacturerSamsung());
+                break;
+            default:
+                break;
+        }
     }
 
     @When("^User click on (.*?) inches checkbox in display diagonal filter panel$")
     public void userClickOnDisplayDiagonalCheckBox(String displayDiagonal)  {
-        tabletsStep.clickDisplayDiagonalCheckBox(Helper.convertStringToInt(displayDiagonal));
+        switch (Helper.convertStringToInt(displayDiagonal)) {
+            case IDisplayDiagonals.TEN_INCH:
+                clickDisplayDiagonalCheckBox(tabletsPage.getDisplayDiagonal10inch());
+                break;
+            default:
+                break;
+        }
     }
 
     @When("^User enter (.*?) in min price field in right panel filter$")
     public void userEnterValueInMinPriceField(String minPrice){
-        priceFilterStep.enterMinPriceInMinPriceField(minPrice);
+        getHelper().enterTextInTextField(priceFilter.getMinPriceInput(), minPrice);
     }
 
     @And("^User enter (.*?) in max price field in right panel filter$")
     public void userEnterValueInMaxPriceField(String maxPrice){
-        priceFilterStep.enterMaxPriceInMaxPriceField(maxPrice);
+        getHelper().enterTextInTextField(priceFilter.getMaxPriceInput(), maxPrice);
     }
 
     @And("^User click on show button$")
     public void userClickOnShowButton()  {
-        tabletsStep.clickShowButton();
+        getHelper().clickStalenessOfWebElementWithJS(tabletsPage.getShowButton());
     }
 
     @Then("^User should see page with text (.*?) according to the selected manufacturer filter$")
     public void userShouldSeePageWithListOfTabletsAccordingSelectedManufacturerFilter(String resultText){
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), resultText);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getTabletsListTitle()), resultText);
     }
 
     @Then("^User should see page with text (.*?) according to the selected display diagonal filter$")
     public void userShouldSeePageWithListOfAppleTablets(String resultText) {
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), resultText);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getTabletsListTitle()), resultText);
     }
 
     @Then("^User should see page with text in range price (.*?) according to the entered prices$")
     public void userShouldSeePageWithListOfTabletsInRangePrice(String resultPrice) {
-        AssertUtils.makeAssert(tabletsListStep.getStickerTextElement(), resultPrice);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getStickerTextElement()), resultPrice);
     }
 
     @Then("^User should see page with text (.*?) according to the selected manufacturer and display diagonal filters$")
     public void userShouldSeePageWithListOfTabletsAccordingSelectedFilters(String resultText){
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), resultText);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getTabletsListTitle()), resultText);
     }
 
     @And("^User close browser after using right panel filter$")
     public void userCloseBrowserAfterUsingFilter(){
         getDriver().quit();
+    }
+
+    public void clickManufacturerCheckBox(WebElement webElement) {
+        getHelper().clickStalenessOfWebElementWithJS(webElement);
+    }
+
+    public void clickDisplayDiagonalCheckBox(WebElement webElement) {
+        getHelper().elementToBeSelected(webElement, IWaitTimes.TEN_SECONDS);
+        getHelper().clickStalenessOfWebElementWithJS(webElement);
     }
 }

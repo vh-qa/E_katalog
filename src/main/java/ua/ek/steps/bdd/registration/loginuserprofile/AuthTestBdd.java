@@ -5,72 +5,79 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import ua.ek.steps.HomeStep;
+import ua.ek.pages.registration.AuthPage;
+import ua.ek.pages.registration.UserProfilePage;
 import ua.ek.steps.base.BaseStepBdd;
-
-import ua.ek.steps.registration.AuthStep;
 import ua.ek.utils.*;
 
- public class AuthTestBdd extends BaseStepBdd {
-
-    private HomeStep homeStep;
-    private AuthStep authStep;
+public class AuthTestBdd extends BaseStepBdd {
+    private AuthPage authPage;
+    private UserProfilePage userProfilePage;
 
     public AuthTestBdd() {
-        StepFactory stepFactory = new StepFactory();
-        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, getDriver());
-        authStep = (AuthStep) stepFactory.createStep(StepType.AUTH_STEP, getDriver());
+        authPage = (AuthPage) getPage(PageType.AUTH_PAGE, getDriver());
+        userProfilePage = (UserProfilePage) getPage(PageType.USER_PROFILE_PAGE, getDriver());
     }
 
      // Positive scenario
 
     @Given("^User open the auth form$")
     public void userOpenAuthForm(){
-        homeStep.goHomePage().clickEnterLink();
+        getDriver()
+                .get(getHomePage()
+                .getBaseUrl());
+        getHelper().clickWebElement(getHomePage().getEnterLink());
     }
 
     @When("^User click on sign in link on auth form$")
     public void userClickSignInLinkOnAuthForm() {
-        authStep.clickAuthLink();
+        getHelper()
+                .clickWebElement(authPage.getAuthLinkOnAuthForm());
     }
 
     @When("^User enter login (.*?) on auth form$")
     public void userEnterLoginOnAuthForm(String login) {
-        authStep.enterLoginOrEmail(login);
+        getHelper()
+                .enterTextInTextField(authPage.getLoginOrEmailAuthField(), login);
     }
 
     @When("^User enter password (.*?) on auth form$")
     public void userEnterPasswordOnAuthForm(String password) {
-        authStep.enterPassword(password);
+        getHelper()
+                .enterTextInTextField(authPage.getPasswordAuthField(), password);
     }
 
     @And("^User click on submit button on auth form$")
     public void userClickSubmitButtonOnAuthForm() {
-        authStep.clickSubmitButton();
+        getHelper()
+                .clickWebElement(authPage.getSubmitButtonAuth());
     }
 
     @Then("^User should see (.*?) link$")
     public void userShouldSeeLinkInUserProfile(String nickText) {
-        AssertUtils.makeAssert(authStep.getUserProfileNickLinkText(), nickText);
+        AssertUtils.makeAssert(
+                getHelper()
+                        .getTextFromStalenessOfWebElement
+                                (userProfilePage.getNickLink()), nickText);
     }
 
     // Negative scenario
 
     @When("^User login with credentials (.*?) and (.*?)$")
     public void userLoginWithCredentials(String login, String password) {
-        authStep.enterLoginOrEmail(login);
-        authStep.enterPassword(password);
+        getHelper().enterTextInTextField(authPage.getLoginOrEmailAuthField(), login);
+        getHelper().enterTextInTextField(authPage.getPasswordAuthField(), password);
     }
 
     @Then("^User should see (.*?) error message for password on auth form$")
     public void userShouldSeeErrorMessageForPasswordOnAuthForm(String errorMessageForPassword) {
-        AssertUtils.makeAssert(authStep.getAuthPage().getErrorPasswordAuth().getText(),
+        AssertUtils.makeAssert(authPage.getErrorPasswordAuth().getText(),
                 errorMessageForPassword);
     }
 
     @Then("^User should see (.*?) error message for login on auth form$")
     public void userShouldSeeErrorMessageForLoginOnAuthForm(String errorMessageForLogin) {
-        AssertUtils.makeAssert(authStep.getAuthPage().getErrorLoginAuth().getText(),
+        AssertUtils.makeAssert(authPage.getErrorLoginAuth().getText(),
                 errorMessageForLogin);
     }
 

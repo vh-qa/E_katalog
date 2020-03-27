@@ -15,7 +15,12 @@ public enum PropertyNames {
     REMOTE_DRIVER_DEFAULT_NODE("remote.driver.default.node"),
     NODE_PORT_5555("node.port.5555"),
     NODE_PORT_7777("node.port.7777"),
-    NODE_PORT_9999("node.port.9999");
+    NODE_PORT_9999("node.port.9999"),
+
+    CUCUMBER_TAGS_DATA_FILE("cucumber.tags.data.file"),
+    CUCUMBER_TAGS_SHEET_NAME_LOGIN("cucumber.tags.sheet.name.login"),
+    CUCUMBER_TAGS_SHEET_NAME_SEARCH("cucumber.tags.sheet.name.search"),
+    CUCUMBER_TAGS_CLASS_NAME("cucumber.tags.class.name");
 
     private String propertyName;
 

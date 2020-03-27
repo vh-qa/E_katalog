@@ -5,39 +5,41 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import ua.ek.steps.HomeStep;
+import ua.ek.pages.search.SearchPage;
+import ua.ek.pages.search.SearchResultPage;
 import ua.ek.steps.base.BaseStepBdd;
-import ua.ek.steps.search.SearchStep;
 import ua.ek.utils.*;
 
 public class SearchTestBdd extends BaseStepBdd {
-    private HomeStep homeStep;
-    private SearchStep searchStep;
+    private SearchPage searchPage;
+    private SearchResultPage searchResultPage;
 
     public SearchTestBdd() {
-        StepFactory stepFactory = new StepFactory();
-        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, getDriver());
-        searchStep = (SearchStep) stepFactory.createStep(StepType.SEARCH_STEP, getDriver());
+        searchPage = (SearchPage) getPage(PageType.SEARCH_PAGE, getDriver());
+        searchResultPage = (SearchResultPage)getPage(PageType.SEARCH_RESULT_PAGE, getDriver());
     }
 
     @Given("^User go to the search panel$")
     public void userGoToSearchPanel() {
-        homeStep.goHomePage();
+        getDriver()
+                .get(getHomePage()
+                        .getBaseUrl());
     }
 
     @When("^User enter search text (.*?) in search field$")
     public void userEnterSearchTextInSearchField(String searchText) {
-        searchStep.enterSearchTextInSearchField(searchText);
+        getHelper().enterTextInTextField(searchPage.getSearchField(), searchText);
     }
 
     @And("^User click on search button$")
     public void userClickSubmitButton() {
-        searchStep.makeSearch();
+        getHelper().clickWebElement(searchPage.getSearchButton());
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS, searchPage.getSearchButton()).click();
     }
 
     @Then("^User should see page with text (.*?) according to the search text$")
     public void userShouldSeePageWithText(String searchResultText) {
-        AssertUtils.makeAssert(searchStep.getSearchListTitleText(), searchResultText);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(searchResultPage.getSearchListTitleElement()), searchResultText);
     }
 
     @And("^User close browser after tablets search$")

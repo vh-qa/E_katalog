@@ -9,6 +9,8 @@ Feature: Tablets Filter advanced selection on the right panel of the web site
   I want to select tablet using various parameters in filters on the right panel of the web site
   in order to select and buy tablet suitable for my needs
 
+  Background: The User starts out on the tablets page
+
   @ManufacturerFilter
   Scenario: Successful tablets manufacturer filter selection
 

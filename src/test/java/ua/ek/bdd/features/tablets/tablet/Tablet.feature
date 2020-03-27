@@ -9,6 +9,8 @@ Feature: Tablets Filter advanced selection on the top panel of the page with lis
   I want to select tablet using various parameters in top panel of the page with list of tablets
   in order to select and buy tablet suitable for my needs
 
+  Background: The User starts out on the tablets page
+
   @ManufacturerLinkTest
   Scenario: Successful tablets manufacturer link selection
 

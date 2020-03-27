@@ -6,7 +6,7 @@ public class SeleniumGridUtils {
     public static void createHub() {
         String cmd = "cmd /c start java -jar C:/SeleniumGrid/selenium-server-standalone.jar -role hub";
 
-        Process process = null;
+        Process process;
         try {
             process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
@@ -20,7 +20,7 @@ public class SeleniumGridUtils {
                 "-jar d:/SeleniumGridNode/selenium-server-standalone-3.141.59.jar -role node " +
                 "-hub http://localhost:4444/grid/register -port " + nodePort;
 
-        Process process = null;
+        Process process;
         try {
             process = Runtime.getRuntime().exec(cmd);
             process.waitFor();

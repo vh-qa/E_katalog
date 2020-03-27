@@ -5,77 +5,79 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import ua.ek.steps.HomeStep;
+import ua.ek.pages.tablets.TabletPage;
+import ua.ek.pages.tablets.TabletsListPage;
 import ua.ek.steps.base.BaseStepBdd;
-import ua.ek.steps.tablets.TabletStep;
-import ua.ek.steps.tablets.TabletsListStep;
 import ua.ek.utils.*;
 
 public class TabletTestBdd extends BaseStepBdd {
-    private HomeStep homeStep;
-    private TabletStep tabletStep;
-    private TabletsListStep tabletsListStep;
+
+private TabletPage tabletPage;
+    private TabletsListPage tabletsListPage;
 
     public TabletTestBdd(){
-        StepFactory stepFactory = new StepFactory();
-        homeStep = (HomeStep) stepFactory.createStep(StepType.HOME_STEP, getDriver());
-        tabletStep = (TabletStep)stepFactory.createStep(StepType.TABLET_STEP, getDriver());
-        tabletsListStep = (TabletsListStep) stepFactory.createStep((StepType.TABLETS_LIST_STEP), getDriver());
+        tabletPage = (TabletPage)getPage(PageType.TABLET_PAGE, getDriver());
+        tabletsListPage = (TabletsListPage)getPage(PageType.TABLETS_LIST_PAGE, getDriver());
     }
 
     @Given("^User go tablets page$")
     public void userOpenTabletsPage()  {
-        tabletStep.goTabletPage();
+        getHelper().clickVisibleWebElementWithJS(getHomePage().getComputersMenuLink());
+        getHelper().clickVisibleWebElementWithJS(getHomePage().getTabletsSubMenuLink());
     }
 
     @When("^User click on apple manufacturer link in the filter panel$")
     public void userClickManufacturerLinkInFilterPanel(){
-        tabletStep.clickManufacturerLink();
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                tabletPage.getManufacturerLink()).click();
     }
 
     @When("^User click on 10 inches display diagonal link in the filter panel$")
     public void userClickDisplayDiagonalLinkInFilterPanel(){
-        tabletStep.clickDisplayDiagonalLink();
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                tabletPage.getDisplayDiagonalLink()).click();
     }
 
     @When("^User click on 7000 — 10000 грн. link in the filter panel$")
     public void userClickFixedPriceLinkInFilterPanel(){
-        tabletStep.clickFixedPriceLink();
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                tabletPage.getFixedPriceLink()).click();
     }
 
     @When("^User enter (.*?) in min price field$")
     public void userEnterMinPrice(String minPrice){
-        tabletStep.enterMinPrice(minPrice);
+        getHelper().enterTextInTextField(tabletPage.getMinPriceField(), minPrice);
     }
 
     @And("^User enter (.*?) in max price field$")
     public void userEnterMaxPrice(String maxPrice){
-        tabletStep.enterMaxPrice(maxPrice);
+        getHelper().enterTextInTextField(tabletPage.getMaxPriceField(), maxPrice);
     }
 
     @And("^User click on submit button$")
     public void userClickOnSubmitButton(){
-        tabletStep.clickSubmitButton();
+        getHelper().waitUntilElementIsVisible(IWaitTimes.FIVE_SECONDS,
+                tabletPage.getSubmitButton()).click();
     }
 
     @Then("^User should see page with text (.*?) according to the selected manufacturer link$")
     public void userShouldSeePageWithTextAccordingSelectedManufacturerLink(String actualMessage){
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), actualMessage);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getTabletsListTitle()), actualMessage);
     }
 
     @Then("^User should see page with text (.*?) according to the selected display diagonal link$")
     public void userShouldSeePageWithTextAccordingSelectedDisplayDiagonalLink(String actualMessage){
-        AssertUtils.makeAssert(tabletsListStep.getTabletsListTitle(), actualMessage);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getTabletsListTitle()), actualMessage);
     }
 
     @Then("^User should see page with text (.*?) according to the selected fixed price link$")
     public void userShouldSeePageWithTextAccordingSelectedFixedPriceLink(String actualMessage){
-        AssertUtils.makeAssert(tabletsListStep.getStickerTextElement(), actualMessage);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getStickerTextElement()), actualMessage);
     }
 
     @Then("^User should see page with text in range price (.*?)$")
     public void userShouldSeePageWithTextInRangePrice(String actualMessage){
-        AssertUtils.makeAssert(tabletsListStep.getStickerTextElement(), actualMessage);
+        AssertUtils.makeAssert(getHelper().getTextFromWebElement(tabletsListPage.getStickerTextElement()), actualMessage);
     }
 
     @And("^User close browser after using top panel filter$")

@@ -10,24 +10,46 @@
 <!--    <parameter name="node" value="http://192.168.1.3:5555"></parameter>-->
     
 <!--    <test name="Login Tests Chrome" group-by-instances="true" preserve-order="true">-->
-    <test name="Login Tests Chrome">
+
+<!--    <test name="Login Tests Chrome">-->
+<!--        <parameter name="browser" value="chrome" />-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="login"></include>-->
+<!--            </run>-->
+<!--        </groups>-->
+<!--        <packages>-->
+<!--            <package name="ua.ek.bdd" />-->
+<!--        </packages>-->
+<!--        <classes>-->
+<!--            <class name="ua.ek.bdd.TestBddRunner" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="Search Tests Chrome">
         <parameter name="browser" value="chrome" />
+        <groups>
+            <run>
+                <include name="search"></include>
+            </run>
+        </groups>
         <packages>
-            <package name="ua.ek.bdd.search" />
+            <package name="ua.ek.bdd" />
         </packages>
         <classes>
-            <class name="ua.ek.bdd.TestBddRunner" />
+            <class name="ua.ek.bdd.SearchTestBddRunner" />
         </classes>
     </test>
 
-    <test name="Tablets Filters Tests Firefox" group-by-instances="true" preserve-order="true">
-        <parameter name="browser" value="firefox" />
-        <packages>
-            <package name="ua.ek.bdd.search" />
-        </packages>
-        <classes>
-            <class name="ua.ek.bdd.TestBddRunner" />
-        </classes>
-    </test>
+
+<!--    <test name="Login Tests Firefox" group-by-instances="true" preserve-order="true">-->
+<!--        <parameter name="browser" value="firefox" />-->
+<!--        <packages>-->
+<!--            <package name="ua.ek.bdd" />-->
+<!--        </packages>-->
+<!--        <classes>-->
+<!--            <class name="ua.ek.bdd.TestBddRunner" />-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>

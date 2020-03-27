@@ -1,4 +1,4 @@
-package ua.ek.model;
+package ua.ek.models;
 
 public class Price {
     private double minPrice;

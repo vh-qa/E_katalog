@@ -9,14 +9,16 @@ Feature: User Registration
   I want to user registration
   in order to use all opportunities of the e-katalog
 
+  Background: The User starts out on the auth form
+
   @SuccessfulRegistration
   Scenario: Successful user registration
 
     Given User open the registration form
     When User click on registration link on registration form
-    And User enter login some_login_32 on registration form
-    And User enter email some_email_32@company.com on registration form
-    And User enter password some_password_32 on registration form
+    And User enter login some_login_34 on registration form
+    And User enter email some_email_34@company.com on registration form
+    And User enter password some_password_34 on registration form
     And User click on submit button on registration form
     Then User should see form with text Регистрация прошла успешно!
     And User close browser with registration form
