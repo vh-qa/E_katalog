@@ -2,6 +2,7 @@ package ua.ek.utils;
 
 import org.openqa.selenium.WebDriver;
 import ua.ek.base.BasePage;
+import ua.ek.base.IBasePage;
 import ua.ek.pages.HomePage;
 import ua.ek.pages.registration.AuthPage;
 import ua.ek.pages.registration.RegistrationPage;
@@ -17,9 +18,9 @@ import ua.ek.pages.tablets.manufacturers.AppleTabletsPage;
 
 public class PageFactory {
 
-    public BasePage createPage(PageType pageType, WebDriver driver) {
+    public IBasePage createPage(PageType pageType, WebDriver driver) {
 
-        BasePage basePage = null;
+        IBasePage basePage = null;
 
         switch (pageType) {
             case HOME_PAGE:
