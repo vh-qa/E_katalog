@@ -9,7 +9,7 @@ Feature: User Registration
   I want to user registration
   in order to use all opportunities of the e-katalog
 
-  Background: The User starts out on the auth form
+  Background: The User starts out on the registration form
 
   @SuccessfulRegistration
   Scenario: Successful user registration

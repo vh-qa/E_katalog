@@ -2,6 +2,7 @@ package ua.ek.steps.base;
 
 import org.openqa.selenium.WebDriver;
 import ua.ek.base.BasePage;
+import ua.ek.base.IBasePage;
 import ua.ek.pages.HomePage;
 import ua.ek.utils.Helper;
 import ua.ek.utils.InitRemoteDrivers;
@@ -21,7 +22,7 @@ public abstract class BaseStepBdd {
         helper = new Helper(driver);
     }
 
-    public BasePage getPage(PageType pageType, WebDriver driver){
+    public IBasePage getPage(PageType pageType, WebDriver driver){
         PageFactory pageFactory = new PageFactory();
         return pageFactory.createPage(pageType, driver);
     }
